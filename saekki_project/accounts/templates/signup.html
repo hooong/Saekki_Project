@@ -1,0 +1,21 @@
+{% if user.is_authenticated %}
+<script type="text/javascript">
+    alert("잘못된 접근입니다. \n 회원가입을 위해서는 로그아웃이 필요합니다.")
+    window.location.href = '/';
+</script>
+{% else %}
+<form method="POST">  
+    {%csrf_token%}
+    <h2>회원가입</h2>
+    {% for field in form %}
+        <div>
+            {{ field.label }}
+            {{ field }}
+        </div>
+    {% endfor %}
+    <button type='submit'>회원가입</button>
+    <a href="{% url 'home' %}">
+        <button type='button'>취소</button>
+    </a>
+</form>
+{% endif %}

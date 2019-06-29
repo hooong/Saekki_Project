@@ -1,0 +1,25 @@
+<h2>Other People</h2>
+{% for user in users %}
+{{ user.username }}
+{% if user not in friends %}
+<a href="{% url 'change_friend' operation='add' pk=user.pk %}">
+    <button>친구추가</button>
+</a>
+{% endif %}
+<br>
+{% endfor %}
+<h2>friends</h2>
+{% for friend in friends %}
+{{ friend.username }}
+<a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
+    <button>친구해제</button>
+</a>
+<br>
+{% endfor %}
+<h2>Promise</h2>
+{% for promise in promises %}
+{% if promise.user.username == user.username or user in promise.party_set(id=promise.id).users %}
+{{promise.title}} <br>
+{{promise.setting_date_time}} <br>
+{% endif %}
+{% endfor %}
