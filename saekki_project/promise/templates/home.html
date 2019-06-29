@@ -18,8 +18,8 @@
 {% endfor %}
 <h2>Promise</h2>
 {% for promise in promises %}
-{% if promise.user.username == user.username or user in promise.party_set(id=promise.id).users %}
+{% if user.username == promise.user.username or user.username in promise.party %}
 {{promise.title}} <br>
-{{promise.setting_date_time}} <br>
+{{promise.setting_date_time}}
 {% endif %}
 {% endfor %}

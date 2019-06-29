@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'saekki_pro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'saekki',				#자신이 등록한 db이름
+        'USER': 'postgres',			#유저이름
+        'PASSWORD': '123456',		#자신이 등록한 비밀번호입력
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 # 약속게시물
 class Promise(models.Model):
@@ -8,6 +9,7 @@ class Promise(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     setting_date_time = models.CharField(max_length=200)
+    party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
     # TODO
     # 위치정보
 
@@ -32,15 +34,3 @@ class Friend(models.Model):
             current_user = current_user
         )
         friend.users.remove(new_friend)
-
-# 참가원 models
-class Party(models.Model):
-    users = models.ManyToManyField(User)
-    current_promise = models.ForeignKey(Promise, related_name='owner_promise', null=True, on_delete=models.CASCADE)
-
-    @classmethod
-    def make_party(cls, current_promise, new_party):
-        party, created = cls.objects.get_or_create(
-            current_promise = current_promise
-        )
-        party.users.add(new_party)

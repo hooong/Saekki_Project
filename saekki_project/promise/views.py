@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .forms import PromiseForm
-from .models import Friend, Party, Promise
+from .models import Friend, Promise
 
 # index_page
 def home(request):
@@ -18,14 +18,11 @@ def new(request):
     if request.method == "POST":
         form = PromiseForm(request.POST)
         if form.is_valid():
+            parties = request.POST.getlist('party_friend[]')
             promise = form.save(commit=False)
             promise.user = request.user
+            promise.party = parties
             promise.save()
-            Party.objects.create(current_promise=promise)
-            partys = request.POST.getlist('party_friend[]')
-            for party in partys:
-                party_object = User.objects.get(username=party)
-                Party.make_party(promise, party_object)
             return redirect('home')
     else:
         form = PromiseForm()
