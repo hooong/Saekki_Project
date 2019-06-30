@@ -10,8 +10,10 @@ class Promise(models.Model):
     content = models.TextField()
     setting_date_time = models.CharField(max_length=200)
     party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
-    # TODO
-    # 위치정보
+    # 경도
+    longitud = models.FloatField(null=True, blank=True, default=None)
+    # 위도
+    latitude = models.FloatField(null=True, blank=True, default=None)
 
     def __str__(self):
         return self.title
