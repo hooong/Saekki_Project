@@ -22,6 +22,8 @@ def new(request):
             promise = form.save(commit=False)
             promise.user = request.user
             promise.party = parties
+            promise.latitude = float(request.POST['addr_lat'])
+            promise.longitud = float(request.POST['addr_lng'])
             promise.save()
             return redirect('home')
     else:
