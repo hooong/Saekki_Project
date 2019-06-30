@@ -1,3 +1,4 @@
+<!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
 <h2>Other People</h2>
 {% for user in users %}
 {{ user.username }}
@@ -8,6 +9,8 @@
 {% endif %}
 <br>
 {% endfor %}
+
+<!-- 친구목록 -->
 <h2>friends</h2>
 {% for friend in friends %}
 {{ friend.username }}
@@ -16,6 +19,8 @@
 </a>
 <br>
 {% endfor %}
+
+<!-- 약속게시물 -->
 <h2>Promise</h2>
 {% for promise in promises %}
 {% if user.username == promise.user.username or user.username in promise.party %}
