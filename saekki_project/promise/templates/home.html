@@ -1,3 +1,9 @@
+<a href="{% url 'new' %}">
+<button>글쓰기</button>
+</a>
+
+<a href="{% url 'logout' %}">로그아웃</a>
+
 <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
 <h2>Other People</h2>
 {% for user in users %}
@@ -24,7 +30,11 @@
 <h2>Promise</h2>
 {% for promise in promises %}
 {% if user.username == promise.user.username or user.username in promise.party %}
-{{promise.title}} <br>
-{{promise.setting_date_time}}
-{% endif %}
+<a href="{% url 'detail' pk=promise.id %}">
+    <div>
+        {{promise.title}} <br>
+        {{promise.setting_date_time}}
+        {% endif %}
+    </div>      
+</a>
 {% endfor %}
