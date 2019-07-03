@@ -36,3 +36,11 @@ class Friend(models.Model):
             current_user = current_user
         )
         friend.users.remove(new_friend)
+
+class Party_detail(models.Model):
+    promise = models.ForeignKey(Promise, related_name='party_detail', null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+    # 성공여부
+    success_or_fail = models.PositiveSmallIntegerField(default=0)
+    arrived_time = models.DateTimeField(null=True, blank=True, default=None)
