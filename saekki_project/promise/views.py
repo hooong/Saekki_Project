@@ -1,17 +1,27 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .forms import PromiseForm
 from .models import Friend, Promise
 
 # index_page
 def home(request):
-    users = User.objects.exclude(id=request.user.id)
-    friend = Friend.objects.get(current_user=request.user)
-    friends = friend.users.all()
-    promises = Promise.objects.all()
-    user = request.user
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        users = User.objects.exclude(id=request.user.id)
+        friend = Friend.objects.get(current_user=request.user)
+        friends = friend.users.all()
+        promises = Promise.objects.all()
+        user = request.user
+        
+        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user})
 
-    return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user})
+# 디테일 보여주기
+def detail(request, pk):
+    promise = get_object_or_404(Promise ,pk=pk)
+
+    return render(request, 'detail.html', {'promise':promise})
+
 
 # 글쓰기
 def new(request):
