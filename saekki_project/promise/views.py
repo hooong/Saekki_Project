@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.utils import timezone
 from .forms import PromiseForm
-from .models import Friend, Promise
+from .models import Friend, Promise, Party_detail
 
 # index_page
 def home(request):
+    # 로그인 안된 상태
     if not request.user.is_authenticated:
         return redirect('login')
+    # 로그인 되었을때
     else:
         users = User.objects.exclude(id=request.user.id)
         friend = Friend.objects.get(current_user=request.user)
@@ -35,6 +39,18 @@ def new(request):
             promise.latitude = float(request.POST['addr_lat'])
             promise.longitud = float(request.POST['addr_lng'])
             promise.save()
+
+            # 참가자들의 성공여부를 저장하는 부분
+            for party in parties:
+                p = Party_detail()
+                p.promise = promise
+                p.user = User.objects.get(username=party)
+                p.save()
+            p = Party_detail()
+            p.promise = promise
+            p.user = request.user
+            p.save()
+
             return redirect('home')
     else:
         form = PromiseForm()
@@ -55,3 +71,14 @@ def change_friend(request, operation, pk):
 
     return redirect('home')
     
+# 도착이벤트
+def arrived(request, promise_id):
+    if request.method == 'POST':
+        p = Party_detail.objects.get(promise=promise_id, user=request.user)
+        p.success_or_fail = 1
+        p.arrived_time = timezone.now()
+        p.save()
+        
+        return redirect('home')
+    else:
+        return HttpResponse('오류')

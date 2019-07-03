@@ -1,6 +1,10 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
 
-<h2>자세히 보여주기</h2>
+<form method="POST" action="{% url 'arrived' promise.id %}">
+    {% csrf_token %}
+    <button type="submit">도착했어요!</button>
+</form>
+    <br><br>
 제목 : {{promise.title}} <br>
 글쓴이 : {{promise.user}} <br>
 작성시간 : {{promise.created_at}} <br>
