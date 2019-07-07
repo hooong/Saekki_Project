@@ -1,10 +1,13 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
 
+<!-- 도착이벤트 -->
 <form method="POST" action="{% url 'arrived' promise.id %}">
     {% csrf_token %}
     <button type="submit">도착했어요!</button>
 </form>
     <br><br>
+
+    
 제목 : {{promise.title}} <br>
 글쓴이 : {{promise.user}} <br>
 작성시간 : {{promise.created_at}} <br>
@@ -16,6 +19,9 @@
 {% endfor %} <br>
 약속장소 : <div id="map" style="width:500px;height:400px;"></div>
 
+<!-- TODO
+    - 현재 도착한사람 보여주기
+-->
 
 <script> 
 

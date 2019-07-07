@@ -27,14 +27,30 @@
 {% endfor %}
 
 <!-- 약속게시물 -->
-<h2>Promise</h2>
+<h2>Promise(진행중인 약속)</h2>
 {% for promise in promises %}
 {% if user.username == promise.user.username or user.username in promise.party %}
+{% if promise.end == 0 %}
 <a href="{% url 'detail' pk=promise.id %}">
     <div>
         {{promise.title}} <br>
         {{promise.setting_date_time}}
-        {% endif %}
     </div>      
 </a>
+{% endif %}
+{% endif %}
+{% endfor %}
+
+<h2>Promise(끝난 약속)</h2>
+{% for promise in promises %}
+{% if user.username == promise.user.username or user.username in promise.party %}
+{% if promise.end == 1 %}
+<a href="{% url 'detail' pk=promise.id %}">
+    <div>
+        {{promise.title}} <br>
+        {{promise.setting_date_time}}
+    </div>      
+</a>
+{% endif %}
+{% endif %}
 {% endfor %}
