@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'promise',
     'accounts',
     'tempus_dominus',
+    'django_crontab',
+    'django_apscheduler',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,5 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = '/'
+
+APSCHEDULER_DATETIME_FORMAT =  "N j, Y, f:s a"

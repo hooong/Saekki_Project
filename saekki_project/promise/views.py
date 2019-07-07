@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from .forms import PromiseForm
-from .models import Friend, Promise, Party_detail
+from .models import *
+
 
 # index_page
 def home(request):
