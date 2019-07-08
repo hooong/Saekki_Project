@@ -20,6 +20,13 @@ class Promise(models.Model):
     def __str__(self):
         return self.title
 
+# 약속게시물 내 댓글
+class Promise_Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    promise = models.ForeignKey(Promise, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
 # 친구 model
 class Friend(models.Model):
     users = models.ManyToManyField(User)
@@ -39,6 +46,7 @@ class Friend(models.Model):
         )
         friend.users.remove(new_friend)
 
+# 도착여부를 확인하기위한 모델
 class Party_detail(models.Model):
     promise = models.ForeignKey(Promise, related_name='party_detail', null=True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)

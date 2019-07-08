@@ -19,6 +19,21 @@
 {% endfor %} <br>
 약속장소 : <div id="map" style="width:500px;height:400px;"></div>
 
+<br><br>
+<hr>
+<h2>댓글</h2>
+{% for comment in comments %}
+{{comment.content}} <br>
+작성자 : {{comment.user}} <br>
+작성일자 : {{comment.created_at}} <br>
+{% endfor %}
+<hr>
+<form method='POST', action="{% url 'new_comment' promise_id=promise.id %}">
+    {% csrf_token %}
+    {{commentform}}
+    <button type='submit'>댓글쓰기</button>
+</form>
+
 <!-- TODO
     - 현재 도착한사람 보여주기
 -->

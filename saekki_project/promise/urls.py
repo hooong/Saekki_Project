@@ -7,6 +7,7 @@ from .broker import schedule
 urlpatterns = [
     path('new/', views.new, name='new'),
     path('detail/<int:pk>', views.detail, name='detail'),
+    path('comment/<int:promise_id>', views.new_comment, name='new_comment'),
     path('arrived/<int:promise_id>', views.arrived, name='arrived'),
     url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
 ]
