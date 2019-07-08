@@ -1,5 +1,5 @@
 from django import forms
-from .models import Promise
+from .models import Promise, Promise_Comment
 from tempus_dominus.widgets import DateTimePicker
 from django.utils import timezone
 
@@ -23,3 +23,11 @@ class PromiseForm(forms.ModelForm):
             'setting_date_time': '약속 날짜/시간',
         }
 
+class Promise_CommentForm(forms.ModelForm):
+    class Meta:
+        model = Promise_Comment
+        fields = ['content']
+
+        labels = {
+            'content': '댓글내용'
+        }

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.utils import timezone
-from .forms import PromiseForm
+from .forms import *
 from .models import *
 
 
@@ -24,8 +24,22 @@ def home(request):
 # 디테일 보여주기
 def detail(request, pk):
     promise = get_object_or_404(Promise ,pk=pk)
+    comments = Promise_Comment.objects.all().order_by('-id')
+    commentform = Promise_CommentForm()
 
-    return render(request, 'detail.html', {'promise':promise})
+    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform })
+
+# 댓글작성
+def new_comment(request, promise_id):
+    if request.method == 'POST':
+        form = Promise_CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.promise = Promise.objects.get(id=promise_id)
+            comment.save()
+
+            return redirect('/promise/detail/'+str(promise_id))
 
 
 # 글쓰기
