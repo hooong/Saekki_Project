@@ -46,9 +46,3 @@ class Party_detail(models.Model):
     # 성공여부
     success_or_fail = models.PositiveSmallIntegerField(default=0)
     arrived_time = models.DateTimeField(null=True, blank=True, default=None)
-
-# crontab Log
-class CronLog(models.Model):
-    date = models.DateTimeField(auto_now_add=True, blank=True)
-    def __unicode__(self):
-        return self.date.ctime() 
