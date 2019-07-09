@@ -1,8 +1,18 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <!-- 도착이벤트 -->
-<form method="POST" action="{% url 'arrived' promise.id %}">
+<form method="POST" action="{% url 'arrived' promise.id %}" name='arrive_form'>
     {% csrf_token %}
+    <input type="hidden" name='current_lat' value=''>
+    <input type="hidden" name='current_lng' value=''>
     <button type="submit">도착했어요!</button>
 </form>
     <br><br>
@@ -40,7 +50,15 @@
 
 <script> 
 
-        
+    function init(){
+        window.navigator.geolocation.getCurrentPosition(current_position);
+    }
+    function current_position(position){
+        document.arrive_form.current_lat.value = position.coords.latitude  // 위도
+        document.arrive_form.current_lng.value = position.coords.longitude // 경도
+    }
+    window.addEventListener("load", init);
+    
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
     var lng = '{{promise.longitud}}';

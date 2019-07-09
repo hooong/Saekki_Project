@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.utils import timezone
 from .forms import *
@@ -89,11 +90,27 @@ def change_friend(request, operation, pk):
 # 도착이벤트
 def arrived(request, promise_id):
     if request.method == 'POST':
-        p = Party_detail.objects.get(promise=promise_id, user=request.user)
-        p.success_or_fail = 1
-        p.arrived_time = timezone.now()
-        p.save()
-        
-        return redirect('home')
+        promise = Promise.objects.get(id=promise_id)
+        cur_lat = request.POST['current_lat']
+        cur_lng = request.POST['current_lng']
+        max_lat = float(promise.latitude) + 0.0006
+        min_lat = float(promise.latitude) - 0.0006
+        max_lng = float(promise.longitud) + 0.0006
+        min_lng = float(promise.longitud) - 0.0006
+        if cur_lat != '' and cur_lng != '':
+            if (min_lat <= float(cur_lat) and float(cur_lat) <= max_lat) and (min_lng <= float(cur_lng) and float(cur_lng) <= max_lng):
+                party = Party_detail.objects.get(promise=promise_id, user=request.user)
+                party.success_or_fail = 1
+                party.arrived_time = timezone.now()
+                party.save()
+
+                messages.info(request, '성공적으로 도착하셨습니다.')
+                return HttpResponseRedirect('/promise/detail/'+str(promise_id))
+            else:
+                messages.info(request, '아직 장소에 도착을 하지 못하셨습니다.')
+                return HttpResponseRedirect('/promise/detail/'+str(promise_id))
+        else:
+            messages.info(request, '위치가 제대로 확인되지 않았습니다.')
+            return HttpResponseRedirect('/promise/detail/'+str(promise_id))
     else:
         return HttpResponse('오류')
