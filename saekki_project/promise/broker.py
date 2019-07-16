@@ -11,7 +11,7 @@ def schedule():
 
 # 시간 비교 후 끝났는지 확인
 def com_time():
-    print("crontab")
+    print("스케쥴러 작동")
     promises = Promise.objects.all()
     for promise in promises:
         promise_date_time = time_to_str(promise.setting_date_time)

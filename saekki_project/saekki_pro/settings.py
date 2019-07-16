@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'promise',
     'accounts',
     'tempus_dominus',
-    'django_crontab',
     'django_apscheduler',
 ]
 
