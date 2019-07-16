@@ -48,9 +48,9 @@ def new(request):
     if request.method == "POST":
         form = PromiseForm(request.POST)
         if form.is_valid():
-            print(request.POST['pic_date'])
             parties = request.POST.getlist('party_friend[]')
             promise = form.save(commit=False)
+            promise.setting_date_time = request.POST['pic_date']
             promise.user = request.user
             promise.party = parties
             promise.latitude = float(request.POST['addr_lat'])
