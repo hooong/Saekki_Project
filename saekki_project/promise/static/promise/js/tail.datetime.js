@@ -622,15 +622,15 @@
             if(!view || !this.con["view" + first(view)] || !this.con.dateFormat){ return false; }
 
             // Render View
-            var content = d.createElement("DIV");
-                content.className = "calendar-datepicker calendar-view-" + view;
-                content.innerHTML = this["view" + first(view)]();
+            var content_time = d.createElement("DIV");
+                content_time.className = "calendar-datepicker calendar-view-" + view;
+                content_time.innerHTML = this["view" + first(view)]();
 
             // Append Element
             if(dt.querySelector(".calendar-datepicker")){
-                dt.replaceChild(content, dt.querySelector(".calendar-datepicker"));
+                dt.replaceChild(content_time, dt.querySelector(".calendar-datepicker"));
             } else {
-                dt.appendChild(content);
+                dt.appendChild(content_time);
             }
             this.view.type = view;
             return this.handleLabel(dt);
@@ -677,8 +677,8 @@
                 fields.push(
                     '<div class="timepicker-field timepicker-' + key.toLowerCase() + '">' +
                         input.outerHTML +
-                        '<button class="picker-step step-up"></button>' +
-                        '<button class="picker-step step-down"></button>' +
+                        '<button type="button" class="picker-step step-up"></button>' +
+                        '<button type="button" class="picker-step step-down"></button>' +
                         '<label>' + this.__["time"][i++] + '</label>' +
                     '</div>'
                 );
