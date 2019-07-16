@@ -113,7 +113,33 @@
     {% endfor %}
 
     <!-- TODO: 날짜시간선택 -->
+    <div class="css-script-clear"></div>
 
+        <div class="container">
+        <h1>tail.DateTime Datetime Picker Demos</h1>
+        <div class="row">
+            <div class="col-lg-6">
+        <h2>Datetime Picker</h2>
+        <input type="text" id="datetimeDemo" class="datetime form-control" />
+        <div id="datetime-demo-holder" class="datetime-folder"></div>
+        </div>
+
+        </div>
+        </div>
+
+    <script>
+        tail.DateTime("#datetimeDemo", {
+            static: "#datetime-demo-holder",   /* Used for demonstration */
+            classNames: "theme-default",    /* Used for demonstration */
+            startOpen: true,                /* Used for demonstration */
+            stayOpen: true,                 /* Used for demonstration */
+            position: "#datetime-demo-holder", 
+
+        });
+
+        var month = new Date().getMonth();
+    
+    </script>
 
     <!-- 위도 경도 input -->
     <input type="hidden" name='addr_lat' value=''>
