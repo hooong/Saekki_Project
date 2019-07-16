@@ -25,7 +25,7 @@ def home(request):
 # 디테일 보여주기
 def detail(request, pk):
     promise = get_object_or_404(Promise ,pk=pk)
-    comments = Promise_Comment.objects.all().order_by('-id')
+    comments = promise.comments.all()
     commentform = Promise_CommentForm()
 
     return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform })

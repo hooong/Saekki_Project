@@ -23,7 +23,7 @@ class Promise(models.Model):
 # 약속게시물 내 댓글
 class Promise_Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    promise = models.ForeignKey(Promise, on_delete=models.CASCADE)
+    promise = models.ForeignKey(Promise, on_delete=models.CASCADE, related_name="comments")
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
