@@ -31,7 +31,9 @@
 {{party}}
 {% endfor %} <br>
 약속장소 : <div id="map" style="width:500px;height:400px;"></div>
+{% if cur_user == promise.user %}
 <a href="{% url 'pro_del' promise_id=promise.id %}">삭제</a><br>
+{% endif %}
 
 <br><br>
 <hr>
@@ -40,7 +42,9 @@
 {{comment.content}} <br>
 작성자 : {{comment.user}} <br>
 작성일자 : {{comment.created_at}} <br>
+{% if cur_user == comment.user %}
 <a href="{% url 'com_del' promise_id=promise.id comment_id=comment.id %}">댓글삭제</a><br>
+{% endif %}
 {% endfor %}
 
 <hr>
