@@ -10,7 +10,7 @@
 <script src="{% static 'promise/js/tail.datetime.js' %}"></script>
 
 <head>
-    <!-- 지도관련 script -->
+    지도관련 script
     <script>
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -123,9 +123,9 @@
         <div class="row">
             <div class="col-lg-6">
         <h2>Datetime Picker</h2>
-        <input type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" />
-        <div id="datetime-demo-holder" class="datetime-folder"></div>
-        </div>
+        
+        <input type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" pattern="\d"/>
+        <div id="pickerspace"></div>
 
         </div>
         </div>
@@ -133,13 +133,13 @@
     <script>
         tail.DateTime("#datetimeDemo", {
             static: "#datetime-demo-holder",   /* Used for demonstration */
+            position: "#pickerspace",
             classNames: "theme-default",    /* Used for demonstration */
             startOpen: true,                /* Used for demonstration */
             stayOpen: true,                 /* Used for demonstration */
         });
 
-        var month = new Date().getMonth();
-    
+ 
     </script>
 
     <!-- 위도 경도 input -->
