@@ -47,7 +47,6 @@ def new_comment(request, promise_id):
 
             return redirect('/promise/detail/'+str(promise_id))
 
-
 # 글쓰기
 def new(request):
     if request.method == "POST":
@@ -80,6 +79,13 @@ def new(request):
         friends = friend.users.all()
 
         return render(request, 'new.html', {'form':form, 'friends':friends})
+
+# 약속 삭제
+def pro_del(request, pk):
+    promise = get_object_or_404(Promise ,pk=pk)
+    promise.delete()
+
+    return redirect('home')
 
 # 친구추가, 해제 버튼
 def change_friend(request, operation, pk):
