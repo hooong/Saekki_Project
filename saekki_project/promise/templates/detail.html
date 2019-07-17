@@ -31,6 +31,7 @@
 {{party}}
 {% endfor %} <br>
 약속장소 : <div id="map" style="width:500px;height:400px;"></div>
+<a href="{% url 'pro_del' promise_id=promise.id %}">삭제</a><br>
 
 <br><br>
 <hr>
@@ -39,7 +40,9 @@
 {{comment.content}} <br>
 작성자 : {{comment.user}} <br>
 작성일자 : {{comment.created_at}} <br>
+<a href="{% url 'com_del' promise_id=promise.id comment_id=comment.id %}">댓글삭제</a><br>
 {% endfor %}
+
 <hr>
 <form method='POST', action="{% url 'new_comment' promise_id=promise.id %}">
     {% csrf_token %}
