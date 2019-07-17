@@ -45,6 +45,7 @@
             searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
                 if (status === kakao.maps.services.Status.OK) {
                     var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                    where = result[0].address.address_name;
                     detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
                     
                     var content = '<div class="bAddr">' +
@@ -124,7 +125,7 @@
             <div class="col-lg-6">
         <h2>Datetime Picker</h2>
         
-        <input type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" pattern="\d"/>
+        <input type="text" id="datetimeDemo" name="pic_date" class="datetime form-control"/>
         <div id="pickerspace"></div>
 
         </div>
@@ -148,8 +149,19 @@
 
     <!-- 지도 띄우기 -->
     <div id="map" style="width:500px;height:400px;"></div>
-
-    <button type='submit'>확인</button>
+    <!-- submit 전에 form 양식 맞췄는지?-->
+    <script>
+    function checkform(){
+        var timeTmp = document.getElementById('datetimeDemo').value;
+        if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
+            document.new_form.submit();
+        }else{
+            return false;
+        }
+    }
+    </script>
+    <input type="button" value="확인" onclick="checkform()">
+    <!-- <button onclick="" type='button'>확인</button> -->
 </form>
 
 
