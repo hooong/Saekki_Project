@@ -670,7 +670,7 @@
                 input.setAttribute("max", (key !== "Hours")? "60": (this.con.time12h)? "13": "24");
                 input.setAttribute("step", this.con["timeStep" + key]);
                 input.setAttribute("value", function(n){ return (n < 10)? "0" + n: n; }(this.view.date["get" + key]()));
-                input.setAttribute("pattern", "\d*");
+                input.setAttribute("pattern", "[0-9]{1,2}");
                 input.setAttribute("inputmode", "numeric");
                 input.setAttribute("data-input", key.toLowerCase());
 
