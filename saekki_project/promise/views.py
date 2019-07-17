@@ -6,7 +6,6 @@ from django.utils import timezone
 from .forms import *
 from .models import *
 
-
 # index_page
 def home(request):
     # 로그인 안된 상태
