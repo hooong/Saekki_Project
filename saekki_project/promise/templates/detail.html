@@ -9,6 +9,9 @@
 {% endif %}
 
 <!-- 도착이벤트 -->
+{% if success.success_or_fail == 1 %}
+<h2>도착을 하셨습니다!</h2>
+{% else %}
 <form method="POST" action="{% url 'arrived' promise.id %}" name='arrive_form'>
     {% csrf_token %}
     <input type="hidden" name='current_lat' value=''>
@@ -16,6 +19,7 @@
     <button type="submit">도착했어요!</button>
 </form>
 <br><br>
+{% endif %}
 
 제목 : {{promise.title}} <br>
 글쓴이 : {{promise.user}} <br>

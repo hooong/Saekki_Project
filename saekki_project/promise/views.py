@@ -25,10 +25,15 @@ def home(request):
 # 디테일 보여주기
 def detail(request, pk):
     promise = get_object_or_404(Promise ,pk=pk)
+
+    # 댓글
     comments = promise.comments.all()
     commentform = Promise_CommentForm()
 
-    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform })
+    # 도착여부
+    success = Party_detail.objects.get(promise=promise, user=request.user)
+
+    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success })
 
 # 댓글작성
 def new_comment(request, promise_id):
@@ -106,6 +111,17 @@ def arrived(request, promise_id):
                 party.save()
 
                 messages.info(request, '성공적으로 도착하셨습니다.')
+
+                # 모두 도착했는지 확인
+                party_all = promise.party_detail.all()
+                arr = 0
+                for party_arr in party_all:
+                    if party_arr.success_or_fail == 1:
+                        arr += 1
+                if arr == len(party_all):
+                    promise.end = 1
+                    promise.save()
+
                 return HttpResponseRedirect('/promise/detail/'+str(promise_id))
             else:
                 messages.info(request, '아직 장소에 도착을 하지 못하셨습니다.')
