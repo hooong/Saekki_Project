@@ -10,7 +10,7 @@
 <script src="{% static 'promise/js/tail.datetime.js' %}"></script>
 
 <head>
-    지도관련 script
+    <!-- 지도관련 script -->
     <script>
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -140,7 +140,7 @@
             stayOpen: true,                 /* Used for demonstration */
         });
 
- 
+
     </script>
 
     <!-- 위도 경도 input -->
@@ -153,11 +153,37 @@
     <script>
     function checkform(){
         var timeTmp = document.getElementById('datetimeDemo').value;
-        if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
+        var d = new Date();
+        var cur_time = leadingZeros(d.getFullYear(), 4) +
+                leadingZeros(d.getMonth() + 1, 2) +
+                leadingZeros(d.getDate(), 2) +
+                leadingZeros(d.getHours(), 2) +
+                leadingZeros(d.getMinutes(), 2) +
+                leadingZeros(d.getSeconds(), 2);
+        var set_time = timeTmp.replace("-","");
+        set_time = set_time.replace(" ","");
+        set_time = set_time.replace(":","");
+        if(cur_time < set_time){
+            if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
             document.new_form.submit();
-        }else{
+            }else{
+            return false;
+            }
+        } else{
+            alert("약속 시간이 현재보다 이전입니다.");
             return false;
         }
+    }
+
+    function leadingZeros(n, digits) {
+        var zero = '';
+        n = n.toString();
+
+        if (n.length < digits) {
+            for (i = 0; i < digits - n.length; i++)
+            zero += '0';
+        }
+        return zero + n;
     }
     </script>
     <input type="button" value="확인" onclick="checkform()">
