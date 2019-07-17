@@ -47,6 +47,14 @@ def new_comment(request, promise_id):
 
             return redirect('/promise/detail/'+str(promise_id))
 
+# 댓글 삭제
+def com_del(request, promise_id, comment_id):
+    promise = get_object_or_404(Promise, id=promise_id)
+    comment = promise.comments.get(id=comment_id)
+    comment.delete()
+
+    return redirect('/promise/detail/'+str(promise_id))
+
 # 글쓰기
 def new(request):
     if request.method == "POST":
@@ -81,8 +89,8 @@ def new(request):
         return render(request, 'new.html', {'form':form, 'friends':friends})
 
 # 약속 삭제
-def pro_del(request, pk):
-    promise = get_object_or_404(Promise ,pk=pk)
+def pro_del(request, promise_id):
+    promise = get_object_or_404(Promise ,id=promise_id)
     promise.delete()
 
     return redirect('home')
