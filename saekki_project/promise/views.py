@@ -18,8 +18,10 @@ def home(request):
         friends = friend.users.all()
         promises = Promise.objects.all()
         user = request.user
+        arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
+        no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
         
-        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user})
+        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user, 'arrives':arrives, 'no_arrives':no_arrives})
 
 # 디테일 보여주기
 def detail(request, pk):
