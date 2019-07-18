@@ -46,6 +46,6 @@
   - longitud : 약속장소의 경도
   - latitude : 약속장소의 위도
 - Friend model로 친구 구현
-  - 친구추가버튼 : `<a href="{% url 'change_friend' operation='add' pk=user.pk %}">`
-  - 친구해제버튼 : `<a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">`
+  - 친구추가버튼 : <a href="{% url 'change_friend' operation='add' pk=user.pk %}">
+  - 친구해제버튼 : <a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
 </pre>
