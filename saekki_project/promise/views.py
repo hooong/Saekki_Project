@@ -18,12 +18,15 @@ def home(request):
         friends = friend.users.all()
         promises = Promise.objects.all()
         user = request.user
+        arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
+        no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
         
-        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user})
+        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user, 'arrives':arrives, 'no_arrives':no_arrives})
 
 # 디테일 보여주기
 def detail(request, pk):
     promise = get_object_or_404(Promise ,pk=pk)
+    cur_user = request.user
 
     # 댓글
     comments = promise.comments.all()
@@ -32,7 +35,7 @@ def detail(request, pk):
     # 도착여부
     success = Party_detail.objects.get(promise=promise, user=request.user)
 
-    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success })
+    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user })
 
 # 댓글작성
 def new_comment(request, promise_id):
