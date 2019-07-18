@@ -34,7 +34,7 @@
 
 
 ### promise app
-<pre>
+
 - 약속 게시물을 관리하는 app
 - Promise model에 현재 담기는 것
   - user : 글쓴이
@@ -48,4 +48,3 @@
 - Friend model로 친구 구현
   - 친구추가버튼 : `<a href="{% url 'change_friend' operation='add' pk=user.pk %}">`
   - 친구해제버튼 : `<a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">`
-</pre>
