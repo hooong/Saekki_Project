@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'saekki',				
         'USER': 'postgres',			
-        'PASSWORD': '123456',		
+        'PASSWORD': '1234',		
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -127,7 +127,8 @@ TIME_ZONE = 'Asia/Seoul'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'promise', 'static')
+    os.path.join(BASE_DIR, 'promise', 'static'),
+    os.path.join(BASE_DIR, 'saekki_pro', 'static'),
 ]   
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
