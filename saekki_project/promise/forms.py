@@ -13,6 +13,10 @@ class PromiseForm(forms.ModelForm):
             'title': '제목',
             'content': '약속내용',
         }
+    def __init__(self, *args, **kwargs):
+        super(PromiseForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs['class'] = 'form-control test'
+        self.fields['content'].widget.attrs['class'] = 'form-control'
 
 class Promise_CommentForm(forms.ModelForm):
     class Meta:
