@@ -1,3 +1,4 @@
+<p>{{user.username}}님,</p>
 <a href="{% url 'new' %}">
 <button>글쓰기</button>
 </a>
@@ -5,13 +6,21 @@
 <a href="{% url 'logout' %}">로그아웃</a>
 <a href="{% url 'mypage' %}">마이페이지</a>
 
+<h2>친구신청 알림</h2>
+{% for noti in noti_add_friend %}
+{% if noti.receive_user == user %}
+{{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
+<a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
+{% endif %}
+{% endfor %}
+
 <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
 <h2>Other People</h2>
 {% for user in users %}
 {{ user.username }}
 {% if user not in friends %}
-<a href="{% url 'change_friend' operation='add' pk=user.pk %}">
-    <button>친구추가</button>
+<a href="{% url 'add_friend' pk=user.pk %}">
+    <button>친구신청</button>
 </a>
 {% endif %}
 <br>

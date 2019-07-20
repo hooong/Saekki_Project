@@ -20,8 +20,9 @@ def home(request):
         user = request.user
         arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
         no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
+        noti_add_friend = Notification_friend.objects.filter(receive_user=user)        
         
-        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user, 'arrives':arrives, 'no_arrives':no_arrives})
+        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 'noti_add_friend':noti_add_friend})
 
 # 디테일 보여주기
 def detail(request, pk):
@@ -100,15 +101,20 @@ def pro_del(request, promise_id):
 # 친구추가, 해제 버튼
 def change_friend(request, operation, pk):
     friend = User.objects.get(pk=pk)
-    if operation == 'add':
+    noti = Notification_friend.objects.filter(send_user=friend, receive_user=request.user)
+    if operation == 'ok':
         Friend.make_friend(request.user, friend)
         Friend.make_friend(friend, request.user)
+        noti.delete()
+    elif operation == 'deny':
+        noti.delete()
+    # 친구삭제
     elif operation == 'remove':
         Friend.lose_friend(request.user, friend)
         Friend.lose_friend(friend, request.user)
 
     return redirect('home')
-    
+
 # 도착이벤트
 def arrived(request, promise_id):
     if request.method == 'POST':
@@ -147,3 +153,14 @@ def arrived(request, promise_id):
             return HttpResponseRedirect('/promise/detail/'+str(promise_id))
     else:
         return HttpResponse('오류')
+
+# 친구신청 이벤트
+def add_friend(request, pk):
+    friend = User.objects.get(pk=pk)
+    me = request.user
+    add_friend = Notification_friend()
+    add_friend.send_user = me
+    add_friend.receive_user = friend
+    add_friend.save()
+
+    return redirect('home')
