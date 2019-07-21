@@ -1,0 +1,28 @@
+.formInput{
+    min-width: 700px;
+}
+
+.navbar{
+    margin-bottom:10px;
+    box-shadow: 0 0 7px;
+    padding-left:80px;
+
+}
+/* #createDiv{
+    display : flex;
+} */
+.css-script-clear{
+    display:flex;
+    justify-content: center;
+}
+.divContainer{
+    display:flex;
+    justify-content: center;
+    /* background: #f2f2f0; */
+    padding : 20px;
+}
+#map{
+    
+    width:500px;
+    height:400px;
+}

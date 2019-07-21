@@ -1,13 +1,10 @@
-{% load staticfiles %}
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+{% extends 'base.html' %}
+
+{% block contents %}
+
 <!-- 지도 api key -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/minty/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'promise/css/tail.datetime-default-blue.css' %}">
-<script src="{% static 'promise/js/tail.datetime.js' %}"></script>
+
 
 <head>
     <!-- 지도관련 script -->
@@ -104,101 +101,97 @@
     window.addEventListener("load", init);
     </script>
 </head>
-<style>
-    .test{
-        border-radius: 0px;
-        width:500px;
-    }
-    </style>
-<form method="POST" name='new_form'>
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
+    <div class="divContainer">
+    <form method="POST" name='new_form' id="creatFrom">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
 
-    <!-- 참여인원 input -->
-    {% for friend in friends %}
-    <input type="checkbox" name="party_friend[]" value="{{friend}}"> {{friend.username}}<br>
-    {% endfor %}
+        <!-- 참여인원 input -->
+        {% for friend in friends %}
+        <input type="checkbox" name="party_friend[]" value="{{friend}}"> {{friend.username}}<br>
+        {% endfor %}
+    </div>
+        <!-- 날짜시간선택__ -->
+        <div class="css-script-clear">
 
-    <!-- 날짜시간선택__ -->
-    <div class="css-script-clear"></div>
+            
+ 
+                <div class="col-lg-6">
+            <h2>Datetime Picker</h2>
+            
+            <input style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control"/>
+            <div id="pickerspace"></div>
 
-        <div class="container">
-        <h1>tail.DateTime Datetime Picker Demos</h1>
-        <div class="row">
-            <div class="col-lg-6">
-        <h2>Datetime Picker</h2>
-        
-        <input style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control"/>
-        <div id="pickerspace"></div>
-
+            
+            </div>
         </div>
+        <script>
+            tail.DateTime("#datetimeDemo", {
+                static: "#datetime-demo-holder",   /* Used for demonstration */
+                position: "#pickerspace",
+                classNames: "theme-default",    /* Used for demonstration */
+                startOpen: true,                /* Used for demonstration */
+                stayOpen: true,                 /* Used for demonstration */
+            });
+
+
+        </script>
+
+        <!-- 위도 경도 input -->
+        <input type="hidden" name='addr_lat' value=''>
+        <input type="hidden" name='addr_lng' value=''>
+
+        <!-- 지도 띄우기 -->
+        <div class="divContainer">
+        <div id="map"></div>
         </div>
+        <!-- submit 전에 form 양식 맞췄는지?-->
+        <script>
+        function checkform(){
+            var timeTmp = document.getElementById('datetimeDemo').value;
+            var d = new Date();
+            
+            var cur_time = leadingZeros(d.getFullYear(), 4) +
+                    leadingZeros(d.getMonth() + 1, 2) +
+                    leadingZeros(d.getDate(), 2) +
+                    leadingZeros(d.getHours(), 2) +
+                    leadingZeros(d.getMinutes(), 2) +
+                    leadingZeros(d.getSeconds(), 2);
 
-    <script>
-        tail.DateTime("#datetimeDemo", {
-            static: "#datetime-demo-holder",   /* Used for demonstration */
-            position: "#pickerspace",
-            classNames: "theme-default",    /* Used for demonstration */
-            startOpen: true,                /* Used for demonstration */
-            stayOpen: true,                 /* Used for demonstration */
-        });
+            var set_time = timeTmp.replace("-","");
+            set_time = set_time.replace("-","");
+            set_time = set_time.replace(" ","");
+            set_time = set_time.replace(":","");
+            set_time = set_time.replace(":","");
 
-
-    </script>
-
-    <!-- 위도 경도 input -->
-    <input type="hidden" name='addr_lat' value=''>
-    <input type="hidden" name='addr_lng' value=''>
-
-    <!-- 지도 띄우기 -->
-    <div id="map" style="width:500px;height:400px;"></div>
-    <!-- submit 전에 form 양식 맞췄는지?-->
-    <script>
-    function checkform(){
-        var timeTmp = document.getElementById('datetimeDemo').value;
-        var d = new Date();
-        
-        var cur_time = leadingZeros(d.getFullYear(), 4) +
-                leadingZeros(d.getMonth() + 1, 2) +
-                leadingZeros(d.getDate(), 2) +
-                leadingZeros(d.getHours(), 2) +
-                leadingZeros(d.getMinutes(), 2) +
-                leadingZeros(d.getSeconds(), 2);
-
-        var set_time = timeTmp.replace("-","");
-        set_time = set_time.replace("-","");
-        set_time = set_time.replace(" ","");
-        set_time = set_time.replace(":","");
-        set_time = set_time.replace(":","");
-
-        if(cur_time < set_time){
-            if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
-                document.new_form.submit();
-            }else{
+            if(cur_time < set_time){
+                if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
+                    document.new_form.submit();
+                }else{
+                    return false;
+                }
+            } else{
+                alert("약속 시간이 현재보다 이전입니다.");
                 return false;
             }
-        } else{
-            alert("약속 시간이 현재보다 이전입니다.");
-            return false;
         }
-    }
 
-    function leadingZeros(n, digits) {
-        var zero = '';
-        n = n.toString();
+        function leadingZeros(n, digits) {
+            var zero = '';
+            n = n.toString();
 
-        if (n.length < digits) {
-            for (i = 0; i < digits - n.length; i++)
-            zero += '0';
+            if (n.length < digits) {
+                for (i = 0; i < digits - n.length; i++)
+                zero += '0';
+            }
+            return zero + n;
         }
-        return zero + n;
-    }
-    </script>
-    <input type="button" value="확인" onclick="checkform()">
-    <!-- <button onclick="" type='button'>확인</button> -->
-</form>
+        </script>
+        <input type="button" value="확인" onclick="checkform()">
+        <!-- <button onclick="" type='button'>확인</button> -->
+    </form>
 
 
 
@@ -206,3 +199,5 @@
 
 
 
+
+{% endblock %}
