@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'promise',
     'accounts',
     'django_apscheduler',
+
+    # allauth 추가
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -143,6 +145,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 APSCHEDULER_DATETIME_FORMAT =  "N j, Y, f:s a"
 
+# allauth 추가
 AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend', # 기본 인증 백엔드
 'allauth.account.auth_backends.AuthenticationBackend', # 추가 
 ]
