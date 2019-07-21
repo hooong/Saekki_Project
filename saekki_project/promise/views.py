@@ -6,7 +6,6 @@ from django.utils import timezone
 from .forms import *
 from .models import *
 
-
 # index_page
 def home(request):
     # 로그인 안된 상태
@@ -19,16 +18,25 @@ def home(request):
         friends = friend.users.all()
         promises = Promise.objects.all()
         user = request.user
+        arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
+        no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
+        noti_add_friend = Notification_friend.objects.filter(receive_user=user)        
         
-        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user})
+        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 'noti_add_friend':noti_add_friend})
 
 # 디테일 보여주기
 def detail(request, pk):
     promise = get_object_or_404(Promise ,pk=pk)
+    cur_user = request.user
+
+    # 댓글
     comments = promise.comments.all()
     commentform = Promise_CommentForm()
 
-    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform })
+    # 도착여부
+    success = Party_detail.objects.get(promise=promise, user=request.user)
+
+    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user })
 
 # 댓글작성
 def new_comment(request, promise_id):
@@ -42,6 +50,13 @@ def new_comment(request, promise_id):
 
             return redirect('/promise/detail/'+str(promise_id))
 
+# 댓글 삭제
+def com_del(request, promise_id, comment_id):
+    promise = get_object_or_404(Promise, id=promise_id)
+    comment = promise.comments.get(id=comment_id)
+    comment.delete()
+
+    return redirect('/promise/detail/'+str(promise_id))
 
 # 글쓰기
 def new(request):
@@ -76,18 +91,30 @@ def new(request):
 
         return render(request, 'new.html', {'form':form, 'friends':friends})
 
+# 약속 삭제
+def pro_del(request, promise_id):
+    promise = get_object_or_404(Promise ,id=promise_id)
+    promise.delete()
+
+    return redirect('home')
+
 # 친구추가, 해제 버튼
 def change_friend(request, operation, pk):
     friend = User.objects.get(pk=pk)
-    if operation == 'add':
+    noti = Notification_friend.objects.filter(send_user=friend, receive_user=request.user)
+    if operation == 'ok':
         Friend.make_friend(request.user, friend)
         Friend.make_friend(friend, request.user)
+        noti.delete()
+    elif operation == 'deny':
+        noti.delete()
+    # 친구삭제
     elif operation == 'remove':
         Friend.lose_friend(request.user, friend)
         Friend.lose_friend(friend, request.user)
 
     return redirect('home')
-    
+
 # 도착이벤트
 def arrived(request, promise_id):
     if request.method == 'POST':
@@ -106,6 +133,17 @@ def arrived(request, promise_id):
                 party.save()
 
                 messages.info(request, '성공적으로 도착하셨습니다.')
+
+                # 모두 도착했는지 확인
+                party_all = promise.party_detail.all()
+                arr = 0
+                for party_arr in party_all:
+                    if party_arr.success_or_fail == 1:
+                        arr += 1
+                if arr == len(party_all):
+                    promise.end = 1
+                    promise.save()
+
                 return HttpResponseRedirect('/promise/detail/'+str(promise_id))
             else:
                 messages.info(request, '아직 장소에 도착을 하지 못하셨습니다.')
@@ -115,3 +153,14 @@ def arrived(request, promise_id):
             return HttpResponseRedirect('/promise/detail/'+str(promise_id))
     else:
         return HttpResponse('오류')
+
+# 친구신청 이벤트
+def add_friend(request, pk):
+    friend = User.objects.get(pk=pk)
+    me = request.user
+    add_friend = Notification_friend()
+    add_friend.send_user = me
+    add_friend.receive_user = friend
+    add_friend.save()
+
+    return redirect('home')

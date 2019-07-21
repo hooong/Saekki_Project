@@ -54,3 +54,9 @@ class Party_detail(models.Model):
     # 성공여부
     success_or_fail = models.PositiveSmallIntegerField(default=0)
     arrived_time = models.DateTimeField(null=True, blank=True, default=None)
+
+
+# 친구신청 알림 모델
+class Notification_friend(models.Model):
+    send_user = models.ForeignKey(User, related_name='firend_send_user', null=True, on_delete=models.CASCADE)
+    receive_user = models.ForeignKey(User, related_name='firend_receive_user', null=True, on_delete=models.CASCADE)

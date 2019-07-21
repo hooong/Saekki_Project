@@ -1,16 +1,24 @@
+<p>{{user.username}}님,</p>
 <a href="{% url 'new' %}">
 <button>글쓰기</button>
 </a>
 
 <a href="{% url 'logout' %}">로그아웃</a>
+<a href="{% url 'mypage' %}">마이페이지</a>
+
+<h2>친구신청 알림</h2>
+{% for noti in noti_add_friend %}
+{{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
+<a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
+{% endfor %}
 
 <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
 <h2>Other People</h2>
 {% for user in users %}
 {{ user.username }}
 {% if user not in friends %}
-<a href="{% url 'change_friend' operation='add' pk=user.pk %}">
-    <button>친구추가</button>
+<a href="{% url 'add_friend' pk=user.pk %}">
+    <button>친구신청</button>
 </a>
 {% endif %}
 <br>
@@ -28,20 +36,34 @@
 
 <!-- 약속게시물 -->
 <h2>Promise(진행중인 약속)</h2>
-{% for promise in promises %}
-{% if user.username == promise.user.username or user.username in promise.party %}
-{% if promise.end == 0 %}
-<a href="{% url 'detail' pk=promise.id %}">
-    <div>
-        {{promise.title}} <br>
-        {{promise.setting_date_time}}
-    </div>      
-</a>
-{% endif %}
-{% endif %}
+<!-- 도착 -->
+{% for arrive in arrives %}
+    {% if arrive.promise.end == 0 %}
+            <a href="{% url 'detail' pk=arrive.promise.id %}">
+                <div>
+                    {{arrive.promise.title}} <br>
+                    {{arrive.promise.setting_date_time}} <br>
+                    (도착) <br>
+                </div>      
+            </a>
+    {% endif %}
 {% endfor %}
+<hr> 
+<!-- 미도착 -->
+{% for no_arrive in no_arrives %}
+    {% if no_arrive.promise.end == 0 %}
+            <a href="{% url 'detail' pk=no_arrive.promise.id %}">
+                <div>
+                    {{no_arrive.promise.title}} <br>
+                    {{no_arrive.promise.setting_date_time}} <br>
+                    (미도착) <br>
+                </div>      
+            </a>
+    {% endif %}
+{% endfor %}      
+        
 
-<h2>Promise(끝난 약속)</h2>
+<h2>Promise(시간이 지난 약속)</h2>
 {% for promise in promises %}
 {% if user.username == promise.user.username or user.username in promise.party %}
 {% if promise.end == 1 %}

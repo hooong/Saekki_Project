@@ -1,7 +1,7 @@
 import time
 from django.utils import timezone
 from apscheduler.schedulers.background import BackgroundScheduler
-from .models import Promise
+from .models import *
 
 # 스케쥴러 생성
 def schedule():
