@@ -104,7 +104,12 @@
     window.addEventListener("load", init);
     </script>
 </head>
-
+<style>
+    .test{
+        border-radius: 0px;
+        width:500px;
+    }
+    </style>
 <form method="POST" name='new_form'>
     {% csrf_token %}
     <table>
@@ -125,7 +130,7 @@
             <div class="col-lg-6">
         <h2>Datetime Picker</h2>
         
-        <input type="text" id="datetimeDemo" name="pic_date" class="datetime form-control"/>
+        <input style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control"/>
         <div id="pickerspace"></div>
 
         </div>
