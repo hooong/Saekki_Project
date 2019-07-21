@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'saekki_pro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'saekki',				
+        'NAME': 'abc',				
         'USER': 'postgres',			
-        'PASSWORD': '123456',		
+        'PASSWORD': 'sfruite7',		
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
