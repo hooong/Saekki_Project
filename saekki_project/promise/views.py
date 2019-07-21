@@ -13,6 +13,8 @@ def home(request):
         return redirect('login')
     # 로그인 되었을때
     else:
+        if len(Friend.objects.filter(current_user=request.user)) == 0:
+            Friend.objects.create(current_user=request.user)
         users = User.objects.exclude(id=request.user.id)
         friend = Friend.objects.get(current_user=request.user)
         friends = friend.users.all()
@@ -20,9 +22,14 @@ def home(request):
         user = request.user
         arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
         no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
-        noti_add_friend = Notification_friend.objects.filter(receive_user=user)        
-        
-        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 'noti_add_friend':noti_add_friend})
+        noti_add_friend = Notification_friend.objects.filter(receive_user=user)
+        noti_wait_friend = []
+        for wait in Notification_friend.objects.filter(send_user=user):
+            noti_wait_friend.append(wait.receive_user.username)
+
+        return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
+                                            'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
+                                            'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend})
 
 # 디테일 보여주기
 def detail(request, pk):

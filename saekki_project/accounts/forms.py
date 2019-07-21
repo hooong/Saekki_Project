@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from allauth.socialaccount.forms import SignupForm
+from promise.models import Friend
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -24,3 +26,14 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+
+class CustomSignupForm(SignupForm):
+
+    def save(self):
+        user = super(CustomSignupForm, self).save()
+
+        # Add your own processing here.
+
+        # You must return the original result.
+        return user
