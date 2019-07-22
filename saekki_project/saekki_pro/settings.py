@@ -57,7 +57,7 @@ ROOT_URLCONF = 'saekki_pro.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['promise/templates'],
+        'DIRS': ['saekki_pro/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

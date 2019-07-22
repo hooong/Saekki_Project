@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 {% block contents %}
 
 <!-- 지도 api key -->
@@ -101,8 +101,11 @@
     window.addEventListener("load", init);
     </script>
 </head>
+<body>
+        <div class="divContainer"><img src="{% static 'promise/logo.jpg' %}" id="logo"></div>
     <div class="divContainer">
-    <form method="POST" name='new_form' id="creatFrom">
+        
+    <form method="POST" name='new_form' id="createForm">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
@@ -110,7 +113,9 @@
 
         <!-- 참여인원 input -->
         {% for friend in friends %}
-        <input type="checkbox" name="party_friend[]" value="{{friend}}"> {{friend.username}}<br>
+        <div class="friendsList">
+        <input type="checkbox" name="party_friend[]" value="{{friend}}"> {{friend.username}}
+        </div>
         {% endfor %}
     </div>
         <!-- 날짜시간선택__ -->
@@ -118,12 +123,14 @@
 
             
  
-                <div class="col-lg-6">
-            <h2>Datetime Picker</h2>
-            
-            <input style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control"/>
-            <div id="pickerspace"></div>
-
+            <div class="col-lg-6">
+            <h2>날짜 선택</h2>
+            <div id="pickerDiv">
+                <div id="pickerInput">
+                    <input  value="날짜 및 시간을 선택해주세요" style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" readonly/>
+                </div>
+                <div id="pickerspace"></div>
+            </div>
             
             </div>
         </div>
@@ -192,10 +199,7 @@
         <input type="button" value="확인" onclick="checkform()">
         <!-- <button onclick="" type='button'>확인</button> -->
     </form>
-
-
-
-
+</body>
 
 
 

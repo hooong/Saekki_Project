@@ -1,6 +1,10 @@
+/* 아 웹표준 너무 어렵다.. */
 .formInput{
-    min-width: 700px;
+    width:700px;
+    margin-left:20px;
 }
+
+
 
 .navbar{
     margin-bottom:10px;
@@ -8,21 +12,60 @@
     padding-left:80px;
 
 }
-/* #createDiv{
-    display : flex;
-} */
+
 .css-script-clear{
     display:flex;
     justify-content: center;
 }
 .divContainer{
+    color:#DE2E5F;
     display:flex;
     justify-content: center;
-    /* background: #f2f2f0; */
     padding : 20px;
+}table{
+    color:#DE2E5F;
+}
+
+body{
+    
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #f7f7f7 100%);
+}
+.col-lg-6{
+    min-width: 800px;
+    padding:10px;
+}
+#pickerDiv{
+    display:flex;
+    
+}div{
+    
+    flex:auto;
+}
+#pickerInput{
+    margin-top:15px;
+    /* flex:0 0 auto; */
+    width:300px;
+    order:2;
+}
+#pickerspace{
+order:1;
+}
+#logo{
+    width:790px;
+    height:160px;
+}
+#createForm{
+    justify-content: center;
+    width:800px;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 #map{
-    
-    width:500px;
+    border-radius:20px;
+    max-width:800px;
+    min-width:300px;
     height:400px;
+}
+form{
+    display:flex;
 }
