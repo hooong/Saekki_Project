@@ -7,6 +7,7 @@
 
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일화면적용 -->
     <!-- 지도관련 script -->
     <script>
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
@@ -102,7 +103,7 @@
     </script>
 </head>
 <body>
-        <div class="divContainer"><img src="{% static 'promise/logo.jpg' %}" id="logo"></div>
+        <div class="divContainer"><div id="logoDiv"><img src="{% static 'promise/logo.jpg' %}" id="logo"></div></div>
     <div class="divContainer">
         
     <form method="POST" name='new_form' id="createForm">
