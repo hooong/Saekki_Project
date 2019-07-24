@@ -3,8 +3,8 @@
 
 <p>{{user.username}}님,</p>
 
-{% if user.image %}
-<img width="50" height="50" src="{{ user.image }}" />
+{% if user.profile.image %}
+<img width="50" height="50" src="{{ user.profile.image.url }}" />
 {% else%}
 <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
 {% endif %}
