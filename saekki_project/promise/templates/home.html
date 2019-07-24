@@ -1,4 +1,13 @@
+{% load socialaccount %}
+{% get_social_accounts user as accounts %}
+
 <p>{{user.username}}님,</p>
+
+{% if user.image %}
+<img width="50" height="50" src="{{ user.image }}" />
+{% else%}
+<img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+{% endif %}
 <a href="{% url 'new' %}">
 <button>글쓰기</button>
 </a>

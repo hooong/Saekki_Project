@@ -29,7 +29,7 @@ def home(request):
 
         return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
-                                            'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend})
+                                            'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,})
 
 # 디테일 보여주기
 def detail(request, pk):

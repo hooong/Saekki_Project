@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.conf.urls import url
 from django.urls import path, include
 import promise.views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +26,4 @@ urlpatterns = [
     path('', promise.views.home, name = 'home'),
     path('accounts_s/', include('accounts.urls')),
     url(r'^accounts/', include('allauth.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
