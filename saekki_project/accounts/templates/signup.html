@@ -33,7 +33,7 @@
 
 
 <div id="lgbox" class="wow slideInRight">
-<form class="lg_element" method="POST">  
+<form enctype="multipart/form-data" class="lg_element" method="POST">  
     {%csrf_token%}
     <h2 class="wh">회원가입</h2>
     {% for field in form %}
@@ -42,6 +42,7 @@
             {{ field }}
         </div>
     {% endfor %}
+    {{pro_form}}
     <div style="margin-top: 10px">
     <button type='submit'>회원가입</button>
     <a href="{% url 'home' %}">

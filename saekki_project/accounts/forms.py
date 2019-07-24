@@ -1,5 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
+from allauth.socialaccount.forms import SignupForm
+from promise.models import Friend
+from .models import *
+
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -13,14 +17,28 @@ class UserForm(forms.ModelForm):
         labels = {
             'username': '닉네임',
             'email': '이메일',
-            'password': '패스워드'
+            'password': '패스워드',
         }
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['maxlength'] = 15
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
+
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+
+class CustomSignupForm(SignupForm):
+        
+
+    def save(self):
+        user = super(CustomSignupForm, self).save()
+
+        return user
