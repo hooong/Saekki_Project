@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'saekki_pro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'abc',				
+        'NAME': 'saekki',				
         'USER': 'postgres',			
         'PASSWORD': '123456',		
         'HOST': '127.0.0.1',
@@ -158,7 +158,7 @@ AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend', # 기�
 SITE_ID =1
 # 이메일 확인을 하지 않음.
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none' # 아니면  smtp 로 설정
-SOCIALACCOUNT_AUTO_SIGNUP = False
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
 ACCOUNT_FORMS = {
 'signup': 'accounts.forms.CustomSignupForm',
