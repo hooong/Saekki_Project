@@ -44,6 +44,7 @@ def mypage_mod_conf(request):
         user = request.user
         if not user.profile:
             Profile.objects.create(user=user)
-        user.profile.state_msg = request.POST['msg']
-        user.save()
+        profile = Profile.objects.get(user=user)
+        profile.state_msg = request.POST['msg']
+        profile.save()
         return redirect('mypage')
