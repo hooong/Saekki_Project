@@ -18,8 +18,6 @@ urlpatterns = [
     # url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
     path('aboutus/', views.aboutus, name='aboutus')
 ]
-+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 
 # 스케쥴러 작동
 schedule()
