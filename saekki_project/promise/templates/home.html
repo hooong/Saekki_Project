@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block contents %}
+{% load socialaccount %}
+{% get_social_accounts user as accounts %}
+
 <p>{{user.username}}님,</p>
+
+{% if user.image %}
+<img width="50" height="50" src="{{ user.image }}" />
+{% else%}
+<img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+{% endif %}
 <a href="{% url 'new' %}">
 <button>글쓰기</button>
 </a>
@@ -11,22 +20,24 @@
 
 <h2>친구신청 알림</h2>
 {% for noti in noti_add_friend %}
-{% if noti.receive_user == user %}
-{{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
-<a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
-{% endif %}
+    {{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
+    <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
 {% endfor %}
 
 <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
 <h2>Other People</h2>
 {% for user in users %}
-{{ user.username }}
-{% if user not in friends %}
-<a href="{% url 'add_friend' pk=user.pk %}">
-    <button>친구신청</button>
-</a>
-{% endif %}
-<br>
+    {{ user.username }}
+    {% if user not in friends %}
+        {% if user.username in noti_wait_friend %}
+        <button>요청중</button>
+        {% else %}
+        <a href="{% url 'add_friend' pk=user.pk %}">
+            <button>친구신청</button>
+        </a>
+        {% endif %}
+    {% endif %}
+    <br>
 {% endfor %}
 
 <!-- 친구목록 -->

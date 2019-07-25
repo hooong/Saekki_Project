@@ -40,6 +40,13 @@ INSTALLED_APPS = [
     'promise',
     'accounts',
     'django_apscheduler',
+
+    # allauth 추가
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'saekki',				
         'USER': 'postgres',			
-        'PASSWORD': '1234',		
+        'PASSWORD': '123456',		
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -133,7 +140,26 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    #medai폴더로 파일들을 모으겠다는 의미
+MEDIA_URL = '/media/'   #URL설정
+
+
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = '/'
 
 APSCHEDULER_DATETIME_FORMAT =  "N j, Y, f:s a"
+
+# allauth 추가
+AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend', # 기본 인증 백엔드
+'allauth.account.auth_backends.AuthenticationBackend', # 추가 
+]
+# 디폴트 SITE의 id
+# 등록하지 않으면,각 요청 시에 host명의 Site 인스턴스를 찾습니다.
+SITE_ID =1
+# 이메일 확인을 하지 않음.
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none' # 아니면  smtp 로 설정
+SOCIALACCOUNT_AUTO_SIGNUP = True
+
+ACCOUNT_FORMS = {
+'signup': 'accounts.forms.CustomSignupForm',
+}

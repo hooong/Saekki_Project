@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 from .broker import schedule
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('new/', views.new, name='new'),
@@ -16,6 +18,8 @@ urlpatterns = [
     # url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
     path('aboutus/', views.aboutus, name='aboutus')
 ]
+
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # 스케쥴러 작동
 schedule()
