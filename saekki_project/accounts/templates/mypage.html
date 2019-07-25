@@ -1,3 +1,5 @@
+{% extends 'base.html'%}
+{% block contents %}
 {% load staticfiles %}
 <!doctype html>
 <html lang="en">
@@ -16,9 +18,9 @@
 
 <body>
 
-    <h1>대충 상단바</h1>
-    <h1>대충 약속에 늦지않을 새끼</h1>
-    <div class="container">
+
+    <div class="container" style="padding-top:20px;">
+            <h1>My Page</h1>
         <div class="profile">
             <div class="profile-head">프로필</div>
             <div class="profile-body">
@@ -84,3 +86,4 @@
 </body>
 
 </html>
+{% endblock %}
