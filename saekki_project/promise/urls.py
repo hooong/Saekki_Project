@@ -16,7 +16,7 @@ urlpatterns = [
     path('addfriend/<int:pk>', views.add_friend, name='add_friend'),
     path('changefriend/<str:operation>/<int:pk>', views.change_friend, name='change_friend')
     # url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
 # 스케쥴러 작동
 schedule()

@@ -6,6 +6,9 @@ from .models import *
 
 
 class UserForm(forms.ModelForm):
+    password_check = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'class':'form-control'}), label='패스워드 확인')
+
+    field_order=['username','password','password_check','email']
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
@@ -15,7 +18,7 @@ class UserForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
         labels = {
-            'username': '닉네임',
+            'username': '아이디 ( 닉네임 )',
             'email': '이메일',
             'password': '패스워드',
         }

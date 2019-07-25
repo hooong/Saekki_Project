@@ -1,0 +1,83 @@
+/* 아 웹표준 너무 어렵다.. */
+.formInput{
+    /* max-width:700px; */
+    width:100%;
+    /* margin-left:20px; */
+}
+
+
+.navbar{
+    margin-bottom:10px;
+    box-shadow: 0 0 7px;
+    padding-left:80px;
+
+}
+
+.css-script-clear{
+    display:flex;
+    justify-content: center;
+}
+.divContainer{
+    color:#DE2E5F;
+    display:flex;
+    justify-content: center;
+    padding : 20px;
+}table{
+    width:800px;
+    color:#DE2E5F;
+}td{
+    width:700px;
+}
+label{
+    width:70px;
+
+}
+
+body{
+    
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #f7f7f7 100%);
+}
+.col-lg-6{
+    flex: 0 0 100%;
+    max-width: 800px;
+    padding:10px;
+}
+#pickerDiv{
+    display:flex;
+    
+}div{
+    
+    flex:auto;
+}
+#pickerInput{
+    margin-top:15px;
+    /* flex:0 0 auto; */
+    order:2;
+}.datetime{
+    width:100%;
+}
+#pickerspace{
+order:1;
+}
+#logoDiv{
+    max-width:800px;
+}
+#logo{
+    width:100%;
+    /* height:160px; */
+}
+#createForm{
+    justify-content: center;
+    width:800px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#map{
+    border-radius:20px;
+    max-width:800px;
+    min-width:300px;
+    height:400px;
+}
+form{
+    display:flex;
+}
