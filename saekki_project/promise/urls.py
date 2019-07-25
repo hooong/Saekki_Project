@@ -18,6 +18,5 @@ urlpatterns = [
     # url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
     path('aboutus/', views.aboutus, name='aboutus')
 ]
-
 # 스케쥴러 작동
 schedule()
