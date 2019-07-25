@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block contents %}
 <p>{{user.username}}님,</p>
 <a href="{% url 'new' %}">
 <button>글쓰기</button>
@@ -78,3 +81,4 @@
 {% endif %}
 {% endif %}
 {% endfor %}
+{% endblock %}

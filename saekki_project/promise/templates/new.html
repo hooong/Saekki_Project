@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block contents %}
-
+<!-- css -->
+<link rel="stylesheet" href="{% static 'promise/css/newLandscape.css' %}">
 <!-- 지도 api key -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
 
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일화면적용 -->
+    
     <!-- 지도관련 script -->
     <script>
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});

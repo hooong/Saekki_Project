@@ -1,0 +1,93 @@
+@font-face { font-family: 'Eoe_Zno_B'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/Eoe_Zno_B.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+.containDiv{
+    display:flex;
+    width:100%;
+    
+}
+.containDiv h2{
+    font-size:3vw;
+}
+.containDiv > #we{
+    /* border:1px solid; */
+    margin-left : auto;
+    -webkit-flex-basis: 70%; 
+    flex-basis: 100%;
+    padding: 120px 19.03% 61px 30.89%;
+    font-family: 'Eoe_Zno_B';
+}
+.imgDiv{
+    margin-bottom: 30px;
+    display:flex;
+    width:100%;
+    height:28vh;
+    max-height:300px;
+    overflow: hidden;
+
+}
+.imgSpace{
+    /* max-height:300px; */
+    display:flex;
+    /* background-color:gray; */
+    flex : 0 1 60%;
+    padding-top:15px;
+    /* color:white; */
+    word-wrap: break-word;
+    background-color: rgba(252, 227, 193, 0.5);
+    
+}
+.imgSpace2{
+    
+    /* margin-left:-1px; */
+    width:0px;
+    height: 0px;
+    border-bottom: 28vh solid rgba(252, 227, 193, 0.5);
+    border-right : 270px solid transparent;
+    
+
+}
+.imgSpaceR2{
+    
+    /* margin-left:-1px; */
+    width:0px;
+    height: 0px;
+    border-bottom: 28vh solid rgba(252, 227, 193, 0.5);
+    border-left : 270px solid transparent;
+    
+
+}
+.profileSpace{
+    padding-bottom:10px;
+    flex-basis:256px;
+    /* overflow: hidden; */
+}
+.profileImg{
+    /* display: inline-block; */
+    width:240px;
+    height: 240px;
+    border-radius: 50%;
+  
+    object-fit: cover;
+}
+.wordSpace{
+
+    font-size: 1.8vw;
+    /* order:2; */
+    overflow: hidden;
+}
+.nameSpace{
+    display:block;margin-left:30px;margin-bottom:-1.4%;font-size:2vw;position: relative; z-index: 2;
+}
+.nameSpaceR{
+    display:block;margin-left:30px;margin-bottom:-1.4%;font-size:2vw;position: relative; z-index: 2;
+}
+/* #zindex{
+    position: absolute;
+    z-index: 2;
+    border : 1px solid;
+    width:50px;
+    height: 50px;
+}
+.float_sidebar{
+
+} */
