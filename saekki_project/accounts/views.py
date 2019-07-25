@@ -10,23 +10,40 @@ from django.template import RequestContext
 def signup(request):
     if request.method == "POST":
         form = UserForm(request.POST)
-        pro_form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid() and pro_form.is_valid():
-            new_user = User.objects.create_user(**form.cleaned_data)
-            login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
-            profile = Profile.objects.create(user=request.user, image=request.FILES['image'])
-            profile.save()
-            Friend.objects.create(current_user=request.user)
-            return redirect('home')
+        # pro_form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            if form.cleaned_data['password']  == form.cleaned_data['password_check']:
+                new_user = User.objects.create_user(form.cleaned_data['username'],form.cleaned_data['email'],form.cleaned_data['password'])
+                login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
+                # profile = Profile.objects.create(user=request.user, image=request.FILES['image'])
+                # profile.save()
+                Friend.objects.create(current_user=request.user)
+                return redirect('home')
+            else:
+                return render(request, 'signup.html', {'form':form, 'error':'비밀번호와 비밀번호 확인이 다릅니다.'})
+                # TODO: 이거 alert로 에러 내용 띄워주기.
         else:
             return HttpResponse('사용자명이 이미 존재합니다.')
     else:
         form = UserForm()
-        pro_form = ProfileForm()
-        return render(request, 'signup.html', {'form':form, 'pro_form':pro_form})
+        return render(request, 'signup.html', {'form':form})
 
 # mypage
 def mypage(request):
     user = request.user
 
     return render(request, 'mypage.html', {"user":user})
+
+def mypage_modify(request):
+    user = request.user
+
+    return render(request, 'mypage_modify.html', {"user":user})
+
+def mypage_mod_conf(request):
+    if request.method == 'POST':
+        user = request.user
+        if not user.profile:
+            Profile.objects.create(user=user)
+        user.profile.state_msg = request.POST['msg']
+        user.save()
+        return redirect('mypage')

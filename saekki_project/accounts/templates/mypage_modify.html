@@ -41,14 +41,18 @@
                     <p style="font-size: 1.2vw;"><strong style="color:black;"> {{user.username}}</strong></p>
                     <p style="margin-bottom : 0rem;">{{user.email}}</p>
                     <p>넣고싶은 정보 뭐가있을지 모르겠다 ex)닉네임 ?</p>
-                    {% if not user.profile %}
-                        <div class="profile-statemessage">상태메세지를 입력해주세요.</div>
-                    {% elif user.profile.state_msg is None %}
-                        <div class="profile-statemessage">상태메세지를 입력해주세요.</div>
-                    {% else %}
-                        <div class="profile-statemessage">{{ user.profile.state_msg }}</div>
-                    {% endif %}
-                    <a href="{% url 'mypage_mod' %}">상태메시지 수정하기</a>
+                    <form action="{% url 'mypage_mod_conf' %}" method='POST'>
+                        {% csrf_token %}
+                        <!-- TODO: 자바스크립트로 해야함. -->
+                        {% if not user.profile %}
+                            <div class="profile-statemessage"><input type="text" name='msg' placeholder="상태메시지를 입력해주세요."></div>
+                        {% elif user.profile.state_msg is None %}
+                            <div class="profile-statemessage"><input type="text" name='msg' placeholder="상태메시지를 입력해주세요."></div>
+                        {% else %}
+                            <div class="profile-statemessage"><input type="text" name='msg' value="{{user.profile.state_msg}}"></div>
+                        {% endif %}
+                        <button type="submit">확인</button>
+                    </form>
                 </div>
             </div>
         </div>
