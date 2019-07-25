@@ -8,5 +8,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('', include('django.contrib.auth.urls')),
     path('mypage/', views.mypage, name='mypage'),
+    path('mypage_mod/', views.mypage_modify, name='mypage_mod'),
+    path('mypage_mod_conf/', views.mypage_mod_conf, name='mypage_mod_conf'),
     # path('logout/', views.logout name='logout'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
