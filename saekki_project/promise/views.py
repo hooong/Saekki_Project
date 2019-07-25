@@ -171,3 +171,6 @@ def add_friend(request, pk):
     add_friend.save()
 
     return redirect('home')
+
+def aboutus(request):
+    return render(request, 'aboutus.html')

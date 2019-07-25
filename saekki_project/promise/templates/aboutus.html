@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block contents %}
+<link rel="stylesheet" href="{% static 'saekki_pro/css/animate.css' %}">
+<script type="text/javascript" src="{% static 'saekki_pro/js/wow.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'promise/css/aboutusLandscape.css' %}">
+<div id="zindex">z</div>
+<div class="containDiv">
+    <div id="we" class="wow slideInRight">
+        <h2>사람들은 평범합니다. 우리는 커피 한잔과 이메일 체크로 하루를 시작합니다. 그리고는 함께 모여 세상에 없던 아이디어와 디자인을 만드는 일에 몰두합니다. 다들 그렇지 않나요?</h2>
+    </div>
+    
+</div>
+<script>
+        new WOW().init();
+</script>
+<span class="nameSpace">박지원</span>
+<div class="imgDiv wow slideInLeft">
+    
+    <div class="imgSpace">
+        <div class="profileSpace">
+        <img class="profileImg" src="https://images.unsplash.com/photo-1504593811423-6dd665756598?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80">
+        </div>
+        <div class="wordSpace">
+                하고 싶은 일만 하고 먹고 싶은 것만 먹고 듣고 싶은 것만 듣고 보고 싶은 것 만 보고 싶다
+        </div>
+       
+    </div>
+    <div class="imgSpace2">
+        
+    </div>
+    
+</div>
+<span class="nameSpace">박지원</span>
+<div class="imgDiv wow slideInRight">
+        <div class="imgSpaceR2" style="margin-left:auto;"></div>
+        <div class="imgSpace">
+            <div class="profileSpace">
+            <img class="profileImg" src="{% static 'promise/user.png' %}">
+            </div>
+            <div class="wordSpace">
+            겨레의 늠름한 아들로 태어나 조국을 지키는 보람찬 일에서 우리는 젊음을 함께 사르며 깨끗히 피고 진 무궁화꽃이다
+            </div>
+        </div>
+        
+</div>
+
+{% endblock %}

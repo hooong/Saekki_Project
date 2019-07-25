@@ -1,17 +1,13 @@
 /* 아 웹표준 너무 어렵다.. */
+
 .formInput{
-    /* max-width:700px; */
-    width:100%;
+    max-width:700px;
+    /* max-width:100%; */
     /* margin-left:20px; */
 }
 
 
-.navbar{
-    margin-bottom:10px;
-    box-shadow: 0 0 7px;
-    padding-left:80px;
 
-}
 
 .css-script-clear{
     display:flex;
@@ -23,10 +19,10 @@
     justify-content: center;
     padding : 20px;
 }table{
-    width:800px;
+    width:100%;
     color:#DE2E5F;
 }td{
-    width:700px;
+    max-width:700px;
 }
 label{
     width:70px;
