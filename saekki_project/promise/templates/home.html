@@ -2,6 +2,9 @@
 {% get_social_accounts user as accounts %}
 
 <p>{{user.username}}님,</p>
+{% if user.profile and user.profile.state_msg != None %}
+    {{user.profile.state_msg}}
+{% endif %}
 
 <!-- 프로필 사진 보여주기 -->
 {% if not user.socialaccount_set.all %}
@@ -59,19 +62,22 @@
 <!-- 친구목록 -->
 <h2>friends</h2>
 {% for friend in friends %}
-    {% if not user.socialaccount_set.all %}
-        {% if not user.profile %}
+    {% if not friend.socialaccount_set.all %}
+        {% if not friend.profile %}
             스태틱
-        {% elif user.profile.image == '' %}
+        {% elif friend.profile.image == '' %}
             스태틱
         {% else %}
-            <img width="50" height="50" src="{{ user.profile.image.url }}" />
+            <img width="50" height="50" src="{{ friend.profile.image.url }}" />
         {% endif %}
     {% else %}
-    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+    <img width="50" height="50" src="{{ friend.socialaccount_set.all.0.get_avatar_url }}" />
     {% endif %}
 
 {{ friend.username }}
+{% if friend.profile and friend.profile.state_msg != None %}
+    {{friend.profile.state_msg}}
+{% endif %}
 <a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
     <button>친구해제</button>
 </a>
