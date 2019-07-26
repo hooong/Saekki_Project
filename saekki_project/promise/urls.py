@@ -14,9 +14,9 @@ urlpatterns = [
     path('promise_del/<int:promise_id>', views.pro_del, name='pro_del'),
     path('comment_del/<int:promise_id>/<int:comment_id>', views.com_del, name='com_del'),
     path('addfriend/<int:pk>', views.add_friend, name='add_friend'),
-    path('changefriend/<str:operation>/<int:pk>', views.change_friend, name='change_friend')
+    path('changefriend/<str:operation>/<int:pk>', views.change_friend, name='change_friend'),
     # url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
+    path('aboutus/', views.aboutus, name='aboutus')
 ]
-
 # 스케쥴러 작동
 schedule()

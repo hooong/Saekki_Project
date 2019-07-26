@@ -17,10 +17,9 @@
 <link rel="stylesheet" href="{% static 'promise/css/tail.datetime-default-blue.css' %}">
 <script src="{% static 'promise/js/tail.datetime.js' %}"></script>
 
-
-<!-- css -->
-<link rel="stylesheet" href="{% static 'promise/css/landscape.css' %}">
-
+<!-- base -->
+<link rel="stylesheet" href="{% static 'promise/css/base.css' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일화면적용 -->
 <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="/">약<span style="font-size:5px">속을</span>지<span style="font-size:5px">키지 않는 새끼</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,10 +31,10 @@
           <a class="nav-link" href="/">집 <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="{% url 'new' %}">약속잡기</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="{% url 'aboutus' %}">aboutus</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
