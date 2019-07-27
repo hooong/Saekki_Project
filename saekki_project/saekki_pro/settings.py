@@ -11,16 +11,21 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(BASE_DIR)
+CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
+CONFIG_SECRET_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_common.json')
+config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '319v11ose2n4x$vtmjed0h$5b%*ce@rm%d*w6lkn54w6v0e6v_'
+SECRET_KEY = config_secret_common['django']['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,9 +94,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'saekki',				
-        'USER': 'postgres',			
-        'PASSWORD': '123456',		
-        'HOST': '127.0.0.1',
+        'USER': 'hong',			
+        'PASSWORD': config_secret_common['django']['db_pw'],		
+        'HOST': config_secret_common['django']['db_host'],
         'PORT': '5432',
     }
 }
