@@ -2,7 +2,7 @@
 p {
   color:white;
 }
-body{overflow:scroll;}
+
 @media all and (orientation:portrait){
 .lg_element{
   width : 80%;
@@ -26,7 +26,7 @@ body{overflow:scroll;}
     radial-gradient(black 35%, transparent 1%),
 	url('https://images.unsplash.com/photo-1561524891-8e08ab8569f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2251&q=80') no-repeat center center fixed ; 
 	height:100vh;
-	overflow: hidden;
+	overflow: hidden scroll;
 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
