@@ -33,29 +33,35 @@ def home(request):
 
 # 디테일 보여주기
 def detail(request, pk):
-    promise = get_object_or_404(Promise ,pk=pk)
-    cur_user = request.user
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        promise = get_object_or_404(Promise ,pk=pk)
+        cur_user = request.user
 
-    # 댓글
-    comments = promise.comments.all()
-    commentform = Promise_CommentForm()
+        # 댓글
+        comments = promise.comments.all()
+        commentform = Promise_CommentForm()
 
-    # 도착여부
-    success = Party_detail.objects.get(promise=promise, user=request.user)
+        # 도착여부
+        success = Party_detail.objects.get(promise=promise, user=request.user)
 
-    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user })
+        return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user })
 
 # 댓글작성
 def new_comment(request, promise_id):
-    if request.method == 'POST':
-        form = Promise_CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.promise = Promise.objects.get(id=promise_id)
-            comment.save()
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        if request.method == 'POST':
+            form = Promise_CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.user = request.user
+                comment.promise = Promise.objects.get(id=promise_id)
+                comment.save()
 
-            return redirect('/promise/detail/'+str(promise_id))
+                return redirect('/promise/detail/'+str(promise_id))
 
 # 댓글 삭제
 def com_del(request, promise_id, comment_id):
@@ -67,36 +73,39 @@ def com_del(request, promise_id, comment_id):
 
 # 글쓰기
 def new(request):
-    if request.method == "POST":
-        form = PromiseForm(request.POST)
-        if form.is_valid():
-            parties = request.POST.getlist('party_friend[]')
-            promise = form.save(commit=False)
-            promise.setting_date_time = request.POST['pic_date']
-            promise.user = request.user
-            promise.party = parties
-            promise.latitude = float(request.POST['addr_lat'])
-            promise.longitud = float(request.POST['addr_lng'])
-            promise.save()
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        if request.method == "POST":
+            form = PromiseForm(request.POST)
+            if form.is_valid():
+                parties = request.POST.getlist('party_friend[]')
+                promise = form.save(commit=False)
+                promise.setting_date_time = request.POST['pic_date']
+                promise.user = request.user
+                promise.party = parties
+                promise.latitude = float(request.POST['addr_lat'])
+                promise.longitud = float(request.POST['addr_lng'])
+                promise.save()
 
-            # 참가자들의 성공여부를 저장하는 부분
-            for party in parties:
+                # 참가자들의 성공여부를 저장하는 부분
+                for party in parties:
+                    p = Party_detail()
+                    p.promise = promise
+                    p.user = User.objects.get(username=party)
+                    p.save()
                 p = Party_detail()
                 p.promise = promise
-                p.user = User.objects.get(username=party)
+                p.user = request.user
                 p.save()
-            p = Party_detail()
-            p.promise = promise
-            p.user = request.user
-            p.save()
 
-            return redirect('home')
-    else:
-        form = PromiseForm()
-        friend = Friend.objects.get(current_user=request.user)
-        friends = friend.users.all()
+                return redirect('home')
+        else:
+            form = PromiseForm()
+            friend = Friend.objects.get(current_user=request.user)
+            friends = friend.users.all()
 
-        return render(request, 'new.html', {'form':form, 'friends':friends})
+            return render(request, 'new.html', {'form':form, 'friends':friends})
 
 # 약속 삭제
 def pro_del(request, promise_id):
