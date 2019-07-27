@@ -2,7 +2,7 @@
 p {
   color:white;
 }
-
+body{overflow:scroll;}
 @media all and (orientation:portrait){
 .lg_element{
   width : 80%;
@@ -328,3 +328,4 @@ SETTINGS
 .sm-link_bg{
     --smLinkTextColorHover: #fff;
 }
+   
