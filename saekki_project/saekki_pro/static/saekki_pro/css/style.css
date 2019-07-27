@@ -86,7 +86,12 @@ a:active { color: white; }
     width:100%;
     
     }
-
+    .tail{
+      text-align: center;
+      width:30%;
+      margin:auto;
+      color:white;
+  }
 
 
 
