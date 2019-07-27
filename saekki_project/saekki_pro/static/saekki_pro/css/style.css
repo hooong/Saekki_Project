@@ -14,6 +14,12 @@ p {
 .form-control{
   height:60px;
 }
+.tail{
+  text-align: center;
+  width:30%;
+  margin:auto;
+  color:white;
+}
 	body{
 	background:  
 	radial-gradient(black 35%, transparent 1%),
