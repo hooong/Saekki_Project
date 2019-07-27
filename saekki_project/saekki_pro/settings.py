@@ -15,7 +15,8 @@ import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CONFIG_SECRET_DIR = os.path.join('/srv/', '.config_secret')
+ROOT_DIR = os.path.dirname(BASE_DIR)
+CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
 CONFIG_SECRET_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_common.json')
 config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 
