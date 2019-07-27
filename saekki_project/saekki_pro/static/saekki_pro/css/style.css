@@ -15,9 +15,10 @@ p {
   height:60px;
 }
 .tail{
+  
   text-align: center;
   width:30%;
-  margin:auto;
+  margin:20px auto 20px auto;
   color:white;
 }
 	body{
@@ -93,6 +94,7 @@ a:active { color: white; }
     
     }
     .tail{
+      margin-bottom:10px;
       text-align: center;
       width:30%;
       margin:auto;
@@ -129,6 +131,7 @@ a.sm-link{
 }
 
 .sm-link__label{
+  font-size:18pt;
   display: block;
 }
 
