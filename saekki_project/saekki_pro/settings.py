@@ -26,8 +26,7 @@ SECRET_KEY = '319v11ose2n4x$vtmjed0h$5b%*ce@rm%d*w6lkn54w6v0e6v_'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '.ap-northeast-2.compute.amazonaws.com',
+    '*'
 ]
 
 
@@ -91,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'saekki',				
         'USER': 'postgres',			
-        'PASSWORD': '1234',		
+        'PASSWORD': '123456',		
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

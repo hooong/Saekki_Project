@@ -42,8 +42,8 @@ def mypage_modify(request):
 def mypage_mod_conf(request):
     if request.method == 'POST':
         user = request.user
-        if not user.profile:
-            Profile.objects.create(user=user)
+        if user.socialaccount_set.all:
+            Profile.objects.get_or_create(user=user)
         profile = Profile.objects.get(user=user)
         profile.state_msg = request.POST['msg']
         profile.save()
