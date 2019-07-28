@@ -28,7 +28,7 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 SECRET_KEY = config_secret_common['django']['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '*'
@@ -139,13 +139,14 @@ TIME_ZONE = 'Asia/Seoul'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+#STATIC_DIR = os.path.join(BASE_DIR, 'static')
+#STATICFILES_DIRS = [
+#    STATIC_DIR,
+#   os.path.join(BASE_DIR, 'promise', 'static'),
+#    os.path.join(BASE_DIR, 'saekki_pro', 'static'),
+#]   
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'promise', 'static'),
-    os.path.join(BASE_DIR, 'saekki_pro', 'static'),
-]   
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   #medai폴더로 파일들을 모으겠다는 의미
 MEDIA_URL = '/media/'   #URL설정
