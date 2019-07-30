@@ -1,0 +1,59 @@
+/* 프로필 부분 */
+
+
+.profile-head{
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.profile{
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: .25rem;
+    
+}
+.profile-img{
+    text-align:center;
+    border-right: 1px solid  rgba(167, 144, 144, 0.5) ;
+    padding: 1rem;
+    
+}
+.profile-body{
+    display:flex;
+}
+.profile-text{
+    padding: 1rem;    
+}
+.profile-statemessage{
+    border: 1px solid rgba(203, 175, 175, 0.5);
+    height:10rem;
+    width: 55.5rem;
+}
+.imgbox2{
+    /* padding-top:1rem; */
+    border: 1px solid  rgba(0, 0, 0, 0.5);
+    max-height: 12rem; max-width:12rem;
+}
+.cccc{
+    margin:0 auto;
+    text-align:center;
+    margin-top:1rem;
+    
+}
+
+
+
+/* 최근약속 부분 */
+
+
+.resent{
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    margin-top: 2rem;
+    
+}
+.resent-p{
+    border-bottom:1px solid  rgba(0, 0, 0, 0.5);
+    margin-right:1rem;
+    margin-left:1rem;
+    
+}

@@ -22,6 +22,11 @@ def home(request):
         user = request.user
         arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
         no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
+
+        # 약속 알림
+        noti_promise = Notification_promise.objects.filter(receive_user=user)
+
+        # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user)
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
@@ -29,7 +34,8 @@ def home(request):
 
         return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
-                                            'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,})
+                                            'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
+                                            'noti_promise':noti_promise,})
 
 # 디테일 보여주기
 def detail(request, pk):
@@ -88,6 +94,14 @@ def new(request):
                 promise.longitud = float(request.POST['addr_lng'])
                 promise.save()
 
+                # 약속 알림 보내기
+                for party in parties:
+                    noti = Notification_promise()
+                    noti.send_user = request.user
+                    noti.receive_user = User.objects.get(username=party)
+                    noti.promise = promise
+                    noti.save()
+
                 # 참가자들의 성공여부를 저장하는 부분
                 for party in parties:
                     p = Party_detail()
@@ -130,6 +144,18 @@ def change_friend(request, operation, pk):
         Friend.lose_friend(friend, request.user)
 
     return redirect('home')
+
+# 약속알림 버튼
+def noti_promise_button(request, operation, pk):
+    noti = Notification_promise.objects.get(pk=pk)
+    if operation == 'delete':
+        noti.delete()
+        return redirect('home')
+    elif operation == 'click':
+        promise_id = noti.promise.id
+        noti.delete()
+        return redirect('/promise/detail/'+str(promise_id))
+
 
 # 도착이벤트
 def arrived(request, promise_id):
