@@ -181,7 +181,6 @@ def noti_promise_button(request, operation, pk):
         noti.delete()
         return redirect('/promise/detail/'+str(promise_id))
 
-
 # 도착이벤트
 def arrived(request, promise_id):
     if request.method == 'POST':
