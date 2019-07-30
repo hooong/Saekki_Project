@@ -10,6 +10,8 @@
     {{user.profile.state_msg}}
 {% endif %}
 
+<a href="{% url 'search' %}"> 회원검색 </a>
+
 <!-- 프로필 사진 보여주기 -->
 {% if not user.socialaccount_set.all %}
     {% if not user.profile %}

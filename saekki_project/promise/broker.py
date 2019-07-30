@@ -24,10 +24,8 @@ def com_time():
 def time_to_str(t):
     t = t.replace('-','')
     t = t.replace(':','')
+    t = t.replace(' ','')
     if len(t) > 15:
-        t = t.replace(' ','')
         t = t[:14]
-    else:
-        t = t.replace('T','')
-    
+        
     return t
