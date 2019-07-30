@@ -109,6 +109,9 @@
     {% if arrive.promise.end == 0 %}
             <a href="{% url 'detail' pk=arrive.promise.id %}">
                 <div>
+                    {% if arrive.promise.soon %}
+                        {{arrive.promise.soon}}시간도 안남았어요! <br>
+                    {% endif %}
                     {{arrive.promise.title}} <br>
                     {{arrive.promise.setting_date_time}} <br>
                     (도착) <br>
@@ -122,6 +125,9 @@
     {% if no_arrive.promise.end == 0 %}
             <a href="{% url 'detail' pk=no_arrive.promise.id %}">
                 <div>
+                    {% if no_arrive.promise.soon %}
+                        {{no_arrive.promise.soon}}시간도 안남았어요! <br>
+                    {% endif %}
                     {{no_arrive.promise.title}} <br>
                     {{no_arrive.promise.setting_date_time}} <br>
                     (미도착) <br>

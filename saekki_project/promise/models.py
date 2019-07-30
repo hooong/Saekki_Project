@@ -16,6 +16,8 @@ class Promise(models.Model):
     latitude = models.FloatField(null=True, blank=True, default=None)
     # 종료되었는지 여부
     end = models.PositiveSmallIntegerField(default=0)
+    # 마감임박
+    soon = models.CharField(max_length=10, null=True)
 
     def __str__(self):
         return self.title
