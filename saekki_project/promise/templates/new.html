@@ -4,7 +4,7 @@
 <!-- css -->
 <link rel="stylesheet" href="{% static 'promise/css/newLandscape.css' %}">
 <!-- 지도 api key -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
+<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
 
 
 <head>
@@ -20,9 +20,10 @@
 
     function current_position(position)
     {
-    
+        alert(position.coords.latitude);
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = {
+                
                 //TODO : 위치기반 현재 위치 따오기 만약 위치서비스 안쓸경우도 대비
                 center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨

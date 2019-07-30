@@ -14,13 +14,20 @@ p {
 .form-control{
   height:60px;
 }
+.tail{
+  
+  text-align: center;
+  width:30%;
+  margin:20px auto 20px auto;
+  color:white;
+}
 	body{
 	background:  
 	radial-gradient(black 35%, transparent 1%),
     radial-gradient(black 35%, transparent 1%),
 	url('https://images.unsplash.com/photo-1561524891-8e08ab8569f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2251&q=80') no-repeat center center fixed ; 
 	height:100vh;
-	overflow: hidden;
+	overflow: hidden scroll;
 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -87,6 +94,7 @@ a:active { color: white; }
     
     }
     .tail{
+      margin-bottom:10px;
       text-align: center;
       width:30%;
       margin:auto;
@@ -123,6 +131,7 @@ a.sm-link{
 }
 
 .sm-link__label{
+  font-size:18pt;
   display: block;
 }
 
@@ -322,3 +331,4 @@ SETTINGS
 .sm-link_bg{
     --smLinkTextColorHover: #fff;
 }
+   

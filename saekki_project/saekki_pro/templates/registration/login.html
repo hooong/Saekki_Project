@@ -8,8 +8,8 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'saekki_pro/css/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'saekki_pro/css/portrait.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'saekki_pro/css/landscape.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'saekki_pro/css/portrait.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'saekki_pro/css/landscape.css' %}"> -->
     <link rel="stylesheet" href="{% static 'saekki_pro/css/animate.css' %}">
     <script type="text/javascript" src="{% static 'saekki_pro/js/wow.min.js' %}"></script>
 
@@ -26,11 +26,11 @@
 
 <body>
 
-
-
+wefewf
+<img src="{{ STATIC_URL }}">
 <div class="section">
     <div class="wow slideInLeft">
-    <div class="section__item" style="width:67%;float:left;">
+    <div class="section__item" style="width:80%;float:left;">
         <a href="#" class="sm-link sm-link_padding-all sm-link1">
             <span class="sm-link__label">약속에 늦지 않는 새끼</span>
         </a>
@@ -46,7 +46,7 @@
 <div id="lgbox">
     <!-- 메인 로고 파트 -->
     <div class="wow bounceInDown">
-        <img width="200px" src="{% static 'img/indexlogo.png' %}" style="margin:100px 0px 10px 0px">
+        <img width="200px" src="{% static 'saekki_pro/logo.png' %}" style="margin:100px 0px 10px 0px">
     </div>
     <!-- 로그인 폼 -->
 	<form class="lg_element" method="POST" action="{% url 'login' %}" class="sign-in-form">
