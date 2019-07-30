@@ -148,9 +148,9 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   #medai폴더로 파일들을 모으겠다는 의미
 MEDIA_URL = '/media/'   #URL설정
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   #medai폴더로 파일들을 모으겠다는 의미
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = '/'
