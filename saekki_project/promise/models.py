@@ -61,9 +61,10 @@ class Notification_friend(models.Model):
     send_user = models.ForeignKey(User, related_name='firend_send_user', null=True, on_delete=models.CASCADE)
     receive_user = models.ForeignKey(User, related_name='firend_receive_user', null=True, on_delete=models.CASCADE)
 
-# 약속수락 모델
+# 약속알림 모델
 class Notification_promise(models.Model):
     send_user = models.ForeignKey(User, related_name='promise_send_user', null=True, on_delete=models.CASCADE)
     receive_user = models.ForeignKey(User, related_name='promise_receive_user', null=True, on_delete=models.CASCADE)
+    promise = models.ForeignKey(Promise, related_name='promise_noti', null=True, on_delete=models.CASCADE)
 
     

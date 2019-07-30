@@ -29,6 +29,8 @@
                         {% if not user.socialaccount_set.all %}
                             {% if not user.profile %}
                                 스태틱
+                            {% elif user.profile.image == '' %}
+                                스태틱
                             {% else %}
                                 <img width="150" height="200" src="{{ user.profile.image.url }}" />
                             {% endif %}
