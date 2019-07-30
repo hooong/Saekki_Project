@@ -7,29 +7,10 @@
 
 
 
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-
-<a href="{% url 'search' %}"> 회원검색 </a>
-
-<!-- 프로필 사진 보여주기 -->
-{% if not user.socialaccount_set.all %}
-    {% if not user.profile %}
-        스태틱
-    {% elif user.profile.image == '' %}
-        스태틱
-    {% else %}
-        <img width="50" height="50" src="{{ user.profile.image.url }}" />
-    {% endif %}
-{% else %}
-    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-{% endif %}
 
 
-    <filter id="blur">
 
-        <feGaussianBlur stdDeviation="6" />
 
-    </filter>
 
 </svg>
 
@@ -126,7 +107,7 @@ color:#C8D7D2;
     
     
     
-
+            <a href="{% url 'search' %}"> 회원검색 </a>
 <h2>약속 댓글 알림</h2>
 {% for noti in noti_promise %}
     {% if noti.com_or_pro == 'p' %}
