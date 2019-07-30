@@ -48,7 +48,7 @@ def search(request):
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=request.user):
             noti_wait_friend.append(wait.receive_user.username)
-        qs = User.objects.all()
+        qs = User.objects.all().exclude(username=request.user.username).exclude(username='admin')
 
         q = request.GET.get('q', '') # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
         if q: # q가 있으면
