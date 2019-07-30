@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from django.utils import timezone
 from .forms import *
@@ -36,6 +37,30 @@ def home(request):
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
                                             'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
                                             'noti_promise':noti_promise,})
+
+# 모든 유저 검색페이지
+def search(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        friend = Friend.objects.get(current_user=request.user)
+        friends = friend.users.all()
+        noti_wait_friend = []
+        for wait in Notification_friend.objects.filter(send_user=request.user):
+            noti_wait_friend.append(wait.receive_user.username)
+        qs = User.objects.all()
+
+        q = request.GET.get('q', '') # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
+        if q: # q가 있으면
+            qs = qs.filter(username__icontains=q) # 제목에 q가 포함되어 있는 레코드만 필터링
+
+        return render(request, 'search.html', {
+            'user_list' : qs,
+            'q' : q,
+            'friends': friends,
+            'noti_wait_friend': noti_wait_friend,
+        })
+
 
 # 디테일 보여주기
 def detail(request, pk):
@@ -205,7 +230,7 @@ def add_friend(request, pk):
     add_friend.receive_user = friend
     add_friend.save()
 
-    return redirect('home')
+    return redirect('/promise/search/?q='+request.GET.get('q_2', ''))
 
 def aboutus(request):
     return render(request, 'aboutus.html')

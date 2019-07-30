@@ -45,6 +45,7 @@
 <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
 <h2>Other People</h2>
 {% for user in users %}
+    <!-- 프사 띄워주는 곳 -->
     {% if not user.socialaccount_set.all %}
         {% if not user.profile %}
             스태틱
