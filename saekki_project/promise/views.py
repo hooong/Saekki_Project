@@ -87,10 +87,19 @@ def new_comment(request, promise_id):
         if request.method == 'POST':
             form = Promise_CommentForm(request.POST)
             if form.is_valid():
+                promise = Promise.objects.get(id=promise_id)
                 comment = form.save(commit=False)
                 comment.user = request.user
-                comment.promise = Promise.objects.get(id=promise_id)
+                comment.promise = promise
                 comment.save()
+
+                # 댓글 알림
+                noti = Notification_promise()
+                noti.send_user = request.user
+                noti.receive_user = User.objects.get(username=promise.user.username)
+                noti.promise = promise
+                noti.com_or_pro = 'c'
+                noti.save()
 
                 return redirect('/promise/detail/'+str(promise_id))
 
@@ -125,6 +134,7 @@ def new(request):
                     noti.send_user = request.user
                     noti.receive_user = User.objects.get(username=party)
                     noti.promise = promise
+                    noti.com_or_pro = 'p'
                     noti.save()
 
                 # 참가자들의 성공여부를 저장하는 부분
