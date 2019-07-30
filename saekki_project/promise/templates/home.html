@@ -32,10 +32,15 @@
 <a href="{% url 'logout' %}">로그아웃</a>
 <a href="{% url 'mypage' %}">마이페이지</a>
 
-<h2>약속 알림</h2>
+<h2>약속 댓글 알림</h2>
 {% for noti in noti_promise %}
-    <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
-    <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+    {% if noti.com_or_pro == 'p' %}
+        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
+        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+    {% elif noti.com_or_pro == 'c' %}
+        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
+        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+    {% endif %}
 {% endfor %}
 
 <h2>친구신청 알림</h2>
