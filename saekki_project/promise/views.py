@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from django.utils import timezone
 from .forms import *
@@ -22,6 +23,11 @@ def home(request):
         user = request.user
         arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
         no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
+
+        # 약속 알림
+        noti_promise = Notification_promise.objects.filter(receive_user=user)
+
+        # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user)
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
@@ -29,33 +35,73 @@ def home(request):
 
         return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
-                                            'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,})
+                                            'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
+                                            'noti_promise':noti_promise,})
+
+# 모든 유저 검색페이지
+def search(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        friend = Friend.objects.get(current_user=request.user)
+        friends = friend.users.all()
+        noti_wait_friend = []
+        for wait in Notification_friend.objects.filter(send_user=request.user):
+            noti_wait_friend.append(wait.receive_user.username)
+        qs = User.objects.all().exclude(username=request.user.username).exclude(username='admin')
+
+        q = request.GET.get('q', '') # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
+        if q: # q가 있으면
+            qs = qs.filter(username__icontains=q) # 제목에 q가 포함되어 있는 레코드만 필터링
+
+        return render(request, 'search.html', {
+            'user_list' : qs,
+            'q' : q,
+            'friends': friends,
+            'noti_wait_friend': noti_wait_friend,
+        })
+
 
 # 디테일 보여주기
 def detail(request, pk):
-    promise = get_object_or_404(Promise ,pk=pk)
-    cur_user = request.user
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        promise = get_object_or_404(Promise ,pk=pk)
+        cur_user = request.user
 
-    # 댓글
-    comments = promise.comments.all()
-    commentform = Promise_CommentForm()
+        # 댓글
+        comments = promise.comments.all()
+        commentform = Promise_CommentForm()
 
-    # 도착여부
-    success = Party_detail.objects.get(promise=promise, user=request.user)
+        # 도착여부
+        success = Party_detail.objects.get(promise=promise, user=request.user)
 
-    return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user })
+        return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user })
 
 # 댓글작성
 def new_comment(request, promise_id):
-    if request.method == 'POST':
-        form = Promise_CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.promise = Promise.objects.get(id=promise_id)
-            comment.save()
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        if request.method == 'POST':
+            form = Promise_CommentForm(request.POST)
+            if form.is_valid():
+                promise = Promise.objects.get(id=promise_id)
+                comment = form.save(commit=False)
+                comment.user = request.user
+                comment.promise = promise
+                comment.save()
 
-            return redirect('/promise/detail/'+str(promise_id))
+                # 댓글 알림
+                noti = Notification_promise()
+                noti.send_user = request.user
+                noti.receive_user = User.objects.get(username=promise.user.username)
+                noti.promise = promise
+                noti.com_or_pro = 'c'
+                noti.save()
+
+                return redirect('/promise/detail/'+str(promise_id))
 
 # 댓글 삭제
 def com_del(request, promise_id, comment_id):
@@ -67,36 +113,48 @@ def com_del(request, promise_id, comment_id):
 
 # 글쓰기
 def new(request):
-    if request.method == "POST":
-        form = PromiseForm(request.POST)
-        if form.is_valid():
-            parties = request.POST.getlist('party_friend[]')
-            promise = form.save(commit=False)
-            promise.setting_date_time = request.POST['pic_date']
-            promise.user = request.user
-            promise.party = parties
-            promise.latitude = float(request.POST['addr_lat'])
-            promise.longitud = float(request.POST['addr_lng'])
-            promise.save()
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else: 
+        if request.method == "POST":
+            form = PromiseForm(request.POST)
+            if form.is_valid():
+                parties = request.POST.getlist('party_friend[]')
+                promise = form.save(commit=False)
+                promise.setting_date_time = request.POST['pic_date']
+                promise.user = request.user
+                promise.party = parties
+                promise.latitude = float(request.POST['addr_lat'])
+                promise.longitud = float(request.POST['addr_lng'])
+                promise.save()
 
-            # 참가자들의 성공여부를 저장하는 부분
-            for party in parties:
+                # 약속 알림 보내기
+                for party in parties:
+                    noti = Notification_promise()
+                    noti.send_user = request.user
+                    noti.receive_user = User.objects.get(username=party)
+                    noti.promise = promise
+                    noti.com_or_pro = 'p'
+                    noti.save()
+
+                # 참가자들의 성공여부를 저장하는 부분
+                for party in parties:
+                    p = Party_detail()
+                    p.promise = promise
+                    p.user = User.objects.get(username=party)
+                    p.save()
                 p = Party_detail()
                 p.promise = promise
-                p.user = User.objects.get(username=party)
+                p.user = request.user
                 p.save()
-            p = Party_detail()
-            p.promise = promise
-            p.user = request.user
-            p.save()
 
-            return redirect('home')
-    else:
-        form = PromiseForm()
-        friend = Friend.objects.get(current_user=request.user)
-        friends = friend.users.all()
+                return redirect('home')
+        else:
+            form = PromiseForm()
+            friend = Friend.objects.get(current_user=request.user)
+            friends = friend.users.all()
 
-        return render(request, 'new.html', {'form':form, 'friends':friends})
+            return render(request, 'new.html', {'form':form, 'friends':friends})
 
 # 약속 삭제
 def pro_del(request, promise_id):
@@ -121,6 +179,17 @@ def change_friend(request, operation, pk):
         Friend.lose_friend(friend, request.user)
 
     return redirect('home')
+
+# 약속알림 버튼
+def noti_promise_button(request, operation, pk):
+    noti = Notification_promise.objects.get(pk=pk)
+    if operation == 'delete':
+        noti.delete()
+        return redirect('home')
+    elif operation == 'click':
+        promise_id = noti.promise.id
+        noti.delete()
+        return redirect('/promise/detail/'+str(promise_id))
 
 # 도착이벤트
 def arrived(request, promise_id):
@@ -170,7 +239,7 @@ def add_friend(request, pk):
     add_friend.receive_user = friend
     add_friend.save()
 
-    return redirect('home')
+    return redirect('/promise/search/?q='+request.GET.get('q_2', ''))
 
 def aboutus(request):
     return render(request, 'aboutus.html')

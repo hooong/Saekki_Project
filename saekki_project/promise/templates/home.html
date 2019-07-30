@@ -6,7 +6,24 @@
 {% get_social_accounts user as accounts %}
 
 
+
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+<a href="{% url 'search' %}"> 회원검색 </a>
+
+<!-- 프로필 사진 보여주기 -->
+{% if not user.socialaccount_set.all %}
+    {% if not user.profile %}
+        스태틱
+    {% elif user.profile.image == '' %}
+        스태틱
+    {% else %}
+        <img width="50" height="50" src="{{ user.profile.image.url }}" />
+    {% endif %}
+{% else %}
+    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+{% endif %}
+
 
     <filter id="blur">
 
@@ -74,6 +91,7 @@ color:#C8D7D2;
     border:1px solid;
 } */
 
+
 </style>
 
 
@@ -108,6 +126,18 @@ color:#C8D7D2;
     
     
     
+
+<h2>약속 댓글 알림</h2>
+{% for noti in noti_promise %}
+    {% if noti.com_or_pro == 'p' %}
+        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
+        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+    {% elif noti.com_or_pro == 'c' %}
+        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
+        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+    {% endif %}
+{% endfor %}
+      
 <h2>친구신청 알림</h2>
 {% if not noti_add_friend %}
     너는 친구도없니? <br>
@@ -120,6 +150,7 @@ color:#C8D7D2;
 <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
 <h2>Other People</h2>
 {% for user in users %}
+    <!-- 프사 띄워주는 곳 -->
     {% if not user.socialaccount_set.all %}
         {% if not user.profile %}
             스태틱

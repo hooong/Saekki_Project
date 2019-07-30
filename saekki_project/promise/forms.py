@@ -27,3 +27,6 @@ class Promise_CommentForm(forms.ModelForm):
         labels = {
             'content': '댓글내용'
         }
+
+class SearchForm(forms.Form): 
+    word = forms.CharField(label='Search Word')

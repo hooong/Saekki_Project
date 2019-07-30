@@ -15,6 +15,8 @@ urlpatterns = [
     path('comment_del/<int:promise_id>/<int:comment_id>', views.com_del, name='com_del'),
     path('addfriend/<int:pk>', views.add_friend, name='add_friend'),
     path('changefriend/<str:operation>/<int:pk>', views.change_friend, name='change_friend'),
+    path('noti_promise/<str:operation>/<int:pk>', views.noti_promise_button, name='noti_promise_button'),
+    path('search/', views.search, name='search'),
     # url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
     path('aboutus/', views.aboutus, name='aboutus')
 ]
