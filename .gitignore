@@ -9,4 +9,4 @@ media
 .config_secret/
 .config/
 .static_root/
-settings.py
+saekki_project/saekki_pro/settings.py
