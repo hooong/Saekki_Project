@@ -5,32 +5,113 @@
 {% load socialaccount %}
 {% get_social_accounts user as accounts %}
 
-<p>{{user.username}}님,</p>
-{% if user.profile and user.profile.state_msg != None %}
-    {{user.profile.state_msg}}
-{% endif %}
 
-<!-- 프로필 사진 보여주기 -->
-{% if not user.socialaccount_set.all %}
-    {% if not user.profile %}
-        스태틱
-    {% elif user.profile.image == '' %}
-        스태틱
-    {% else %}
-        <img width="50" height="50" src="{{ user.profile.image.url }}" />
-    {% endif %}
-{% else %}
-    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-{% endif %}
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
 
-<a href="{% url 'new' %}">
-<button>글쓰기</button>
-</a>
+    <filter id="blur">
 
-<a href="{% url 'logout' %}">로그아웃</a>
-<a href="{% url 'mypage' %}">마이페이지</a>
+        <feGaussianBlur stdDeviation="6" />
 
+    </filter>
+
+</svg>
+
+<style>
+
+
+ #blurExample, #noneblurExample {
+     
+
+background-size:cover;
+width:400px;
+height:300px;
+position: relative;
+z-index:1;
+float:left;
+margin:10px;
+overflow:hidden;
+border-radius: 6px;
+box-shadow: 0 0 10px rgba(0,0,0,0.30), 0 10px 12px rgba(0,0,0,0.22);
+/* box-shadow: 10px 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); */
+}
+.bgBlur:before {
+  
+  content: '';
+  position: absolute;
+  top: -10; left:-10; right:-10; bottom:-10;
+  background: inherit;
+  z-index:-1;
+  filter: blur(1px); 
+  /* -webkit-filter: blur(1px); 
+  -moz-filter: blur(6px);
+  -o-filter: blur(6px);
+  -ms-filter: blur(6px); */
+  filter: url(#blur);
+  
+}
+h1 {
+  color:WHITE;
+  margin:1em;
+}
+svg {
+height:0
+}
+#sub_menu{
+background-color: rgb(55,50,52);
+padding:10px;
+color:#C8D7D2;
+
+}
+
+#sub_menu  a:link {color:#C8D7D2;text-decoration: none;} 
+#sub_menu  a:visited{color:#C8D7D2;text-decoration: none;} 
+#sub_menu  a:hover{color:#D84339;text-decoration: none;}
+#sub_menu  a:active{color:#C8D7D2;text-decoration: none;} 
+/* #subMenuLink{
+    display: none;
+} */
+/* div {
+    border:1px solid;
+} */
+
+</style>
+
+
+
+<div style="background-color:#F4F2F0;height: 100%;">
+<div id="sub_menu">
+        {{user.username}}님, 
+        {% if user.profile and user.profile.state_msg != None %}
+            <!-- {{user.profile.state_msg}} -->
+        {% endif %}
+        {% if noti_add_friend %}
+        <strong style="color:#D84339">친구 신청 알림</strong>이 있습니다.
+       
+        {% else %}
+        뭐하세요 친구없는새기야 
+        {% endif %}
+        <div style="float:right;">
+            <span id="subMenuLink">
+                <a href="{% url 'mypage' %}">마이페이지</a> |
+                <a  href="{% url 'logout' %}">로그아웃</a> | 
+                
+            </span>
+                <img style="width:18px;margin-top:-3px;" src="{%static '/promise/icon/alarm.png'%}"/>
+                <div style="position:relative;right:7px;top:0px; float:right;border-radius:50%;width:15px;height:15px;font-size: 4px;background: white;color:black;text-align: center">1</div>
+        </div>
+
+</div>
+<div style="margin:auto; width:85%; display:flex;margin-top:10px;">
+
+    <div style="flex:3;background-color: white;border:1px solid #d3d5d8;margin-right: 10px;box-sizing: border-box;">
+    
+    
+    
+    
 <h2>친구신청 알림</h2>
+{% if not noti_add_friend %}
+    너는 친구도없니? <br>
+{% endif %}
 {% for noti in noti_add_friend %}
     {{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
     <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
@@ -87,7 +168,6 @@
 </a>
 <br>
 {% endfor %}
-
 <!-- 약속게시물 -->
 <h2>Promise(진행중인 약속)</h2>
 <!-- 도착 -->
@@ -127,7 +207,80 @@
         {{promise.setting_date_time}}
     </div>      
 </a>
+
 {% endif %}
 {% endif %}
 {% endfor %}
+    
+    
+    
+    
+    
+    </div>
+    <div style="flex:0 0 300px;background-color: white; box-shadow: 10px 10px 10px #d3d5d8">
+            <div style="padding:10px;display:flex;">
+            <!-- 프로필 사진 보여주기 -->
+            <div>
+                {% if not user.socialaccount_set.all %}
+                {% if not user.profile %}
+                <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
+                {% elif user.profile.image == '' %}
+                <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
+                {% else %}
+                    <img width="60" height="60" src="{{ user.profile.image.url }}" />
+                {% endif %}
+                {% else %}
+                <img style="border-radius:50%"width="60" height="60" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+                {% endif %}
+            </div>
+            <div style="width:100%; margin-left:10px;padding:5px 0 5px 0;">
+            {{user.username}}<br>
+            <div style="width:200px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis">{{ user.profile.state_msg }}</div>
+            
+            </div>
+            </div>
+    
+    
+            <div style="background:#F4F2F0"><a href="{% url 'mypage' %}">마이페이지</a> |
+                <a  href="{% url 'logout' %}">로그아웃</a> | </div>
+            
+    
+            <div>다른약속</div>
+        </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="{% url 'new' %}">
+<button>글쓰기</button>
+</a>
+
+
+
+</div>
 {% endblock %}

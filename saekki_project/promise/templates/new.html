@@ -4,13 +4,14 @@
 <!-- css -->
 <link rel="stylesheet" href="{% static 'promise/css/newLandscape.css' %}">
 <!-- 지도 api key -->
-<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1e1e43d51246b484ff2b8c4980dc005b&libraries=services"></script>
 
 
 <head>
     
     <!-- 지도관련 script -->
     <script>
+
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
     function init()
@@ -20,7 +21,6 @@
 
     function current_position(position)
     {
-        alert(position.coords.latitude);
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = {
                 
