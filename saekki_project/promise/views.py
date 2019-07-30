@@ -94,12 +94,33 @@ def new_comment(request, promise_id):
                 comment.save()
 
                 # 댓글 알림
-                noti = Notification_promise()
-                noti.send_user = request.user
-                noti.receive_user = User.objects.get(username=promise.user.username)
-                noti.promise = promise
-                noti.com_or_pro = 'c'
-                noti.save()
+                user = request.user
+                parties = promise.party
+                if promise.user.username == user.username:
+                    for party in parties:
+                        noti = Notification_promise()
+                        noti.send_user = request.user
+                        noti.receive_user = User.objects.get(username=party)
+                        noti.promise = promise
+                        noti.com_or_pro = 'c'
+                        noti.save()
+                else:
+                    noti = Notification_promise()
+                    noti.send_user = request.user
+                    noti.receive_user = User.objects.get(username=promise.user.username)
+                    noti.promise = promise
+                    noti.com_or_pro = 'c'
+                    noti.save()
+                    for party in parties:
+                        if party is user.username:
+                            pass
+                        else:
+                            noti = Notification_promise()
+                            noti.send_user = request.user
+                            noti.receive_user = User.objects.get(username=party)
+                            noti.promise = promise
+                            noti.com_or_pro = 'c'
+                            noti.save()
 
                 return redirect('/promise/detail/'+str(promise_id))
 
