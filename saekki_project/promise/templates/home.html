@@ -7,29 +7,32 @@
 
 
 
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 
-
-
-
-
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <filter id="blur">
+        <feGaussianBlur stdDeviation="6" />
+    </filter>
 </svg>
 
 <style>
 
 
- #blurExample, #noneblurExample {
-     
-
+.test {
+background: url('https://images.unsplash.com/photo-1564510714856-4df7dc095cdd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2247&q=80') !important;
 background-size:cover;
-width:400px;
-height:300px;
-position: relative;
-z-index:1;
+width:350px!important;
+height:150px;
+position: relative!important;
+z-index:0!important;
+/* float:left!important; */
+/* margin:10px!important; */
+overflow:hidden!important;
+border-radius: 6px!important;
 float:left;
-margin:10px;
-overflow:hidden;
-border-radius: 6px;
-box-shadow: 0 0 10px rgba(0,0,0,0.30), 0 10px 12px rgba(0,0,0,0.22);
 /* box-shadow: 10px 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); */
 }
 .bgBlur:before {
@@ -40,10 +43,10 @@ box-shadow: 0 0 10px rgba(0,0,0,0.30), 0 10px 12px rgba(0,0,0,0.22);
   background: inherit;
   z-index:-1;
   filter: blur(1px); 
-  /* -webkit-filter: blur(1px); 
+  -webkit-filter: blur(1px); 
   -moz-filter: blur(6px);
   -o-filter: blur(6px);
-  -ms-filter: blur(6px); */
+  -ms-filter: blur(6px);
   filter: url(#blur);
   
 }
@@ -72,7 +75,6 @@ color:#C8D7D2;
     border:1px solid;
 } */
 
-
 </style>
 
 
@@ -100,134 +102,182 @@ color:#C8D7D2;
         </div>
 
 </div>
+
+
+
+
+
 <div style="margin:auto; width:85%; display:flex;margin-top:10px;">
 
-    <div style="flex:3;background-color: white;border:1px solid #d3d5d8;margin-right: 10px;box-sizing: border-box;">
+    <div style="flex:3;background-color: white;border:1px solid #d3d5d8;margin-right: 10px;box-sizing: border-box; box-shadow:0 10px 10px #d3d5d8">
     
-    
-    
+            <!-- <div id="blurExample" class="bgBlur" >
+                <h1>Blur적용</br>내용물은 그대로</h1>
+            </div> -->
+
+                
     
             <a href="{% url 'search' %}"> 회원검색 </a>
-<h2>약속 댓글 알림</h2>
-{% for noti in noti_promise %}
-    {% if noti.com_or_pro == 'p' %}
-        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
-        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
-    {% elif noti.com_or_pro == 'c' %}
-        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
-        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
-    {% endif %}
-{% endfor %}
-      
-<h2>친구신청 알림</h2>
-{% if not noti_add_friend %}
-    너는 친구도없니? <br>
-{% endif %}
-{% for noti in noti_add_friend %}
-    {{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
-    <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
-{% endfor %}
+                <h2>약속 댓글 알림</h2>
+                {% for noti in noti_promise %}
+                    {% if noti.com_or_pro == 'p' %}
+                        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
+                        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+                    {% elif noti.com_or_pro == 'c' %}
+                        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
+                        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+                    {% endif %}
+                {% endfor %}
+                    
+                <h2>친구신청 알림</h2>
+                {% if not noti_add_friend %}
+                    너는 친구도없니? <br>
+                {% endif %}
+                {% for noti in noti_add_friend %}
+                    {{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
+                    <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
+                {% endfor %}
 
-<!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
-<h2>Other People</h2>
-{% for user in users %}
-    <!-- 프사 띄워주는 곳 -->
-    {% if not user.socialaccount_set.all %}
-        {% if not user.profile %}
-            스태틱
-        {% elif user.profile.image == '' %}
-            스태틱
-        {% else %}
-            <img width="50" height="50" src="{{ user.profile.image.url }}" />
-        {% endif %}
-    {% else %}
-    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-    {% endif %}
-    {{ user.username }}
-    {% if user not in friends %}
-        {% if user.username in noti_wait_friend %}
-        <button>요청중</button>
-        {% else %}
-        <a href="{% url 'add_friend' pk=user.pk %}">
-            <button>친구신청</button>
-        </a>
-        {% endif %}
-    {% endif %}
-    <br>
-{% endfor %}
+                <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
+                <h2>Other People</h2>
+                {% for user in users %}
+                    <!-- 프사 띄워주는 곳 -->
+                    {% if not user.socialaccount_set.all %}
+                        {% if not user.profile %}
+                            스태틱
+                        {% elif user.profile.image == '' %}
+                            스태틱
+                        {% else %}
+                            <img width="50" height="50" src="{{ user.profile.image.url }}" />
+                        {% endif %}
+                    {% else %}
+                    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+                    {% endif %}
+                    {{ user.username }}
+                    {% if user not in friends %}
+                        {% if user.username in noti_wait_friend %}
+                        <button>요청중</button>
+                        {% else %}
+                        <a href="{% url 'add_friend' pk=user.pk %}">
+                            <button>친구신청</button>
+                        </a>
+                        {% endif %}
+                    {% endif %}
+                    <br>
+                {% endfor %}
 
-<!-- 친구목록 -->
-<h2>friends</h2>
-{% for friend in friends %}
-    {% if not friend.socialaccount_set.all %}
-        {% if not friend.profile %}
-            스태틱
-        {% elif friend.profile.image == '' %}
-            스태틱
-        {% else %}
-            <img width="50" height="50" src="{{ friend.profile.image.url }}" />
-        {% endif %}
-    {% else %}
-    <img width="50" height="50" src="{{ friend.socialaccount_set.all.0.get_avatar_url }}" />
-    {% endif %}
+                <!-- 친구목록 -->
+                <h2>friends</h2>
+                {% for friend in friends %}
+                    {% if not friend.socialaccount_set.all %}
+                        {% if not friend.profile %}
+                            스태틱
+                        {% elif friend.profile.image == '' %}
+                            스태틱
+                        {% else %}
+                            <img width="50" height="50" src="{{ friend.profile.image.url }}" />
+                        {% endif %}
+                    {% else %}
+                    <img width="50" height="50" src="{{ friend.socialaccount_set.all.0.get_avatar_url }}" />
+                    {% endif %}
 
-{{ friend.username }}
-{% if friend.profile and friend.profile.state_msg != None %}
-    {{friend.profile.state_msg}}
-{% endif %}
-<a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
-    <button>친구해제</button>
-</a>
-<br>
-{% endfor %}
-<!-- 약속게시물 -->
-<h2>Promise(진행중인 약속)</h2>
-<!-- 도착 -->
-{% for arrive in arrives %}
-    {% if arrive.promise.end == 0 %}
-            <a href="{% url 'detail' pk=arrive.promise.id %}">
-                <div>
-                    {{arrive.promise.title}} <br>
-                    {{arrive.promise.setting_date_time}} <br>
-                    (도착) <br>
-                </div>      
-            </a>
-    {% endif %}
-{% endfor %}
-<hr> 
-<!-- 미도착 -->
-{% for no_arrive in no_arrives %}
-    {% if no_arrive.promise.end == 0 %}
-            <a href="{% url 'detail' pk=no_arrive.promise.id %}">
-                <div>
-                    {{no_arrive.promise.title}} <br>
-                    {{no_arrive.promise.setting_date_time}} <br>
-                    (미도착) <br>
-                </div>      
-            </a>
-    {% endif %}
-{% endfor %}      
-        
+                {{ friend.username }}
+                {% if friend.profile and friend.profile.state_msg != None %}
+                    {{friend.profile.state_msg}}
+                {% endif %}
+                <a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
+                    <button>친구해제</button>
+                </a>
+                <br>
+                {% endfor %}
+                <!-- 약속게시물 -->
+                <h2>Promise(진행중인 약속)</h2>
+                <!-- 도착 -->
+                {% for arrive in arrives %}
+                    {% if arrive.promise.end == 0 %}
+                            <a href="{% url 'detail' pk=arrive.promise.id %}">
+                                <div>
+                                    {{arrive.promise.title}} <br>
+                                    {{arrive.promise.setting_date_time}} <br>
+                                    (도착) <br>
+                                </div>      
+                            </a>
+                    {% endif %}
+                {% endfor %}
+                <hr> 
+                <!-- 미도착 -->
+                {% for no_arrive in no_arrives %}
+                    {% if no_arrive.promise.end == 0 %}
+                            <a href="{% url 'detail' pk=no_arrive.promise.id %}">
+                                <div>
+                                    {{no_arrive.promise.title}} <br>
+                                    {{no_arrive.promise.setting_date_time}} <br>
+                                    (미도착) <br>
+                                </div>      
+                            </a>
+                    {% endif %}
+                {% endfor %}      
+                        
 
-<h2>Promise(시간이 지난 약속)</h2>
-{% for promise in promises %}
-{% if user.username == promise.user.username or user.username in promise.party %}
-{% if promise.end == 1 %}
-<a href="{% url 'detail' pk=promise.id %}">
-    <div>
-        {{promise.title}} <br>
-        {{promise.setting_date_time}}
-    </div>      
-</a>
 
-{% endif %}
-{% endif %}
-{% endfor %}
-    
-    
-    
-    
-    
+
+
+
+                <h2>Promise(시간이 지난 약속)</h2>
+                {% for promise in promises %}
+                {% if user.username == promise.user.username or user.username in promise.party %}
+                {% if promise.end == 1 %}
+                <style type="text/css">
+                    .prl{
+                        margin:10px;
+                        border-radius:3px;
+                        box-shadow:10px 10px 10px rgb(138, 148, 145);
+                        text-align: center;
+                    }
+
+                    </style>
+                <a href="{% url 'detail' pk=promise.id %}">
+                    
+                    <div id="{{promise}}" class="prl bgBlur test">
+                        <div style="text-align:center;font-size:24pt;overflow:auto;color: white;  white-space:nowrap;text-overflow:ellipsis">{{promise.title}}</div>
+                        <span>{{promise.setting_date_time}}</span>
+                    
+                    </div>   
+                </a>
+                        <script>
+                            function handler(ev){
+                                var target= $(ev.target);
+                                var elId = target.attr('id');
+                                if(target.is(".prl")){
+                                    $(this).css("box-shadow", "15px 15px 15px rgb(138,148,145)");
+                                    $(this).css("margin", "8px 12px 12px 8px ");
+                                }
+                            }
+                        $(".prl").mouseover(handler);
+                        function hand(ev){
+                                var target= $(ev.target);
+                                var elId = target.attr('id');
+                                if(target.is(".prl")){
+                                $(this).css("box-shadow", "10px 10px 10px rgb(138,148,145)");
+                                $(this).css("margin", "10px");
+                                }
+                            }
+                        $(".prl").mouseleave(hand);
+
+                        </script>
+
+
+
+
+                
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                    
+                    
+                    
+                    
+                    
     </div>
     <div style="flex:0 0 300px;background-color: white; box-shadow: 10px 10px 10px #d3d5d8">
             <div style="padding:10px;display:flex;">
@@ -253,7 +303,7 @@ color:#C8D7D2;
             </div>
     
     
-            <div style="background:#F4F2F0"><a href="{% url 'mypage' %}">마이페이지</a> |
+            <div style="background:#F4F2F0;padding-left:10px;"><a href="{% url 'mypage' %}">마이페이지</a> |
                 <a  href="{% url 'logout' %}">로그아웃</a> | </div>
             
     
