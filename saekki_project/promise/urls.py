@@ -17,8 +17,7 @@ urlpatterns = [
     path('changefriend/<str:operation>/<int:pk>', views.change_friend, name='change_friend'),
     path('noti_promise/<str:operation>/<int:pk>', views.noti_promise_button, name='noti_promise_button'),
     path('search/', views.search, name='search'),
-    # url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', views.change_friend, name='change_friend')
-    path('aboutus/', views.aboutus, name='aboutus')
+    path('aboutus/', views.aboutus, name='aboutus'),
 ]
 # 스케쥴러 작동
 schedule()

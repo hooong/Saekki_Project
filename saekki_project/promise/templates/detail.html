@@ -22,7 +22,7 @@
 {% endif %}
 
 제목 : {{promise.title}} <br>
-글쓴이 : {{promise.user}} <br>
+글쓴이 : {{promise.user.name}} <br>
 작성시간 : {{promise.created_at}} <br>
 내용 : {{promise.content}} <br>
 약속시간 : {{promise.setting_date_time}} <br>
@@ -40,7 +40,7 @@
 <h2>댓글</h2>
 {% for comment in comments %}
 {{comment.content}} <br>
-작성자 : {{comment.user}} <br>
+작성자 : {{comment.user.name}} <br>
 작성일자 : {{comment.created_at}} <br>
 {% if cur_user == comment.user %}
 <a href="{% url 'com_del' promise_id=promise.id comment_id=comment.id %}">댓글삭제</a><br>

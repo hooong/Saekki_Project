@@ -3,30 +3,13 @@ from .forms import *
 from django.http import HttpResponse
 from promise.models import Friend
 from .models import *
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth import login, authenticate
 from django.template import RequestContext
+from django.contrib.auth.forms import UserCreationForm
+import requests, json
 
-def signup(request):
-    if request.method == "POST":
-        form = UserForm(request.POST)
-        # pro_form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            if form.cleaned_data['password']  == form.cleaned_data['password_check']:
-                new_user = User.objects.create_user(form.cleaned_data['username'],form.cleaned_data['email'],form.cleaned_data['password'])
-                login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
-                # profile = Profile.objects.create(user=request.user, image=request.FILES['image'])
-                # profile.save()
-                Friend.objects.create(current_user=request.user)
-                return redirect('home')
-            else:
-                return render(request, 'signup.html', {'form':form, 'error':'비밀번호와 비밀번호 확인이 다릅니다.'})
-                # TODO: 이거 alert로 에러 내용 띄워주기.
-        else:
-            return HttpResponse('사용자명이 이미 존재합니다.')
-    else:
-        form = UserForm()
-        return render(request, 'signup.html', {'form':form})
+User = get_user_model()
 
 # mypage
 def mypage(request):
@@ -48,3 +31,61 @@ def mypage_mod_conf(request):
         profile.state_msg = request.POST['msg']
         profile.save()
         return redirect('mypage')
+
+# 카톡로그인
+def oauth(request):
+    code = request.GET['code']
+
+    client_id = request.session.get('client_id')
+    redirect_uri = request.session.get('redirect_uri')
+
+    access_token_request_uri = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&"
+    access_token_request_uri += "client_id=" + str(client_id)
+    access_token_request_uri += "&redirect_uri=" + str(redirect_uri)
+    access_token_request_uri += "&code=" + code
+
+    access_token_request_uri_data = requests.get(access_token_request_uri)
+    json_data = access_token_request_uri_data.json()
+    access_token = json_data['access_token']
+
+    user_profile_info_uri = "https://kapi.kakao.com/v2/user/me?access_token="
+    user_profile_info_uri += str(access_token)
+    print(user_profile_info_uri)
+    
+    user_profile_info_uri_data = requests.get(user_profile_info_uri)
+    user_json_data = user_profile_info_uri_data.json()
+    user_id = user_json_data['id']
+    nickname = user_json_data['properties']['nickname']
+    profile_image = user_json_data['properties']['profile_image']
+    thumbnail_image = user_json_data['properties']['thumbnail_image']
+
+    # 카카오 회원가입
+    if not User.objects.filter(uid=user_id):
+        new_user = User.objects.create_user(user_id,nickname,'password')
+        new_user.profile_image = profile_image
+        new_user.thumbnail_image = thumbnail_image
+        new_user.save()
+        login(request, new_user)
+    else:
+        user = User.objects.get(uid=user_id)
+        if user.profile_image != profile_image:
+            user.profile_image = profile_image
+            user.thumbnail_image = thumbnail_image
+        login(request, user)
+
+    return redirect('home')
+
+def kakao(request):
+    login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
+
+    client_id = '09b888bc3a04b222b82daa121e425e1f'
+    redirect_uri = 'http://127.0.0.1:8000/oauth'
+    
+    login_request_uri += 'client_id=' + str(client_id)
+    login_request_uri += '&redirect_uri=' + str(redirect_uri)
+    login_request_uri += '&response_type=code'
+
+    request.session['client_id'] = client_id
+    request.session['redirect_uri'] = redirect_uri
+
+    return redirect(login_request_uri)

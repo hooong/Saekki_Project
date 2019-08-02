@@ -2,27 +2,18 @@
 {% load staticfiles %}
 {% block contents %}
 
-{% load socialaccount %}
-{% get_social_accounts user as accounts %}
 
-<p>{{user.username}}님,</p>
-{% if user.profile and user.profile.state_msg != None %}
-    {{user.profile.state_msg}}
-{% endif %}
+
+<p>{{user.name}}님,</p>
 
 <a href="{% url 'search' %}"> 회원검색 </a>
 
 <!-- 프로필 사진 보여주기 -->
-{% if not user.socialaccount_set.all %}
-    {% if not user.profile %}
-        스태틱
-    {% elif user.profile.image == '' %}
-        스태틱
-    {% else %}
-        <img width="50" height="50" src="{{ user.profile.image.url }}" />
-    {% endif %}
+<!-- 프사 띄워주는 곳 -->
+{% if user.profile_image == '' %}
+스태틱
 {% else %}
-    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+<img src="{{user.thumbnail_image}}" alt="">
 {% endif %}
 
 <a href="{% url 'new' %}">
@@ -49,33 +40,6 @@
     <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
 {% endfor %}
 
-<!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
-<h2>Other People</h2>
-{% for user in users %}
-    <!-- 프사 띄워주는 곳 -->
-    {% if not user.socialaccount_set.all %}
-        {% if not user.profile %}
-            스태틱
-        {% elif user.profile.image == '' %}
-            스태틱
-        {% else %}
-            <img width="50" height="50" src="{{ user.profile.image.url }}" />
-        {% endif %}
-    {% else %}
-    <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-    {% endif %}
-    {{ user.username }}
-    {% if user not in friends %}
-        {% if user.username in noti_wait_friend %}
-        <button>요청중</button>
-        {% else %}
-        <a href="{% url 'add_friend' pk=user.pk %}">
-            <button>친구신청</button>
-        </a>
-        {% endif %}
-    {% endif %}
-    <br>
-{% endfor %}
 
 <!-- 친구목록 -->
 <h2>friends</h2>
@@ -92,7 +56,7 @@
     <img width="50" height="50" src="{{ friend.socialaccount_set.all.0.get_avatar_url }}" />
     {% endif %}
 
-{{ friend.username }}
+{{ friend.name }}
 {% if friend.profile and friend.profile.state_msg != None %}
     {{friend.profile.state_msg}}
 {% endif %}
@@ -139,7 +103,7 @@
 
 <h2>Promise(시간이 지난 약속)</h2>
 {% for promise in promises %}
-{% if user.username == promise.user.username or user.username in promise.party %}
+{% if user.name == promise.user.name or user.name in promise.party %}
 {% if promise.end == 1 %}
 <a href="{% url 'detail' pk=promise.id %}">
     <div>
