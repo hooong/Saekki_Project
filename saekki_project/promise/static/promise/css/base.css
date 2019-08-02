@@ -1,6 +1,11 @@
 .navbar{
-    margin-bottom:10px;
     box-shadow: 0 0 7px;
     padding-left:80px;
 
+}
+@media all and (orientation:portrait){
+    .navbar{
+        box-shadow: 0 0 7px;
+        padding-left:10px;
+    }
 }
