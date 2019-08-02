@@ -5,22 +5,16 @@
 
 {% for user in user_list %}
     <!-- 프사 띄워주는 곳 -->
-    {% if not user.socialaccount_set.all %}
-        {% if not user.profile %}
-            스태틱
-        {% elif user.profile.image == '' %}
-            스태틱
-        {% else %}
-            <img width="50" height="50" src="{{ user.profile.image.url }}" />
-        {% endif %}
+    {% if user.profile_image == '' %}
+        스태틱
     {% else %}
-        <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+        <img src="{{user.thumbnail_image}}" alt="">
     {% endif %}
 
-    {{ user.username }}
+    {{ user.name }}
 
     {% if user not in friends %}
-        {% if user.username in noti_wait_friend %}
+        {% if user.uid in noti_wait_friend %}
         <button>요청중</button>
         {% else %}
         

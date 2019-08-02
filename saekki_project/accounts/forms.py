@@ -1,47 +1,40 @@
 from django import forms
 from django.contrib.auth.models import User
-from allauth.socialaccount.forms import SignupForm
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+# from allauth.socialaccount.forms import SignupForm
 from promise.models import Friend
 from .models import *
 
+class UserCreationForm(forms.ModelForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(
+        label='Password confirmation', widget=forms.PasswordInput)
 
-class UserForm(forms.ModelForm):
-    password_check = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'class':'form-control'}), label='패스워드 확인')
-
-    field_order=['username','password','password_check','email']
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '15자 이내로 입력가능합니다.'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
-        }
-        labels = {
-            'username': '아이디 ( 닉네임 )',
-            'email': '이메일',
-            'password': '패스워드',
-        }
+        fields = ('uid', 'profile_image', 'thumbnail_image', 'name')
 
-    def __init__(self, *args, **kwargs):
-        super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['maxlength'] = 15
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
 
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['image']
-
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password']
-
-
-class CustomSignupForm(SignupForm):
-        
-
-    def save(self):
-        user = super(CustomSignupForm, self).save()
-
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
         return user
+
+class UserChangeForm(forms.ModelForm):
+    password = ReadOnlyPasswordHashField()
+
+    class Meta:
+        model = User
+        fields = ('uid', 'password', 'name','profile_image', 'thumbnail_image',
+                  'is_active', 'is_admin')
+
+    def clean_password(self):
+        return self.initial["password"]
