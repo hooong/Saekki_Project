@@ -1,25 +1,28 @@
-{% extends 'base.html' %}
+
 {% load staticfiles %}
-{% block contents %}
+
 <link rel="stylesheet" href="{% static 'saekki_pro/css/animate.css' %}">
 <script type="text/javascript" src="{% static 'saekki_pro/js/wow.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'promise/css/aboutusLandscape.css' %}">
+<body>
 <div style="width:100%; height:40vh;">
-    <div style="position:absolute;top:24vh;z-index:-999;color:white;font-size:25px;left:50%;transform:translateX(-50%);border-bottom:3px solid">안녕하살법</div>
-    <!-- left;50%; transform:translateX(-50%); 중앙정렬시키고 자신의 x축 50%만큼 뺌-->
-<video id="videobcg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
+        <div style="position:absolute;top:24vh;z-index:2;color:white;font-size:25px;left:50%;transform:translateX(-50%);border-bottom:3px solid">안녕하살법</div>
+        <!-- left;50%; transform:translateX(-50%); 중앙정렬시키고 자신의 x축 50%만큼 뺌-->
+        <video id="videobcg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
+    
+                <source src="{% static '/promise/seoul.mp4' %}" type="video/mp4">
+                <source src="movie.webm" type="video/webm">
+                    Sorry, your browser does not support HTML5 video.
+        </video>
 
-        <source src="{% static '/promise/seoul.mp4' %}" type="video/mp4">
-        <source src="movie.webm" type="video/webm">
-            Sorry, your browser does not support HTML5 video.
-</video>
 </div>
 
-<div id="allbody">
+
     <div class="containDiv">
         
         <div id="we" class="wow slideInRight">
             <h2>약속을 지키는 최선의 방법은 약속을 하지 않는 것이다</h2>
+            
         </div>
         
     </div>
@@ -88,5 +91,4 @@
             </div>
             
     </div>
-</div>
-{% endblock %}
+</body>

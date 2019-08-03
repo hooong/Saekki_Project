@@ -35,7 +35,7 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=100, default='')
     profile_image = models.CharField(max_length=500, null=True, default='')
     thumbnail_image = models.CharField(max_length=500, null=True, default='')
-    state_msg = models.CharField(max_length=255, null=True, default='상태메시지를 입력해주세요.')
+    state_msg = models.CharField(max_length=255, null=True, default='')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -56,5 +56,3 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
-
-    

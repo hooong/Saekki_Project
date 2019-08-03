@@ -1,124 +1,13 @@
+
+
+
+
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block contents %}
 
 
-
-
-<p>{{user.name}}님,</p>
-
-<a href="{% url 'search' %}"> 회원검색 </a>
-
-<!-- 프로필 사진 보여주기 -->
-<!-- 프사 띄워주는 곳 -->
-{% if user.profile_image == '' %}
-스태틱
-{% else %}
-<img src="{{user.thumbnail_image}}" alt="">
-{% endif %}
-
-<a href="{% url 'new' %}">
-<button>글쓰기</button>
-</a>
-
-<a href="{% url 'logout' %}">로그아웃</a>
-<a href="{% url 'mypage' %}">마이페이지</a>
-
-<h2>약속 댓글 알림</h2>
-{% for noti in noti_promise %}
-    {% if noti.com_or_pro == 'p' %}
-        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
-        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
-    {% elif noti.com_or_pro == 'c' %}
-        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
-        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
-    {% endif %}
-{% endfor %}
-
-<h2>친구신청 알림</h2>
-{% for noti in noti_add_friend %}
-    {{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
-    <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
-{% endfor %}
-
-
-<!-- 친구목록 -->
-<h2>friends</h2>
-{% for friend in friends %}
-    {% if not friend.socialaccount_set.all %}
-        {% if not friend.profile %}
-            스태틱
-        {% elif friend.profile.image == '' %}
-            스태틱
-        {% else %}
-            <img width="50" height="50" src="{{ friend.profile.image.url }}" />
-        {% endif %}
-    {% else %}
-    <img width="50" height="50" src="{{ friend.socialaccount_set.all.0.get_avatar_url }}" />
-    {% endif %}
-
-{{ friend.name }}
-{% if friend.profile and friend.profile.state_msg != None %}
-    {{friend.profile.state_msg}}
-{% endif %}
-<a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
-    <button>친구해제</button>
-</a>
-<br>
-{% endfor %}
-
-<!-- 약속게시물 -->
-<h2>Promise(진행중인 약속)</h2>
-<!-- 도착 -->
-{% for arrive in arrives %}
-    {% if arrive.promise.end == 0 %}
-            <a href="{% url 'detail' pk=arrive.promise.id %}">
-                <div>
-                    {% if arrive.promise.soon %}
-                        {{arrive.promise.soon}}시간도 안남았어요! <br>
-                    {% endif %}
-                    {{arrive.promise.title}} <br>
-                    {{arrive.promise.setting_date_time}} <br>
-                    (도착) <br>
-                </div>      
-            </a>
-    {% endif %}
-{% endfor %}
-<hr> 
-<!-- 미도착 -->
-{% for no_arrive in no_arrives %}
-    {% if no_arrive.promise.end == 0 %}
-            <a href="{% url 'detail' pk=no_arrive.promise.id %}">
-                <div>
-                    {% if no_arrive.promise.soon %}
-                        {{no_arrive.promise.soon}}시간도 안남았어요! <br>
-                    {% endif %}
-                    {{no_arrive.promise.title}} <br>
-                    {{no_arrive.promise.setting_date_time}} <br>
-                    (미도착) <br>
-                </div>      
-            </a>
-    {% endif %}
-{% endfor %}      
-        
-
-<h2>Promise(시간이 지난 약속)</h2>
-{% for promise in promises %}
-{% if user.name == promise.user.name or user.name in promise.party %}
-{% if promise.end == 1 %}
-<a href="{% url 'detail' pk=promise.id %}">
-    <div>
-        {{promise.title}} <br>
-        {{promise.setting_date_time}}
-    </div>      
-</a>
-{% endif %}
-{% endif %}
-{% endfor %}
-{% endblock %}
-
-<!-- hooong -->
-<!-- hooong -->
+<link rel="stylesheet" href="{% static 'promise/css/homeLandscape.css' %}">
 
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
@@ -131,98 +20,78 @@
     </filter>
 </svg>
 
-<style>
-.test {
-background: url('https://images.unsplash.com/photo-1564510714856-4df7dc095cdd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2247&q=80') !important;
-background-size:cover;
-width:350px!important;
-height:150px;
-position: relative!important;
-z-index:0!important;
-/* float:left!important; */
-/* margin:10px!important; */
-overflow:hidden!important;
-border-radius: 6px!important;
-float:left;
-/* box-shadow: 10px 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); */
-}
-.bgBlur:before {
-  
-  content: '';
-  position: absolute;
-  top: -10; left:-10; right:-10; bottom:-10;
-  background: inherit;
-  z-index:-1;
-  filter: blur(1px); 
-  -webkit-filter: blur(1px); 
-  -moz-filter: blur(6px);
-  -o-filter: blur(6px);
-  -ms-filter: blur(6px);
-  filter: url(#blur);
-  
-}
-h1 {
-  color:WHITE;
-  margin:1em;
-}
-svg {
-height:0
-}
-#sub_menu{
-background-color: rgb(55,50,52);
-padding:10px;
-color:#C8D7D2;
-}
-#sub_menu  a:link {color:#C8D7D2;text-decoration: none;} 
-#sub_menu  a:visited{color:#C8D7D2;text-decoration: none;} 
-#sub_menu  a:hover{color:#D84339;text-decoration: none;}
-#sub_menu  a:active{color:#C8D7D2;text-decoration: none;} 
-/* #subMenuLink{
-    display: none;
-} */
-/* div {
-    border:1px solid;
-} */
-</style>
 
 
+<body>
+        
+        
 
-<div style="background-color:#F4F2F0;height: 100%;">
-<div id="sub_menu">
-        {{user.username}}님, 
-        {% if user.profile and user.profile.state_msg != None %}
-            <!-- {{user.profile.state_msg}} -->
-        {% endif %}
-        {% if noti_add_friend %}
-        <strong style="color:#D84339">친구 신청 알림</strong>이 있습니다.
-       
-        {% else %}
-        뭐하세요 친구없는새기야 
-        {% endif %}
-        <div style="float:right;">
-            <span id="subMenuLink">
-                <a href="{% url 'mypage' %}">마이페이지</a> |
-                <a  href="{% url 'logout' %}">로그아웃</a> | 
-                
-            </span>
-                <img style="width:18px;margin-top:-3px;" src="{%static '/promise/icon/alarm.png'%}"/>
-                <div style="position:relative;right:7px;top:0px; float:right;border-radius:50%;width:15px;height:15px;font-size: 10px;background: white;color:black;text-align: center">1</div>
+        <div id="homeRightCon">
+                <div id="myProfiles">
+                        <!-- 프로필 사진 보여주기 -->
+                        <div>
+                            {% if user.profile_image == '' %}
+                            <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
+                            {% else %}
+                            <img style="border-radius:50%"width="60" height="60" src="{{user.thumbnail_image}}" />
+                            {% endif %}
+                        </div>
+                        <div id="myProfileNames">
+                        {{user.username}}<br>
+                        <div id="myProfileIns">{{ user.profile.state_msg }}</div>
+                        
+                        </div>
+                        </div>
+                    
+                        <div class="menu_tabs">
+                                
+                            <ul>
+                                    {% if noti_add_friend %}
+                                    <span id="newControls">
+                                    <span id="newFriendNews">new</span>
+                                    <span id="newFirendBts"></span>
+                                        </span>
+                                        {% endif %}
+                                <li class="actives"><a href="#"; onclick="tab_menus(0);">친구신청</a></li>
+                                <li><a href="#" onclick="tab_menus(1);">몰라시발</a></li>
+                            </ul>
+                        </div>
+                        <div class="menu_tabs0" id="panels" >
+                                {% if not noti_add_friend %}
+                                    너는 친구도없니? <br>
+                                {% endif %}
+                                {% for noti in noti_add_friend %}
+                                    <strong style="color:#D84339">{{noti.send_user}}</strong>님께서 친구 신청을 하였습니다. 
+                                    <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a> | <a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
+                    
+                                {% endfor %}
+                        
+                        </div>
+                        <div class="menu_tabs1" id="panels" style="display:none;">1번내용란</div>
+                        
+                        <script>
+                        function tab_menus(num){
+                            var f = $('.menu_tabs').find('li');
+                            for(var i =0; i<f.length; i++){
+                                if(i==num){
+                                    f.eq(i).addClass('actives');
+                                    $('.menu_tabs' + i).show();
+                                }else{
+                                    f.eq(i).removeClass('actives');
+                                    $('.menu_tabs' + i).hide();
+                                }
+                            }
+                        }
+                        </script>
+            
         </div>
 
-</div>
-
-
-
-
-
-<div style="margin:auto; width:85%; display:flex;margin-top:10px;">
-
-    <div style="flex:3;background-color: white;border:1px solid #d3d5d8;margin-right: 10px;box-sizing: border-box; box-shadow:0 10px 10px #d3d5d8">
         <a href="{% url 'search' %}"> 회원검색 </a>
 
         <h2>약속 댓글 알림</h2>
         {% for noti in noti_promise %}
             {% if noti.com_or_pro == 'p' %}
+            
                 <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
                 <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
             {% elif noti.com_or_pro == 'c' %}
@@ -231,14 +100,6 @@ color:#C8D7D2;
             {% endif %}
         {% endfor %}
             
-        <h2>친구신청 알림</h2>
-        {% if not noti_add_friend %}
-            너는 친구도없니? <br>
-        {% endif %}
-        {% for noti in noti_add_friend %}
-            {{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
-            <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
-        {% endfor %}
 
         <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
         <h2>Other People</h2>
@@ -293,7 +154,8 @@ color:#C8D7D2;
         <br>
         {% endfor %}
         <!-- 약속게시물 -->
-        <h2>Promise(진행중인 약속)</h2>
+        <div>
+        <h2 >Promise(진행중인 약속)</h2>
         <!-- 도착 -->
         {% for arrive in arrives %}
             {% if arrive.promise.end == 0 %}
@@ -306,45 +168,76 @@ color:#C8D7D2;
                     </a>
             {% endif %}
         {% endfor %}
+    </div>
         <hr> 
         <!-- 미도착 -->
         {% for no_arrive in no_arrives %}
             {% if no_arrive.promise.end == 0 %}
-                    <a href="{% url 'detail' pk=no_arrive.promise.id %}">
-                        <div>
-                            {{no_arrive.promise.title}} <br>
-                            {{no_arrive.promise.setting_date_time}} <br>
-                            (미도착) <br>
-                        </div>      
+                    
+                            <div id="{{no_arrive}}" class="prl bgBlur test">
+                                <a href="{% url 'detail' pk=no_arrive.promise.id %}">
+                                    <div class="promiseCard">  {{no_arrive.promise.title}}</div>
+                                        <span>{{no_arrive.promise.setting_date_time}}(미도착)</span>
+                                        <a href="{% url 'detail' pk=no_arrive.promise.id %}"></a>
+                                        <script>
+                                                function handler(ev){
+                                                    var target= $(ev.target);
+                                                    var elId = target.attr('id');
+                                                    if(target.is(".prl *")){
+                                                        $(this).css("box-shadow", "15px 15px 15px rgb(138,148,145)");
+                                                        $(this).css("margin", "8px 12px 12px 8px ");
+                                                    }
+                                                }
+                                            $(".prl").mouseover(handler);
+                                            function hand(ev){
+                                                    var target= $(ev.target);
+                                                    var elId = target.attr('id');
+                                                    if(target.is(".prl *")){
+                                                    $(this).css("box-shadow", "10px 10px 10px rgb(138,148,145)");
+                                                    $(this).css("margin", "10px");
+                                                    }
+                                                }
+                                            $(".prl").mouseleave(hand);
+                                            </script>
+                                
+                                </div>   
+                           
                     </a>
             {% endif %}
         {% endfor %}      
                 
 
 
-
-
-<div>
-        <h2>Promise(시간이 지난 약속)</h2>
-        {% for promise in promises %}
-        {% if user.username == promise.user.username or user.username in promise.party %}
-        {% if promise.end == 1 %}
-        <style type="text/css">
+ <style type="text/css">
             .prl{
                 margin:10px;
                 border-radius:3px;
                 box-shadow:10px 10px 10px rgb(138, 148, 145);
                 text-align: center;
+                padding:20px;
             }
-            </style>
-        <a href="{% url 'detail' pk=promise.id %}">
+            .prl a:hover{text-decoration:none;}
+
+
+</style>
+
+
+    <div>
+        <h2 >Promise(시간이 지난 약속)</h2>
+        {% for promise in promises %}
+        {% if user.username == promise.user.username or user.username in promise.party %}
+        {% if promise.end == 1 %}
+       
+        
             
-            <div id="{{promise}}" class="prl bgBlur test">
-                <div style="text-align:center;font-size:24pt;overflow:auto;color: white;  white-space:nowrap;text-overflow:ellipsis">{{promise.title}}</div>
+            <div id="{{promise}}" class="prl bgBlur test" style="display:inline-block; margin:10px;">
+                    <a href="{% url 'detail' pk=promise.id %}">
+                <div class="promiseCard">{{promise.title}}</div>
                 <span>{{promise.setting_date_time}}</span>
+            </a>
             
             </div>   
-        </a>
+     
                 <script>
                     function handler(ev){
                         var target= $(ev.target);
@@ -352,6 +245,7 @@ color:#C8D7D2;
                         if(target.is(".prl")){
                             $(this).css("box-shadow", "15px 15px 15px rgb(138,148,145)");
                             $(this).css("margin", "8px 12px 12px 8px ");
+                            
                         }
                     }
                 $(".prl").mouseover(handler);
@@ -365,113 +259,18 @@ color:#C8D7D2;
                     }
                 $(".prl").mouseleave(hand);
                 </script>
-
+   
                 {%endif%}
                 {% endif %}
     {% endfor %}
-
 </div>
+
 
 
     </div>
                     
 
-    <div style="flex:0 0 300px;background-color: white; box-shadow: 10px 10px 10px #d3d5d8">
-            <div style="padding:10px;display:flex;margin-bottom: 10px;">
-            <!-- 프로필 사진 보여주기 -->
-            <div>
-                {% if not user.socialaccount_set.all %}
-                {% if not user.profile %}
-                <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
-                {% elif user.profile.image == '' %}
-                <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
-                {% else %}
-                    <img width="60" height="60" src="{{ user.profile.image.url }}" />
-                {% endif %}
-                {% else %}
-                <img style="border-radius:50%"width="60" height="60" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-                {% endif %}
-            </div>
-            <div style="width:100%; margin-left:10px;padding:5px 0 5px 0;">
-            {{user.username}}<br>
-            <div style="width:200px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis">{{ user.profile.state_msg }}</div>
-            
-            </div>
-            </div>
-    
-    
-            <!-- <div style="background:#F4F2F0;padding-left:10px;"><a href="{% url 'mypage' %}">마이페이지</a> |
-                <a  href="{% url 'logout' %}">로그아웃</a> | </div>
-             -->
-
-
-
-
-
-
-
-
-
-                <style>
-                    .menu_tab{width:100%; overflow:hidden;  padding:0px; margin:0px; background-color:#d3d5d8}
-                    .menu_tab ul{padding:0px; margin:0px;}
-                    .menu_tab li{list-style:none; position:relative; float:left; }
-                    .menu_tab li a{display:block;padding:3px 7px 3px 7px;text-decoration:none; text-align:center;width:150px;border:1px solid #d3d5d8; color:#3f3f3f}
-                    .menu_tab li a:hover{text-decoration:none;}
-                    .menu_tab li.active a{background:white; font-weight:bold; color:#333;border-bottom:1px solid white;}
-                    .menu_tab li.active a:hover{text-decoration:none}
-                    #panels {margin:0px 20px 10px 0px;  line-height:1.5em; border-left: 1px solid #d3d5d8;}
-                    .menu_tab0{
-                        padding: 10px;
-                        font-size:10pt;
-                    }
-                </style>
-    
-            <div class="menu_tab">
-                    
-                <ul>
-                        {% if noti_add_friend %}
-                        <span style="position: absolute;">
-                        <span style="position:relative;top:-20;left:60px;z-index:999;font-size:9pt;background-color:#D84339;color:white;padding:1px 2px 1px 2px;">new</span>
-                        <span style="position: relative;top:-21px;left:68px; z-index:1000; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #D84339"></span>
-                            </span>
-                            {% endif %}
-                    <li class="active"><a href="#"; onclick="tab_menu(0);">친구신청</a></li>
-                    <li><a href="#" onclick="tab_menu(1);">몰라시발</a></li>
-                </ul>
-            </div>
-            <div class="menu_tab0" id="panels" >
-                    {% if not noti_add_friend %}
-                        너는 친구도없니? <br>
-                    {% endif %}
-                    {% for noti in noti_add_friend %}
-                        <strong style="color:#D84339">{{noti.send_user}}</strong>님께서 친구 신청을 하였습니다. <br>
-                        <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
-                    {% endfor %}
-            
-            </div>
-            <div class="menu_tab1" id="panels" style="display:none;">1번내용란</div>
-            
-            <script>
-            function tab_menu(num){
-                var f = $('.menu_tab').find('li');
-                for(var i =0; i<f.length; i++){
-                    if(i==num){
-                        f.eq(i).addClass('active');
-                        $('.menu_tab' + i).show();
-                    }else{
-                        f.eq(i).removeClass('active');
-                        $('.menu_tab' + i).hide();
-                    }
-                }
-            }
-            </script>
-
-
-
-
-
-</div>
+ 
 
 
 
@@ -499,4 +298,6 @@ color:#C8D7D2;
 
 
 
+</body>
 {% endblock %}
+
