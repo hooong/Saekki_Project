@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login, authenticate
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm
+from saekki_pro.settings import config_secret_common
 import requests, json
 
 User = get_user_model()
@@ -78,7 +79,7 @@ def oauth(request):
 def kakao(request):
     login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
 
-    client_id = '09b888bc3a04b222b82daa121e425e1f'
+    client_id = config_secret_common['kakao']['client_id']
     redirect_uri = 'http://127.0.0.1:8000/oauth'
     
     login_request_uri += 'client_id=' + str(client_id)

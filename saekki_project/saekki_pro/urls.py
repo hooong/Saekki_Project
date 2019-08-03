@@ -26,8 +26,7 @@ urlpatterns = [
     path('promise/', include('promise.urls')),
     path('', promise.views.home, name = 'home'),
     path('aboutus/', promise.views.aboutus, name = 'aboutus'),
-    path('accounts_s/', include('accounts.urls')),
-    # url(r'^accounts/', include('allauth.urls')),
+    path('accounts/', include('accounts.urls')),
     
     # 카카오로그인
     path('kakao/', accounts.views.kakao, name='kakao'),

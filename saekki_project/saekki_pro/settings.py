@@ -47,13 +47,6 @@ INSTALLED_APPS = [
     'promise',
     'accounts',
     'django_apscheduler',
-
-    # # allauth 추가
-    # 'django.contrib.sites',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.kakao',
 ]
 
 MIDDLEWARE = [
@@ -159,17 +152,4 @@ AUTH_USER_MODEL = 'accounts.User'
 
 APSCHEDULER_DATETIME_FORMAT =  "N j, Y, f:s a"
 
-# allauth 추가
-AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend', # 기본 인증 백엔드
-# 'allauth.account.auth_backends.AuthenticationBackend', # 추가 
-]
-# 디폴트 SITE의 id
-# 등록하지 않으면,각 요청 시에 host명의 Site 인스턴스를 찾습니다.
-# SITE_ID =1
-# # 이메일 확인을 하지 않음.
-# SOCIALACCOUNT_EMAIL_VERIFICATION = 'none' # 아니면  smtp 로 설정
-# SOCIALACCOUNT_AUTO_SIGNUP = True
-
-# SOCIALACCOUNT_FORMS = {
-#     'signup': 'accounts.forms.CustomSignupForm',
-# }
+AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend',]
