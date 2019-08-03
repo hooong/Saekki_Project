@@ -25,7 +25,7 @@
 @media all and (orientation:portrait){
     #pickerDiv{
         display:flex;
-        flex-direction: column-reverse
+        flex-direction: column-reverse;
         
     }
     #map{

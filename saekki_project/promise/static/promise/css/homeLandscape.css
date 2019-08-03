@@ -60,9 +60,10 @@
         text-align:center;font-size:24pt;overflow:auto;color: white;  white-space:nowrap;text-overflow:ellipsis;
     }
 
+    
 @media all and (orientation:portrait){
     #homeRightCon{margin-bottom:10px;}
-    #myProfiles{padding:10px;display:flex;margin-bottom: 10px;}
+    #myProfiles{padding:10px;display:flex;}
     #myProfileNames{width:100%; margin-left:10px;padding:5px 0 5px 0;}
     #myProfileIns{width:200px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis}
 
