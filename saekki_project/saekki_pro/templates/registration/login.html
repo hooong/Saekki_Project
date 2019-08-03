@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load socialaccount %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +25,9 @@
 
 <body>
 
+<a href="{% url 'kakao' %}">카카오로그인</a>
+<img src="{{ STATIC_ROOT }}">
+
 <div class="section">
     <div class="wow slideInLeft">
     <div class="section__item" style="width:80%;float:left;">
@@ -34,11 +36,6 @@
         </a>
     </div>
     </div>
-    <!-- <div class="section__item" style="width:33%;float:right;text-align:right">
-        <a href="{% url 'signup' %}" class="sm-link sm-link_padding-all sm-link1">
-            <span class="sm-link__label">Sign Up</span>
-        </a>
-    </div> -->
 </div>
 
 <div id="lgbox">
@@ -47,7 +44,7 @@
         <img width="200px" src="{% static 'saekki_pro/logo.png' %}" style="margin-top:100px" >
     </div>
     <!-- 로그인 폼 -->
-	<form class="lg_element" method="POST" action="{% url 'login' %}" class="sign-in-form">
+	<form class="lg_element" method="POST" action="#" class="sign-in-form">
         {%csrf_token%}
         <h2 class="sub-title wh"> 로그인 </h2>
 
@@ -83,11 +80,10 @@
 	<!-- <img class="lg_element" src="https://developers.kakao.com/assets/img/about/logos/kakaologin/kr/kakao_account_login_btn_medium_wide.png"> -->
     <div class="lg_element" id="lgdiv">
     <span style="flex:none"></span>
-    <span id="lgspan"><a href="{% url 'signup' %}">회원가입</a></span>
+    <span id="lgspan"><a href="#">회원가입</a></span>
     </div>
     <div class="lg_element" id="lgdiv">
     <span style="flex:none"></span>
-    <span id="lgspan"><a href="{% provider_login_url 'kakao' %}">카카오로그인</a></span>
     </div>
 </div>
 <div class="tail" ><a href="{% url 'aboutus' %}">About Us</a></div>

@@ -19,14 +19,18 @@ from django.urls import path, include
 import promise.views
 from django.conf import settings
 from django.conf.urls.static import static
+import accounts.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('promise/', include('promise.urls')),
     path('', promise.views.home, name = 'home'),
     path('aboutus/', promise.views.aboutus, name = 'aboutus'),
-    path('accounts_s/', include('accounts.urls')),
-    url(r'^accounts/', include('allauth.urls')),
+    path('accounts/', include('accounts.urls')),
+    
+    # 카카오로그인
+    path('kakao/', accounts.views.kakao, name='kakao'),
+    path('oauth/', accounts.views.oauth, name='oauth'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

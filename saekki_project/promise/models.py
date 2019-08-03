@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from saekki_pro import settings
 from django.contrib.postgres.fields import ArrayField
 
 # 약속게시물
 class Promise(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
@@ -24,15 +25,15 @@ class Promise(models.Model):
 
 # 약속게시물 내 댓글
 class Promise_Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     promise = models.ForeignKey(Promise, on_delete=models.CASCADE, related_name="comments")
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 # 친구 model
 class Friend(models.Model):
-    users = models.ManyToManyField(User)
-    current_user = models.ForeignKey(User, related_name='owner', null=True, on_delete=models.CASCADE)
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    current_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='owner', null=True, on_delete=models.CASCADE)
 
     @classmethod
     def make_friend(cls, current_user, new_friend):
@@ -51,7 +52,7 @@ class Friend(models.Model):
 # 도착여부를 확인하기위한 모델
 class Party_detail(models.Model):
     promise = models.ForeignKey(Promise, related_name='party_detail', null=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
 
     # 성공여부
     success_or_fail = models.PositiveSmallIntegerField(default=0)
@@ -60,13 +61,13 @@ class Party_detail(models.Model):
 
 # 친구신청 알림 모델
 class Notification_friend(models.Model):
-    send_user = models.ForeignKey(User, related_name='firend_send_user', null=True, on_delete=models.CASCADE)
-    receive_user = models.ForeignKey(User, related_name='firend_receive_user', null=True, on_delete=models.CASCADE)
+    send_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='firend_send_user', null=True, on_delete=models.CASCADE)
+    receive_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='firend_receive_user', null=True, on_delete=models.CASCADE)
 
 # 약속,댓글 알림 모델
 class Notification_promise(models.Model):
-    send_user = models.ForeignKey(User, related_name='promise_send_user', null=True, on_delete=models.CASCADE)
-    receive_user = models.ForeignKey(User, related_name='promise_receive_user', null=True, on_delete=models.CASCADE)
+    send_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='promise_send_user', null=True, on_delete=models.CASCADE)
+    receive_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='promise_receive_user', null=True, on_delete=models.CASCADE)
     promise = models.ForeignKey(Promise, related_name='promise_noti', null=True, on_delete=models.CASCADE)
     com_or_pro = models.CharField(max_length=1, null=True)
 

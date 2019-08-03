@@ -2,10 +2,123 @@
 {% load staticfiles %}
 {% block contents %}
 
-{% load socialaccount %}
-{% get_social_accounts user as accounts %}
 
 <link rel="stylesheet" href="{% static 'promise/css/homeLandscape.css' %}">
+
+<p>{{user.name}}님,</p>
+
+<a href="{% url 'search' %}"> 회원검색 </a>
+
+<!-- 프로필 사진 보여주기 -->
+<!-- 프사 띄워주는 곳 -->
+{% if user.profile_image == '' %}
+스태틱
+{% else %}
+<img src="{{user.thumbnail_image}}" alt="">
+{% endif %}
+
+<a href="{% url 'new' %}">
+<button>글쓰기</button>
+</a>
+
+<a href="{% url 'logout' %}">로그아웃</a>
+<a href="{% url 'mypage' %}">마이페이지</a>
+
+<h2>약속 댓글 알림</h2>
+{% for noti in noti_promise %}
+    {% if noti.com_or_pro == 'p' %}
+        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
+        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+    {% elif noti.com_or_pro == 'c' %}
+        <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
+        <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+    {% endif %}
+{% endfor %}
+
+<h2>친구신청 알림</h2>
+{% for noti in noti_add_friend %}
+    {{noti.send_user}}님께서 친구 신청을 하였습니다. <br>
+    <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a><a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
+{% endfor %}
+
+
+<!-- 친구목록 -->
+<h2>friends</h2>
+{% for friend in friends %}
+    {% if not friend.socialaccount_set.all %}
+        {% if not friend.profile %}
+            스태틱
+        {% elif friend.profile.image == '' %}
+            스태틱
+        {% else %}
+            <img width="50" height="50" src="{{ friend.profile.image.url }}" />
+        {% endif %}
+    {% else %}
+    <img width="50" height="50" src="{{ friend.socialaccount_set.all.0.get_avatar_url }}" />
+    {% endif %}
+
+{{ friend.name }}
+{% if friend.profile and friend.profile.state_msg != None %}
+    {{friend.profile.state_msg}}
+{% endif %}
+<a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
+    <button>친구해제</button>
+</a>
+<br>
+{% endfor %}
+
+<!-- 약속게시물 -->
+<h2>Promise(진행중인 약속)</h2>
+<!-- 도착 -->
+{% for arrive in arrives %}
+    {% if arrive.promise.end == 0 %}
+            <a href="{% url 'detail' pk=arrive.promise.id %}">
+                <div>
+                    {% if arrive.promise.soon %}
+                        {{arrive.promise.soon}}시간도 안남았어요! <br>
+                    {% endif %}
+                    {{arrive.promise.title}} <br>
+                    {{arrive.promise.setting_date_time}} <br>
+                    (도착) <br>
+                </div>      
+            </a>
+    {% endif %}
+{% endfor %}
+<hr> 
+<!-- 미도착 -->
+{% for no_arrive in no_arrives %}
+    {% if no_arrive.promise.end == 0 %}
+            <a href="{% url 'detail' pk=no_arrive.promise.id %}">
+                <div>
+                    {% if no_arrive.promise.soon %}
+                        {{no_arrive.promise.soon}}시간도 안남았어요! <br>
+                    {% endif %}
+                    {{no_arrive.promise.title}} <br>
+                    {{no_arrive.promise.setting_date_time}} <br>
+                    (미도착) <br>
+                </div>      
+            </a>
+    {% endif %}
+{% endfor %}      
+        
+
+<h2>Promise(시간이 지난 약속)</h2>
+{% for promise in promises %}
+{% if user.name == promise.user.name or user.name in promise.party %}
+{% if promise.end == 1 %}
+<a href="{% url 'detail' pk=promise.id %}">
+    <div>
+        {{promise.title}} <br>
+        {{promise.setting_date_time}}
+    </div>      
+</a>
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endblock %}
+
+<!-- hooong -->
+<!-- hooong -->
 
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
@@ -304,4 +417,3 @@
 
 </body>
 {% endblock %}
-

@@ -117,7 +117,7 @@
         <!-- 참여인원 input -->
         {% for friend in friends %}
         <div class="friendsList">
-        <input type="checkbox" name="party_friend[]" value="{{friend}}"> {{friend.username}}
+        <input type="checkbox" name="party_friend[]" value="{{friend.uid}}"> {{friend.name}}
         </div>
         {% endfor %}
     </div>

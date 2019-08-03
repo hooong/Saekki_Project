@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.views.generic.edit import FormView
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from .forms import *
 from .models import *
+
+User = get_user_model()
 
 # index_page
 def home(request):
@@ -16,7 +18,7 @@ def home(request):
     else:
         if len(Friend.objects.filter(current_user=request.user)) == 0:
             Friend.objects.create(current_user=request.user)
-        users = User.objects.exclude(id=request.user.id)
+        users = User.objects.exclude(uid=request.user.uid)
         friend = Friend.objects.get(current_user=request.user)
         friends = friend.users.all()
         promises = Promise.objects.all()
@@ -32,7 +34,7 @@ def home(request):
         noti_add_friendc = noti_add_friend.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
-            noti_wait_friend.append(wait.receive_user.username)
+            noti_wait_friend.append(wait.receive_user.uid)
 
         return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
@@ -48,12 +50,12 @@ def search(request):
         friends = friend.users.all()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=request.user):
-            noti_wait_friend.append(wait.receive_user.username)
-        qs = User.objects.all().exclude(username=request.user.username).exclude(username='admin')
+            noti_wait_friend.append(wait.receive_user.uid)
+        qs = User.objects.all().exclude(uid=request.user.uid).exclude(uid='admin')
 
         q = request.GET.get('q', '') # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
         if q: # q가 있으면
-            qs = qs.filter(username__icontains=q) # 제목에 q가 포함되어 있는 레코드만 필터링
+            qs = qs.filter(name__icontains=q) # 제목에 q가 포함되어 있는 레코드만 필터링
 
         return render(request, 'search.html', {
             'user_list' : qs,
@@ -97,28 +99,28 @@ def new_comment(request, promise_id):
                 # 댓글 알림
                 user = request.user
                 parties = promise.party
-                if promise.user.username == user.username:
+                if promise.user.email == user.email:
                     for party in parties:
                         noti = Notification_promise()
                         noti.send_user = request.user
-                        noti.receive_user = User.objects.get(username=party)
+                        noti.receive_user = User.objects.get(email=party)
                         noti.promise = promise
                         noti.com_or_pro = 'c'
                         noti.save()
                 else:
                     noti = Notification_promise()
                     noti.send_user = request.user
-                    noti.receive_user = User.objects.get(username=promise.user.username)
+                    noti.receive_user = User.objects.get(email=promise.user.email)
                     noti.promise = promise
                     noti.com_or_pro = 'c'
                     noti.save()
                     for party in parties:
-                        if party is user.username:
+                        if party is user.email:
                             pass
                         else:
                             noti = Notification_promise()
                             noti.send_user = request.user
-                            noti.receive_user = User.objects.get(username=party)
+                            noti.receive_user = User.objects.get(email=party)
                             noti.promise = promise
                             noti.com_or_pro = 'c'
                             noti.save()
@@ -154,7 +156,7 @@ def new(request):
                 for party in parties:
                     noti = Notification_promise()
                     noti.send_user = request.user
-                    noti.receive_user = User.objects.get(username=party)
+                    noti.receive_user = User.objects.get(uid=party)
                     noti.promise = promise
                     noti.com_or_pro = 'p'
                     noti.save()
@@ -163,7 +165,7 @@ def new(request):
                 for party in parties:
                     p = Party_detail()
                     p.promise = promise
-                    p.user = User.objects.get(username=party)
+                    p.user = User.objects.get(uid=party)
                     p.save()
                 p = Party_detail()
                 p.promise = promise
