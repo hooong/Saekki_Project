@@ -152,7 +152,4 @@ AUTH_USER_MODEL = 'accounts.User'
 
 APSCHEDULER_DATETIME_FORMAT =  "N j, Y, f:s a"
 
-# allauth 추가
-AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend', # 기본 인증 백엔드
-
-]
+AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend',]
