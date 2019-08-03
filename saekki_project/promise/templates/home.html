@@ -30,15 +30,17 @@
                 <div id="myProfiles">
                         <!-- 프로필 사진 보여주기 -->
                         <div>
-                            {% if user.profile_image == '' %}
-                            <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
-                            {% else %}
-                            <img style="border-radius:50%"width="60" height="60" src="{{user.thumbnail_image}}" />
-                            {% endif %}
-                        </div>
-                        <div id="myProfileNames">
-                        {{user.username}}<br>
-                        <div id="myProfileIns">{{ user.profile.state_msg }}</div>
+                           
+        {% if user.profile_image == '' %}
+        <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
+        {% else %}
+        <img style="border-radius:50%" width="60" height="60" src="{{user.thumbnail_image}}" />
+        {% endif %}
+
+    </div>
+    <div id="myProfileNames">
+    {{user.name}}<br>
+    <div id="myProfileIns">{{ user.state_msg  }}</div>
                         
                         </div>
                         </div>

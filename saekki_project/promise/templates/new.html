@@ -142,9 +142,9 @@
         <div class="divContainer">
         <div class="new_tab" >
             <ul>
-                <li class="chapter"><a href="#" onclick="new_tab_script(0)"><div class="new_order0" style="display: inline;">0 글 작성</div> </a></li>
-                <li class="chapter"><a href="#" onclick="new_tab_script(1)"><div class="new_order1" style="display: inline;">1 시간 선택</div></a></li> 
-                <li class="chapter"><a href="#" onclick="new_tab_script(2)"><div class="new_order2" style="display: inline;">2 장소 선택</div></a></li>
+                <li class="chapter"><a href="#" onclick="new_tab_script(0)"><div class="new_order0" style="display: inline;">1. 글 작성</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li>
+                <li class="chapter"><a href="#" onclick="new_tab_script(1)"><div class="new_order1" style="display: inline;">2. 시간 선택</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li> 
+                <li class="chapter"><a href="#" onclick="new_tab_script(2)"><div class="new_order2" style="display: inline;">3. 장소 선택</div></a></li>
             </ul>
         </div>
         </div>
@@ -180,7 +180,7 @@
             
 
                 <div class="col-lg-6">
-                <h2>날짜 선택 select</h2>
+                <h2>2. 날짜 및 시간 선택</h2>
                 <div id="pickerDiv">
                     <div id="pickerInput">
                         <input  value="날짜 및 시간을 선택해주세요" style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" readonly/>
@@ -216,10 +216,11 @@
         <div class="new_tab02" id="panel_new" style="display:none;">
   
 
-
+                <h2 style="margin-left:10px;">3. 장소 선택</h2>
          
                  <!-- 지도 띄우기 -->
                  <div class="divContainer">
+                        
                         <div id="map">
                             
                         </div>
