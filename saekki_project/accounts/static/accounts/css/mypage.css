@@ -1,6 +1,16 @@
 /* 프로필 부분 */
 
-
+@media all and (orientation:landscape){
+    .profile-body{
+        display:flex;
+    }
+}
+@media all and (orientation:portrait){
+    .profile-body{
+        display:flex;
+        flex-direction:column;
+    }
+}
 .profile-head{
     padding: .75rem 1.25rem;
     margin-bottom: 0;
@@ -16,23 +26,23 @@
     text-align:center;
     border-right: 1px solid  rgba(167, 144, 144, 0.5) ;
     padding: 1rem;
-    
+ 
 }
-.profile-body{
-    display:flex;
-}
+
 .profile-text{
+    width:100%;
     padding: 1rem;    
 }
 .profile-statemessage{
     border: 1px solid rgba(203, 175, 175, 0.5);
     height:10rem;
-    width: 55.5rem;
+    width: 100%;
 }
-.imgbox2{
+.imgbox{
     /* padding-top:1rem; */
-    border: 1px solid  rgba(0, 0, 0, 0.5);
-    max-height: 12rem; max-width:12rem;
+    
+    
+    max-height: 12rem;
 }
 .cccc{
     margin:0 auto;
@@ -56,4 +66,7 @@
     margin-right:1rem;
     margin-left:1rem;
     
+}
+textarea[readonly]{
+    color:gray;
 }
