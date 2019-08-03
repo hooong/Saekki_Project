@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'saekki_pro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'saekki_2',				
+        'NAME': 'saekki_deploy',				
         'USER': config_secret_common['django']['db_user'],			
         'PASSWORD': config_secret_common['django']['db_pw'],		
         'HOST': config_secret_common['django']['db_host'],
