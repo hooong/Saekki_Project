@@ -19,8 +19,7 @@
 <pre>
 - django
 - psycopg2
-- django-apscheduler
-- django-allauth  
+- django-apscheduler 
 - pillow
 - 일단 생각나는거 여기까지 만약에 뭔가가 no module뜨면 찾아보고 채워넣기
 - DB는 PostgresQL 사용!!
@@ -30,9 +29,6 @@
 ### accounts app
 <pre>
 - 사용자 계정 관리 app
-
-- `signup.html`관리, auth 폼 꾸미기
-- `login.html`은 `saekki_pro/templates/registration`에 있음
 </pre>
 
 
