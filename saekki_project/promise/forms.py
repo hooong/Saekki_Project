@@ -11,12 +11,16 @@ class PromiseForm(forms.ModelForm):
 
         labels = {
             'title': '제목',
+                
             'content': '약속내용',
         }
+
         #form css class, id 입히기
+
     def __init__(self, *args, **kwargs):
         super(PromiseForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs['class'] = 'form-control formInput'
+        
         self.fields['content'].widget.attrs['class'] = 'form-control formInput'
 
 class Promise_CommentForm(forms.ModelForm):

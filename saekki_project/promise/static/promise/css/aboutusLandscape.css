@@ -95,11 +95,11 @@
         height:40vh;
         width: 100%;
         object-fit: cover;
-        z-index:-1000;
+        z-index:1;
         top:55px;
     }
-    #allbody{
-        background-color:rgb(244,242,240);
+    body{
+        background-color:black;
         color:#c8d7d2;
     }
 
@@ -204,8 +204,8 @@
         object-fit: cover;
         z-index:-1000;
     }
-    #allbody{
-        background-color:rgb(244,242,240);
+    body{
+        background-color:black;
         color:#c8d7d2;
     }
 }
