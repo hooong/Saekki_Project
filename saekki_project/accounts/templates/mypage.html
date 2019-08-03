@@ -26,31 +26,19 @@
             <div class="profile-body">
                 <div class="profile-img">
                     <div class="imgbox">
-                        {% if not user.socialaccount_set.all %}
-                            {% if not user.profile %}
-                                스태틱
-                            {% elif user.profile.image == '' %}
-                                스태틱
-                            {% else %}
-                                <img width="150" height="200" src="{{ user.profile.image.url }}" />
-                            {% endif %}
-                        {% else %}
-                            <img width="150" height="200" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="imgbox2" alt="프로필"/>
-                        {% endif %}
+                       
                             </div>
                     <!-- TODO: 수정에는 이미지 업로드 폼! 그리고 카카오 로그인일때는 수정불가. -->
                     <form action="#" style="padding-top:1rem;"><input type=submitP value="수정"></form>
                 </div>
                 <div class="profile-text">
-                    <p style="font-size: 1.2vw;"><strong style="color:black;"> {{user.username}}</strong></p>
+                    <p style="font-size: 1.2vw;"><strong style="color:black;"> {{user.name}}</strong></p>
                     <p style="margin-bottom : 0rem;">{{user.email}}</p>
                     <p>넣고싶은 정보 뭐가있을지 모르겠다 ex)닉네임 ?</p>
-                    {% if not user.profile %}
-                        <div class="profile-statemessage">상태메세지를 입력해주세요.</div>
-                    {% elif user.profile.state_msg is None %}
+                    {% if user.state_msg == '' %}
                         <div class="profile-statemessage">상태메세지를 입력해주세요.</div>
                     {% else %}
-                        <div class="profile-statemessage">{{ user.profile.state_msg }}</div>
+                        <div class="profile-statemessage">{{ user.state_msg }}</div>
                     {% endif %}
                     <a href="{% url 'mypage_mod' %}">상태메시지 수정하기</a>
                 </div>

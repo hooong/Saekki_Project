@@ -16,7 +16,7 @@
         display:none;
     }
     #leftCon{
-        flex:1 0 95%;
+        flex:1 1 95%;
         
         background-color: white;border:1px solid #d3d5d8;
         box-sizing: border-box; /* 여백 적용을 box내에서*/

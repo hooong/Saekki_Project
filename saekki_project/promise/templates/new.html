@@ -11,12 +11,14 @@
     
     <!-- 지도관련 script -->
     <script>
-
+    var ifyoufirst=0;
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
     function init()
     {
         window.navigator.geolocation.getCurrentPosition(current_position);
+        
+        ifyoufirst++;
     }
 
     function current_position(position)
@@ -101,109 +103,194 @@
             }    
         }
     }
-    window.addEventListener("load", init);
+    
     </script>
 </head>
 <body>
-        <div class="divContainer"><div id="logoDiv"><img src="{% static 'promise/logo.jpg' %}" id="logo"></div></div>
-    <div class="divContainer">
-        
-    <form method="POST" name='new_form' id="createForm">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-
-        <!-- 참여인원 input -->
-        {% for friend in friends %}
-        <div class="friendsList">
-        <input type="checkbox" name="party_friend[]" value="{{friend.uid}}"> {{friend.name}}
+        <script>
+                function new_tab_script(num){
+                    var f = $('.new_tab').find('li');
+                    if(num==0){ $( '.new_order0' ).css( "color", "#D84339" );$( '.new_order1' ).css( "color", "gray" );$( '.new_order2').css( "color", "gray" );}
+                    if(num==1){ $( '.new_order0' ).css( "color", "gray" );$( '.new_order1' ).css( "color", "#D84339" );$( '.new_order2').css( "color", "gray" );}
+                    if(num==2){ $( '.new_order0' ).css( "color", "gray" );$( '.new_order1' ).css( "color", "gray" );$( '.new_order2').css( "color", "#D84339" );}
+                    for(var i =0; i<f.length; i++){
+                     
+                        if(i==num){
+                            if(i==2 ){
+                                if(ifyoufirst==0){ //지도 pick 날아가는현상 해결
+                                    init();
+                                }
+                                
+                                f.eq(i).addClass('active');
+                                $('.new_tab0' + i).show(); 
+                                $('#new_tabArea'+i).show();
+                            }else{
+                            f.eq(i).addClass('active');
+                            $('.new_tab0' + i).show();
+                            $('#new_tabArea'+i).show();
+                            }
+                        }else{
+                            f.eq(i).removeClass('chapter');
+                            $('.new_tab0' + i).hide();
+                            $('#new_tabArea'+i).hide();
+                            
+                        }
+                    }
+                    
+                }
+                </script>
+        <div class="divContainer">
+        <div class="new_tab" >
+            <ul>
+                <li class="chapter"><a href="#" onclick="new_tab_script(0)"><div class="new_order0" style="display: inline;">0 글 작성</div> </a></li>
+                <li class="chapter"><a href="#" onclick="new_tab_script(1)"><div class="new_order1" style="display: inline;">1 시간 선택</div></a></li> 
+                <li class="chapter"><a href="#" onclick="new_tab_script(2)"><div class="new_order2" style="display: inline;">2 장소 선택</div></a></li>
+            </ul>
         </div>
-        {% endfor %}
-    </div>
-        <!-- 날짜시간선택__ -->
+        </div>
+<!-- <div class="divContainer"><div id="logoDiv"><img src="{% static 'promise/logo.jpg' %}" id="logo"></div></div> -->
+<form method="POST" name='new_form' id="createForm">
+    <div class="divContainer" id="new_tabArea0">
+            
+        <div class="new_tab00" id="panel_new">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <!-- 참여인원 input -->
+                {% for friend in friends %}
+                <div class="friendsList">
+                <input type="checkbox" name="party_friend[]" value="{{friend.uid}}"> {{friend.name}}
+                </div>
+                {% endfor %}
+                <div class="new_tab">
+                       
+                           
+                            <span class="chapter"><a href="#" onclick="new_tab_script(1)">다음</a></span>
+    
+                        
+                    </div>
+
+            </div>
+        </div>
+        <div class="new_tab01" id="panel_new" style="display:none;">
+                 <!-- 날짜시간선택__ -->
         <div class="css-script-clear">
 
             
 
-            <div class="col-lg-6">
-            <h2>날짜 선택 select</h2>
-            <div id="pickerDiv">
-                <div id="pickerInput">
-                    <input  value="날짜 및 시간을 선택해주세요" style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" readonly/>
+                <div class="col-lg-6">
+                <h2>날짜 선택 select</h2>
+                <div id="pickerDiv">
+                    <div id="pickerInput">
+                        <input  value="날짜 및 시간을 선택해주세요" style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" readonly/>
+                    </div>
+                    <div id="pickerspace"></div>
                 </div>
-                <div id="pickerspace"></div>
+                <div class="new_tab">
+                        
+                                <span class="chapter" style="float:left"><a href="#" onclick="new_tab_script(0)">이전</a></span>
+                            <span class="chapter"><a href="#" onclick="new_tab_script(2)">다음</a></span>
+    
+                        
+                    </div>
+                </div>
             </div>
-            
-            </div>
+      
+            <script>
+                tail.DateTime("#datetimeDemo", {
+                    static: "#datetime-demo-holder",   /* Used for demonstration */
+                    position: "#pickerspace",
+                    classNames: "theme-default",    /* Used for demonstration */
+                    startOpen: true,                /* Used for demonstration */
+                    stayOpen: true,                 /* Used for demonstration */
+                });
+    
+    
+            </script>
         </div>
-        <script>
-            tail.DateTime("#datetimeDemo", {
-                static: "#datetime-demo-holder",   /* Used for demonstration */
-                position: "#pickerspace",
-                classNames: "theme-default",    /* Used for demonstration */
-                startOpen: true,                /* Used for demonstration */
-                stayOpen: true,                 /* Used for demonstration */
-            });
-
-
-        </script>
-
-        <!-- 위도 경도 input -->
-        <input type="hidden" name='addr_lat' value=''>
+                     <!-- 위도 경도 input -->
+                   
+                       <input type="hidden" name='addr_lat' value=''>
         <input type="hidden" name='addr_lng' value=''>
+        <div class="new_tab02" id="panel_new" style="display:none;">
+  
 
-        <!-- 지도 띄우기 -->
-        <div class="divContainer">
-        <div id="map"></div></div>
-        <div class="divContainer">
-        <input style="width:800px; height:100px;" type="button" value="확인" onclick="checkform()">
-        <!-- <button onclick="" type='button'>확인</button> -->
+
+         
+                 <!-- 지도 띄우기 -->
+                 <div class="divContainer">
+                        <div id="map">
+                            
+                        </div>
+                 </div>
+                 <div class="divContainer">
+                        <div class="new_tab">
+                                        <span class="chapter" style="float:left"><a href="#" onclick="new_tab_script(1)">이전</a></span>
+                                    
+
+                                
+                            </div>
+                        </div>
+                 <div class="divContainer">
+                 <input class="inputform" type="button" value="확인" onclick="checkform()">
+                 <!-- <button onclick="" type='button'>확인</button> -->
+                 </div>
+                 <!-- submit 전에 form 양식 맞췄는지?-->
+        
         </div>
-        <!-- submit 전에 form 양식 맞췄는지?-->
+
+
         <script>
-        function checkform(){
-            var timeTmp = document.getElementById('datetimeDemo').value;
-            var d = new Date();
-            
-            var cur_time = leadingZeros(d.getFullYear(), 4) +
-                    leadingZeros(d.getMonth() + 1, 2) +
-                    leadingZeros(d.getDate(), 2) +
-                    leadingZeros(d.getHours(), 2) +
-                    leadingZeros(d.getMinutes(), 2) +
-                    leadingZeros(d.getSeconds(), 2);
-
-            var set_time = timeTmp.replace("-","");
-            set_time = set_time.replace("-","");
-            set_time = set_time.replace(" ","");
-            set_time = set_time.replace(":","");
-            set_time = set_time.replace(":","");
-
-            if(cur_time < set_time){
-                i
-                if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
-                    document.new_form.submit();
-                }else{
+                function checkform(){
+                    var timeTmp = document.getElementById('datetimeDemo').value;
+                    var d = new Date();
                     
-                    return false;
+                    var cur_time = leadingZeros(d.getFullYear(), 4) +
+                            leadingZeros(d.getMonth() + 1, 2) +
+                            leadingZeros(d.getDate(), 2) +
+                            leadingZeros(d.getHours(), 2) +
+                            leadingZeros(d.getMinutes(), 2) +
+                            leadingZeros(d.getSeconds(), 2);
+        
+                    var set_time = timeTmp.replace("-","");
+                    set_time = set_time.replace("-","");
+                    set_time = set_time.replace(" ","");
+                    set_time = set_time.replace(":","");
+                    set_time = set_time.replace(":","");
+        
+                    if(cur_time < set_time){
+                        i
+                        if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
+                            document.new_form.submit();
+                        }else{
+                            
+                            return false;
+                        }
+                    } else{
+                        alert("약속 시간이 현재보다 이전입니다.");
+                        return false;
+                    }
                 }
-            } else{
-                alert("약속 시간이 현재보다 이전입니다.");
-                return false;
-            }
-        }
+        
+                function leadingZeros(n, digits) {
+                    var zero = '';
+                    n = n.toString();
+        
+                    if (n.length < digits) {
+                        for (i = 0; i < digits - n.length; i++)
+                        zero += '0';
+                    }
+                    return zero + n;
+                }
+                </script>
 
-        function leadingZeros(n, digits) {
-            var zero = '';
-            n = n.toString();
+   
 
-            if (n.length < digits) {
-                for (i = 0; i < digits - n.length; i++)
-                zero += '0';
-            }
-            return zero + n;
-        }
-        </script>
+
+       
+
+       
         
     </form>
 </div>

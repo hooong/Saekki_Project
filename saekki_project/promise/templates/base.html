@@ -45,7 +45,7 @@
 
   
       <div id="sub_menu">
-              {{user.username}}님, 
+            {{user.name}}님, 
               {% if user.profile and user.profile.state_msg != None %}
                   <!-- {{user.profile.state_msg}} -->
               {% endif %}
@@ -77,21 +77,17 @@
     <div id="myProfile">
     <!-- 프로필 사진 보여주기 -->
     <div>
-        {% if not user.socialaccount_set.all %}
-        {% if not user.profile %}
-        <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
-        {% elif user.profile.image == '' %}
+
+        {% if user.profile_image == '' %}
         <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
         {% else %}
-            <img width="60" height="60" src="{{ user.profile.image.url }}" />
+        <img style="border-radius:50%"width="60" height="60" src="{{user.thumbnail_image}}" />
         {% endif %}
-        {% else %}
-        <img style="border-radius:50%"width="60" height="60" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-        {% endif %}
+
     </div>
     <div id="myProfileName">
-    {{user.username}}<br>
-    <div id="myProfileIn">{{ user.profile.state_msg }}</div>
+    {{user.name}}<br>
+    <div id="myProfileIn">{{ user.state_msg  }}</div>
     
     </div>
     </div>
