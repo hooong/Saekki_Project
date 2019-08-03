@@ -1,11 +1,95 @@
 .navbar{
     box-shadow: 0 0 7px;
     padding-left:80px;
-
+    background-color:white;
 }
 @media all and (orientation:portrait){
+    #bodyCon{ margin:auto; width:95%; display:flex; margin-top:10px;}
     .navbar{
         box-shadow: 0 0 7px;
         padding-left:10px;
     }
+    #rightCon{
+        display:none;
+    }
+    #rightCon *{
+        display:none;
+    }
+    #leftCon{
+        flex:1 0 95%;
+        
+        background-color: white;border:1px solid #d3d5d8;
+        box-sizing: border-box; /* 여백 적용을 box내에서*/
+        box-shadow:0 10px 10px #d3d5d8
+    }
+    #subMenuLink{
+        display:none;
+    }
 }
+@media all and (orientation:landscape){
+    #bodyCon{ margin:auto; width:85%; display:flex; margin-top:10px;}
+
+    #leftCon{
+        flex:3;
+        background-color: white;border:1px solid #d3d5d8;margin-right: 10px;
+        box-sizing: border-box; /* 여백 적용을 box내에서*/
+        box-shadow:0 10px 10px #d3d5d8
+    }
+    #rightCon{
+        flex:0 0 300px;background-color: white; box-shadow: 10px 10px 10px #d3d5d8;height:50%
+    }
+    #myProfile{padding:10px;display:flex;margin-bottom: 10px;}
+    #myProfileName{width:100%; margin-left:10px;padding:5px 0 5px 0;}
+    #myProfileIn{width:200px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis}
+    
+    .menu_tab{width:100%; overflow:hidden;  padding:0px; margin:0px; background-color:#d3d5d8}
+    .menu_tab ul{padding:0px; margin:0px;}
+    .menu_tab li{list-style:none; position:relative; float:left; }
+    .menu_tab li a{display:block;padding:3px 7px 3px 7px;text-decoration:none; text-align:center;width:150px;border:1px solid #d3d5d8;border-bottom: 0px; color:#3f3f3f}
+    .menu_tab li a:hover{text-decoration:none;}
+    .menu_tab li.active a{background:white; font-weight:bold; color:rgb(91, 117, 109);border-bottom:0px solid white;}
+    .menu_tab li.active a:hover{text-decoration:none}
+    #panels {margin:0px 20px 10px 0px;  line-height:1.5em; border-left: 1px solid #d3d5d8; border-bottom: 1px solid #d3d5d8;border-right: 1px solid #d3d5d8; overflow:scroll;width:100%;height:200px;}
+    .menu_tab0{ padding: 10px; font-size:10pt;}
+    
+    /* rightCont 친구신청 new 영역 */
+    #newControl{position: absolute;} /*new 위치 컨트롤*/
+    #newFriendNew{position:relative;top:-20;left:60px;z-index:999;font-size:9pt;background-color:#D84339;color:white;padding:1px 2px 1px 2px;}
+    #newFirendBt{position: relative;top:-21px;left:68px; z-index:1000; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #D84339}
+    /* new 하단 삼각형 */
+    
+    
+}
+.sub_menuCon{background-color:#F4F2F0;height: 100%;}
+#sub_menu{
+background-color: rgb(55,50,52);
+padding:10px;
+color:#C8D7D2;
+  }
+  #sub_menu  a:link {color:#C8D7D2;text-decoration: none;} 
+  #sub_menu  a:visited{color:#C8D7D2;text-decoration: none;} 
+  #sub_menu  a:hover{color:#D84339;text-decoration: none;}
+  #sub_menu  a:active{color:#C8D7D2;text-decoration: none;} 
+
+  #alarmCount{
+    position:relative;
+    right:7px;top:0px;
+    float:right;
+    border-radius:50%;
+    width:15px; height:15px;
+    font-size: 10px;
+    background: white; color:black;
+    text-align: center
+}
+body{
+    background-color:#F4F2F0;
+}
+
+
+
+
+
+.promiseCard{
+    text-align:center;font-size:24pt;overflow:auto;color: white;  white-space:nowrap;text-overflow:ellipsis;
+}
+

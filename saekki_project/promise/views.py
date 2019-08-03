@@ -29,6 +29,7 @@ def home(request):
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user)
+        noti_add_friendc = noti_add_friend.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.username)
@@ -36,7 +37,7 @@ def home(request):
         return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
                                             'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,})
+                                            'noti_promise':noti_promise,'noti_add_friendc':noti_add_friendc,})
 
 # 모든 유저 검색페이지
 def search(request):
