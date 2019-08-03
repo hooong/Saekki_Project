@@ -39,11 +39,16 @@
 
     </div>
     <div id="myProfileNames">
-    {{user.name}}<br>
+    {{user.name}}
+    <div style="float:right;"><a  href="{% url 'logout' %}">로그아웃</a></div></span>
     <div id="myProfileIns">{{ user.state_msg  }}</div>
                         
                         </div>
                         </div>
+                        <div style="background-color:#F4F2F0;padding-left: 10px;display:flex;"><span style="flex:1 1 20%"><a href="{% url 'mypage' %}">마이페이지</a></span>
+                            <div style="flex:1 1 80%;"><marquee direction="right">test</marquee></div>
+                            
+                             </div>
                     
                         <div class="menu_tabs">
                                 
