@@ -68,7 +68,7 @@
                                     너는 친구도없니? <br>
                                 {% endif %}
                                 {% for noti in noti_add_friend %}
-                                    <strong style="color:#D84339">{{noti.send_user}}</strong>님께서 친구 신청을 하였습니다. 
+                                    <strong style="color:#D84339">{{noti.send_user.name}}</strong>님께서 친구 신청을 하였습니다. 
                                     <a href="{% url 'change_friend' operation='ok' pk=noti.send_user.id %}">수락</a> | <a href="{% url 'change_friend' operation='deny' pk=noti.send_user.id %}">거절</a><br>
                     
                                 {% endfor %}
@@ -99,42 +99,15 @@
         {% for noti in noti_promise %}
             {% if noti.com_or_pro == 'p' %}
             
-                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
+                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
                 <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
             {% elif noti.com_or_pro == 'c' %}
-                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
+                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
                 <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
             {% endif %}
         {% endfor %}
             
 
-        <!-- 모든 사용자 띄우기(super유저는 친구목록이 안뜸) -->
-        <h2>Other People</h2>
-        {% for user in users %}
-            <!-- 프사 띄워주는 곳 -->
-            {% if not user.socialaccount_set.all %}
-                {% if not user.profile %}
-                    스태틱
-                {% elif user.profile.image == '' %}
-                    스태틱
-                {% else %}
-                    <img width="50" height="50" src="{{ user.profile.image.url }}" />
-                {% endif %}
-            {% else %}
-            <img width="50" height="50" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-            {% endif %}
-            {{ user.username }}
-            {% if user not in friends %}
-                {% if user.username in noti_wait_friend %}
-                <button>요청중</button>
-                {% else %}
-                <a href="{% url 'add_friend' pk=user.pk %}">
-                    <button>친구신청</button>
-                </a>
-                {% endif %}
-            {% endif %}
-            <br>
-        {% endfor %}
 
         <!-- 친구목록 -->
         <h2>friends</h2>

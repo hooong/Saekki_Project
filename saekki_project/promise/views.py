@@ -26,12 +26,14 @@ def home(request):
         arrives = Party_detail.objects.filter(user=user, success_or_fail=1)
         no_arrives = Party_detail.objects.filter(user=user, success_or_fail=0)
 
+        # 알림
+        user = request.user
         # 약속 알림
         noti_promise = Notification_promise.objects.filter(receive_user=user)
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user)
-        noti_add_friendc = noti_add_friend.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -39,7 +41,7 @@ def home(request):
         return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
                                             'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,'noti_add_friendc':noti_add_friendc,})
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count,})
 
 # 모든 유저 검색페이지
 def search(request):
@@ -57,11 +59,25 @@ def search(request):
         if q: # q가 있으면
             qs = qs.filter(name__icontains=q) # 제목에 q가 포함되어 있는 레코드만 필터링
 
+        # 알림
+        user = request.user
+        # 약속 알림
+        noti_promise = Notification_promise.objects.filter(receive_user=user)
+
+        # 친구 알림
+        noti_add_friend = Notification_friend.objects.filter(receive_user=user)
+        all_noti_count = noti_add_friend.count() + noti_promise.count()
+        noti_wait_friend = []
+        for wait in Notification_friend.objects.filter(send_user=user):
+            noti_wait_friend.append(wait.receive_user.uid)
+
         return render(request, 'search.html', {
             'user_list' : qs,
             'q' : q,
             'friends': friends,
             'noti_wait_friend': noti_wait_friend,
+            'noti_add_friend':noti_add_friend,
+            'noti_promise':noti_promise,'all_noti_count':all_noti_count
         })
 
 
@@ -73,6 +89,30 @@ def detail(request, pk):
         promise = get_object_or_404(Promise ,pk=pk)
         cur_user = request.user
 
+        # 참가원 현황
+        parties = []
+        for uid in promise.party:
+            user = get_object_or_404(User, uid=uid)
+            p = Party_detail.objects.filter(user=user, promise=promise)
+            if p.success_or_fail is 0:
+                arrive = '(미도착)'
+            else:
+                arrive = '(도착)'
+            parties.append([user.name,arrive])
+
+        # 알림
+        user = request.user
+        # 약속 알림
+        noti_promise = Notification_promise.objects.filter(receive_user=user)
+
+        # 친구 알림
+        noti_add_friend = Notification_friend.objects.filter(receive_user=user)
+        all_noti_count = noti_add_friend.count() + noti_promise.count()
+        noti_wait_friend = []
+        for wait in Notification_friend.objects.filter(send_user=user):
+            noti_wait_friend.append(wait.receive_user.uid)
+
+
         # 댓글
         comments = promise.comments.all()
         commentform = Promise_CommentForm()
@@ -80,7 +120,9 @@ def detail(request, pk):
         # 도착여부
         success = Party_detail.objects.get(promise=promise, user=request.user)
 
-        return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user })
+        return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user, 'parties':parties
+                                                ,'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count })
 
 # 댓글작성
 def new_comment(request, promise_id):
@@ -99,28 +141,28 @@ def new_comment(request, promise_id):
                 # 댓글 알림
                 user = request.user
                 parties = promise.party
-                if promise.user.email == user.email:
+                if promise.user.uid == user.uid:
                     for party in parties:
                         noti = Notification_promise()
                         noti.send_user = request.user
-                        noti.receive_user = User.objects.get(email=party)
+                        noti.receive_user = User.objects.get(uid=party)
                         noti.promise = promise
                         noti.com_or_pro = 'c'
                         noti.save()
                 else:
                     noti = Notification_promise()
                     noti.send_user = request.user
-                    noti.receive_user = User.objects.get(email=promise.user.email)
+                    noti.receive_user = User.objects.get(uid=promise.user.uid)
                     noti.promise = promise
                     noti.com_or_pro = 'c'
                     noti.save()
                     for party in parties:
-                        if party is user.email:
+                        if party is user.uid:
                             pass
                         else:
                             noti = Notification_promise()
                             noti.send_user = request.user
-                            noti.receive_user = User.objects.get(email=party)
+                            noti.receive_user = User.objects.get(uid=party)
                             noti.promise = promise
                             noti.com_or_pro = 'c'
                             noti.save()
@@ -178,7 +220,20 @@ def new(request):
             friend = Friend.objects.get(current_user=request.user)
             friends = friend.users.all()
 
-            return render(request, 'new.html', {'form':form, 'friends':friends})
+            # 알림
+            user = request.user
+            # 약속 알림
+            noti_promise = Notification_promise.objects.filter(receive_user=user)
+
+            # 친구 알림
+            noti_add_friend = Notification_friend.objects.filter(receive_user=user)
+            all_noti_count = noti_add_friend.count() + noti_promise.count()
+            noti_wait_friend = []
+            for wait in Notification_friend.objects.filter(send_user=user):
+                noti_wait_friend.append(wait.receive_user.uid)
+
+            return render(request, 'new.html', {'form':form, 'friends':friends, 'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count})
 
 # 약속 삭제
 def pro_del(request, promise_id):
