@@ -93,14 +93,16 @@ def detail(request, pk):
 
         # 참가원 현황
         parties = []
-        for uid in promise.party:
+        for uid in promise.pre_party:
             user = get_object_or_404(User, uid=uid)
-            p = Party_detail.objects.filter(user=user, promise=promise)
-            if p.success_or_fail is 0:
-                arrive = '(미도착)'
-            else:
-                arrive = '(도착)'
-            parties.append([user.name,arrive])
+            p = Party_detail.objects.get(user=user, promise=promise)
+            if p.acpt is 0:
+                acpt = '(수락대기중)'
+            elif p.acpt is 1:
+                acpt = '(수락)'
+            elif p.acpt is 2:
+                acpt = '(거절)'
+            parties.append([user.name,acpt])
 
         # 알림
         user = request.user
@@ -191,7 +193,7 @@ def new(request):
                 promise = form.save(commit=False)
                 promise.setting_date_time = request.POST['pic_date']
                 promise.user = request.user
-                promise.party = parties
+                promise.pre_party = parties
                 promise.latitude = float(request.POST['addr_lat'])
                 promise.longitud = float(request.POST['addr_lng'])
                 promise.save()
@@ -205,18 +207,20 @@ def new(request):
                     noti.com_or_pro = 'p'
                     noti.save()
 
-                # 참가자들의 성공여부를 저장하는 부분
+                # 수락대기로 넣기
                 for party in parties:
                     p = Party_detail()
                     p.promise = promise
                     p.user = User.objects.get(uid=party)
+                    p.acpt = 0
                     p.save()
                 p = Party_detail()
                 p.promise = promise
                 p.user = request.user
+                p.acpt = 1
                 p.save()
 
-                return redirect('home')
+                return redirect('/promise/fun_image/'+str(promise.id))
         else:
             form = PromiseForm()
             friend = Friend.objects.get(current_user=request.user)
@@ -237,6 +241,48 @@ def new(request):
 
             return render(request, 'new.html', {'form':form, 'friends':friends, 'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
                                             'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key})
+
+# 약속 수락/거절 버튼
+def acpt(request, operation, promise_id):
+    user = get_object_or_404(User, uid=request.user.uid)
+    promise = get_object_or_404(Promise, id=promise_id)
+    p = Party_detail.objects.get(promise=promise, user=request.user)
+    if operation == 'acpt':
+        promise.acpt_party.append(user.uid)
+        return redirect('/promise/fun_image/'+str(promise_id))
+    elif operation == 'deny':
+        noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
+        noti_promise.delete()
+        p.acpt = 2
+        p.save()
+        return redirect('home')
+
+# 엽사 올리기
+def fun_image(request, promise_id):
+    if request.method == 'POST':
+        form = Fun_imageForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = get_object_or_404(User, uid=request.user)
+            promise = get_object_or_404(Promise, id=promise_id)
+            p = Party_detail.objects.get(promise=promise, user=request.user)
+            fun = form.save(commit=False)
+            fun.user = p
+            fun.save()
+            
+            # 수락알림 삭제
+            noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
+            noti_promise.delete()
+
+            # 수락으로 상태변경
+            p.acpt = 1
+            p.save()
+
+            return redirect('/promise/detail/'+str(promise_id))
+    else:
+        form = Fun_imageForm()
+
+    return render(request, 'fun.html', {'form':form})
+
 
 # 약속 삭제
 def pro_del(request, promise_id):
@@ -325,3 +371,10 @@ def add_friend(request, pk):
 
 def aboutus(request):
     return render(request, 'aboutus.html')
+
+def wanted(request):
+    # 랜덤으로 몇개
+    
+    wanted = Fun_Image.objects.all()
+
+    return render(request, 'wanted.html', {'parties':parties,'wanted':wanted})
