@@ -16,7 +16,7 @@ User = get_user_model()
 def mypage(request):
     user = request.user
 
-    return render(request, 'mypage.html', {"user":user})
+    return render(request, 'mypage_modify.html', {"user":user})
 
 def mypage_modify(request):
     user = request.user

@@ -3,7 +3,8 @@
     padding-left:80px;
     background-color:white;
 }
-@media all and (orientation:portrait){
+
+@media all and (max-width:500px),all and (orientation:portrait){
     #bodyCon{ margin:auto; width:95%; display:flex; margin-top:10px;}
     .navbar{
         box-shadow: 0 0 7px;
