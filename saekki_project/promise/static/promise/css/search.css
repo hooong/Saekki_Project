@@ -70,6 +70,7 @@ fieldset {
     border: none;
     border-radius: 5px;
   }
+  
 
   
   input {
@@ -80,14 +81,14 @@ fieldset {
   input:focus {
     outline: 0 none;
   }
-  input:focus +  #sbtn {
+  input:focus + #sbtn {
     -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
             transform: translate(0, 0);
     -webkit-transition-duration: 0.3s;
             transition-duration: 0.3s;
   }
-  input:focus +  #sbtn .fas {
+  input:focus + #sbtn .fa {
     -webkit-transform: translate(0px, 0);
         -ms-transform: translate(0px, 0);
             transform: translate(0px, 0);
