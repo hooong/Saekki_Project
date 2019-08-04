@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from saekki_pro.settings import config_secret_common
 from django.views.generic.edit import FormView
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -88,6 +89,7 @@ def detail(request, pk):
     else: 
         promise = get_object_or_404(Promise ,pk=pk)
         cur_user = request.user
+        app_key = config_secret_common['kakao']['app_key']
 
         # 참가원 현황
         parties = []
@@ -122,7 +124,7 @@ def detail(request, pk):
 
         return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user, 'parties':parties
                                                 ,'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count })
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key })
 
 # 댓글작성
 def new_comment(request, promise_id):
@@ -219,6 +221,7 @@ def new(request):
             form = PromiseForm()
             friend = Friend.objects.get(current_user=request.user)
             friends = friend.users.all()
+            app_key = config_secret_common['kakao']['app_key']
 
             # 알림
             user = request.user
@@ -233,7 +236,7 @@ def new(request):
                 noti_wait_friend.append(wait.receive_user.uid)
 
             return render(request, 'new.html', {'form':form, 'friends':friends, 'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count})
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key})
 
 # 약속 삭제
 def pro_del(request, promise_id):

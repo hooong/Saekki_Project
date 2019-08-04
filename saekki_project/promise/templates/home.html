@@ -40,7 +40,7 @@
     </div>
     <div id="myProfileNames">
     {{user.name}}
-    <div style="float:right;"><a  href="{% url 'logout' %}">로그아웃</a></div></span>
+    <div style="float:right;"><a  href="{% url 'kakao' operation='logout'%}">로그아웃</a></div></span>
     <div id="myProfileIns">{{ user.state_msg  }}</div>
                         
                         </div>
