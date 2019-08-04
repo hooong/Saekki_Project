@@ -1,4 +1,4 @@
-@media all and (orientation:landscape){
+@media (min-width:500px) and (orientation:landscape){
     #homeRightCon{
         display:none;
     }
@@ -46,14 +46,7 @@
     height:0
     }
 
-      /* #subMenuLink{
-          display: none;
-      } */
-      /* div {
-          border:1px solid;
-      } */
-      /* nav 아래의 컨테이너 전체넓이 넓이결정 */
-    /* #bodyCon{ margin:auto; width:85%; display:flex; margin-top:10px;} */
+
  
 
     .promiseCard{
@@ -61,7 +54,7 @@
     }
 
     
-@media all and (orientation:portrait){
+    @media all and (max-width:970px),all and (orientation:portrait){
     #homeRightCon{margin-bottom:10px;}
     #myProfiles{padding:10px;display:flex;}
     #myProfileNames{width:100%; margin-left:10px;padding:5px 0 5px 0;}
@@ -81,8 +74,8 @@
     /* rightCont 친구신청 new 영역 */
     #newControls{position: absolute;} 
     /*new 위치 컨트롤*/
-    #newFriendNews{position:relative;top:-20;left:60px;z-index:999;font-size:9pt;background-color:#D84339;color:white;padding:1px 2px 1px 2px;}
-    #newFirendBts{position: relative;top:-21px;left:68px; z-index:1000; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #D84339} 
+    #newFriendNews{position:relative;top:-19px;left:180;z-index:999;font-size:9pt;background-color:#D84339;color:white;padding:1px 2px 1px 2px;}
+    #newFirendBts{position: relative;top:-20px;left:188px; z-index:1000; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #D84339} 
     /* new 하단 삼각형 */
 
 }
