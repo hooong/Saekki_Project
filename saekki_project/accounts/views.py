@@ -41,6 +41,29 @@ def mypage_mod_conf(request):
         user.save()
         return redirect('mypage')
 
+def kakao_logout(request):
+    # 카카오 로그아웃
+    logout_kakao_uri = "https://kapi.kakao.com/v1/user/logout"
+    access_token = request.session.get('access_token')
+    headers = {"Authorization": "Bearer "+str(access_token)}
+    r = requests.post(logout_kakao_uri, headers=headers)
+    print(r.content)
+
+    return redirect('logout')
+
+
+def kakao_signout(request):
+    #카카오 탈퇴
+    signout_kakao_uri = "https://kapi.kakao.com/v1/user/unlink"
+    access_token = request.session.get('access_token')
+    headers = {"Authorization": "Bearer "+str(access_token)}
+    r = requests.post(signout_kakao_uri, headers=headers)
+    print(r.content)
+    user = User.objects.get(uid=request.user)
+    user.delete()
+
+    return redirect('logout')
+
 # 카톡로그인
 def oauth(request):
     code = request.GET['code']
@@ -56,6 +79,7 @@ def oauth(request):
     access_token_request_uri_data = requests.get(access_token_request_uri)
     json_data = access_token_request_uri_data.json()
     access_token = json_data['access_token']
+    request.session['access_token'] = access_token
 
     user_profile_info_uri = "https://kapi.kakao.com/v2/user/me?access_token="
     user_profile_info_uri += str(access_token)
@@ -84,7 +108,7 @@ def oauth(request):
 
     return redirect('home')
 
-def kakao(request):
+def kakao(request, operation):
     login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
 
     client_id = config_secret_common['kakao']['client_id']
@@ -97,4 +121,10 @@ def kakao(request):
     request.session['client_id'] = client_id
     request.session['redirect_uri'] = redirect_uri
 
-    return redirect(login_request_uri)
+    if operation == 'login':
+        return redirect(login_request_uri)
+    elif operation == 'logout':
+        return redirect('kakao_logout')
+    elif operation == 'signout':
+        return redirect('kakao_signout')
+        
