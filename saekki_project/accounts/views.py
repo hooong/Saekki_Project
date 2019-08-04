@@ -88,7 +88,7 @@ def kakao(request):
     login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
 
     client_id = config_secret_common['kakao']['client_id']
-    redirect_uri = 'http://127.0.0.1:8000/oauth'
+    redirect_uri = 'https://2saekki.ga/oauth'
     
     login_request_uri += 'client_id=' + str(client_id)
     login_request_uri += '&redirect_uri=' + str(redirect_uri)
