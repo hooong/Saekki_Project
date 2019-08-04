@@ -21,8 +21,7 @@
         height:400px;
     }
 }
-
-@media all and (orientation:portrait){
+@media all and (max-width:500px),all and (orientation:portrait){
     #pickerDiv{
         display:flex;
         flex-direction: column-reverse;
@@ -34,6 +33,7 @@
         height:300px;
     }
 }
+
 
 .css-script-clear{
     display:flex;
