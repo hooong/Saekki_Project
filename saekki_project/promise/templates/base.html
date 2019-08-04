@@ -127,7 +127,8 @@
         {% if noti.com_or_pro == 'p' %}
         
             <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
-            <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+            <a href="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}"><button>수락</button></a>
+            <a href="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}"><button>거절</button></a>
         {% elif noti.com_or_pro == 'c' %}
             <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
             <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>

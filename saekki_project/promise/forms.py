@@ -1,5 +1,5 @@
 from django import forms
-from .models import Promise, Promise_Comment
+from .models import *
 from tempus_dominus.widgets import DateTimePicker
 from django.utils import timezone
 
@@ -30,6 +30,15 @@ class Promise_CommentForm(forms.ModelForm):
 
         labels = {
             'content': '댓글내용'
+        }
+
+class Fun_imageForm(forms.ModelForm):
+    class Meta:
+        model = Fun_Image
+        fields = ['fun_image']
+
+        labels = {
+            'fun_image': '엽사'
         }
 
 class SearchForm(forms.Form): 
