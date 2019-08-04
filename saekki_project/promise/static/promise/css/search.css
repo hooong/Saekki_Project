@@ -1,0 +1,112 @@
+
+  @media all and (max-width:970px),all and (orientation:portrait){
+    input,
+    #sbtn {
+      position: relative;
+      width: 200px;
+      height: 50px;
+      padding: 0;
+      display: inline-block;
+      float: left;
+    }
+    .fa-search {
+      font-size: 1.4rem;
+      color: #29abe2;
+      z-index: 3;
+      top: 25%;
+      -webkit-transform: translate(-190px, 0);
+          -ms-transform: translate(-190px, 0);
+              transform: translate(-190px, 0);
+      -webkit-transition-duration: 0.3s;
+              transition-duration: 0.3s;
+      -webkit-transition: all 0.1s ease-in-out;
+              transition: all 0.1s ease-in-out;
+    }
+    
+  }
+  @media (min-width:500px) and (orientation:landscape){
+      input,
+      #sbtn {
+        position: relative;
+        width: 380px;
+        height: 50px;
+        padding: 0;
+        display: inline-block;
+        float: left;
+      }
+      .fa-search {
+        font-size: 1.4rem;
+        color: #29abe2;
+        z-index: 3;
+        top: 25%;
+        -webkit-transform: translate(-190px, 0);
+            -ms-transform: translate(-190px, 0);
+                transform: translate(-370px, 0);
+        -webkit-transition-duration: 0.3s;
+                transition-duration: 0.3s;
+        -webkit-transition: all 0.1s ease-in-out;
+                transition: all 0.1s ease-in-out;
+      }
+  }
+.divContainer{
+    flex:1 1 800px;
+    color:#D84339;
+    display:flex;
+    justify-content: center;
+    padding : 20px;
+    background-color:#29abe2;
+}
+form{
+    display:flex;
+    justify-content: center;
+    width:100%;
+}
+
+fieldset {
+    position: relative;
+    display: inline-block;
+    padding: 0 0 0 40px;
+    background: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+
+  
+  input {
+    color: #666;
+    z-index: 2;
+    border: 0 none;
+  }
+  input:focus {
+    outline: 0 none;
+  }
+  input:focus +  #sbtn {
+    -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+    -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+  }
+  input:focus +  #sbtn .fas {
+    -webkit-transform: translate(0px, 0);
+        -ms-transform: translate(0px, 0);
+            transform: translate(0px, 0);
+    -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+    color: #fff;
+  }
+  
+  #sbtn {
+    z-index: 1;
+    width: 50px;
+    border: 0 none;
+    background: #ceb980;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;  
+    -webkit-transform: translate(-50px, 0);
+        -ms-transform: translate(-50px, 0);
+            transform: translate(-50px, 0);
+    -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+  }
+  
