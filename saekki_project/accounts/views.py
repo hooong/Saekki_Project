@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import *
 from django.http import HttpResponse
-from promise.models import Friend
+from promise.models import *
 from .models import *
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, authenticate
@@ -16,12 +16,23 @@ User = get_user_model()
 def mypage(request):
     user = request.user
 
-    return render(request, 'mypage.html', {"user":user})
+    return render(request, 'mypage_modify.html', {"user":user})
 
 def mypage_modify(request):
+    # 알림
     user = request.user
+    # 약속 알림
+    noti_promise = Notification_promise.objects.filter(receive_user=user)
 
-    return render(request, 'mypage_modify.html', {"user":user})
+    # 친구 알림
+    noti_add_friend = Notification_friend.objects.filter(receive_user=user)
+    all_noti_count = noti_add_friend.count() + noti_promise.count()
+    noti_wait_friend = []
+    for wait in Notification_friend.objects.filter(send_user=user):
+        noti_wait_friend.append(wait.receive_user.uid)
+
+    return render(request, 'mypage_modify.html', {"user":user,'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count})
 
 def mypage_mod_conf(request):
     if request.method == 'POST':
@@ -77,7 +88,7 @@ def kakao(request):
     login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
 
     client_id = config_secret_common['kakao']['client_id']
-    redirect_uri = 'https://2saekki.ga/oauth'
+    redirect_uri = 'http://127.0.0.1:8000/oauth'
     
     login_request_uri += 'client_id=' + str(client_id)
     login_request_uri += '&redirect_uri=' + str(redirect_uri)
