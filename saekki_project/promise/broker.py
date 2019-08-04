@@ -21,6 +21,12 @@ def com_time():
             promise.end = 1
             promise.save()
 
+            # 도착한 사람들 엽사 삭제
+            parties = Party_detail.objects.filter(promise=promise, success_or_fail=1)
+            for party in parties:
+                fun = Fun_Image.objects.filter(user=party)
+                fun.delete()
+
 def soon():
     print("마감임박!")
     promises = Promise.objects.all().exclude(end=1)
@@ -59,3 +65,4 @@ def time_to_str(t):
         t = t[:14]
 
     return t
+

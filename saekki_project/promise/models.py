@@ -10,7 +10,8 @@ class Promise(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     setting_date_time = models.CharField(max_length=200)
-    party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
+    pre_party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
+    acpt_party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
     # 경도
     longitud = models.FloatField(null=True, blank=True, default=None)
     # 위도
@@ -54,10 +55,23 @@ class Party_detail(models.Model):
     promise = models.ForeignKey(Promise, related_name='party_detail', null=True, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
 
+    # 수락여부
+    acpt = models.PositiveSmallIntegerField(default=0)       # 1 : 수락 , 2 : 거절
+
     # 성공여부
     success_or_fail = models.PositiveSmallIntegerField(default=0)
     arrived_time = models.DateTimeField(null=True, blank=True, default=None)
 
+# 엽사(배팅) 모델
+class Fun_Image(models.Model):
+    user = models.ForeignKey(Party_detail, related_name='fun', null=True, on_delete=models.CASCADE)
+    # 엽사
+    fun_image = models.ImageField(blank=True, null=True, upload_to="promise_fun_tmp")
+
+# 엽사(현상수배) 모델
+class Wanted(models.Model):
+    image = models.ImageField(blank=True, null=True, upload_to="wanted")
+    created_at = models.DateTimeField(auto_now_add=True)
 
 # 친구신청 알림 모델
 class Notification_friend(models.Model):
