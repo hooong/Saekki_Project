@@ -97,6 +97,7 @@ def oauth(request):
         new_user = User.objects.create_user(user_id,nickname,'password')
         new_user.profile_image = profile_image
         new_user.thumbnail_image = thumbnail_image
+        new_user.state_msg = "상태메시지를 입력해주세요!"
         new_user.save()
         login(request, new_user)
     else:
