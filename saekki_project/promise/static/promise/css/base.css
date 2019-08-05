@@ -3,7 +3,32 @@
     padding-left:80px;
     background-color:white;
 }
+.nbtn:hover{
+    background: #ffffff;
+    color:#cabcb0;
+}
+.nbtn {
+    font-weight: bold;
+    background: #cabcb0;
+    color: #fff;
+    font-family: Sans-serif;
+    font-size: 10pt;
+    height: 25px;
+    width: 40px;
 
+    text-align: center;
+    border: 0;
+    transition: all 0.3s ease 0s;
+}
+.notiPromise{
+    display:flex;margin-bottom: 5px;
+}
+.notiL{
+    flex:1 1 100%; height: 25px; overflow: hidden; text-overflow: ellipsis;word-wrap : brek-word;display : -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp : 1;line-height: 30px ;
+}
+.notiR{
+    flex:0 0 90px;
+}
 @media all and (max-width:970px),all and (orientation:portrait){
     #bodyCon{ margin:auto; width:95%; display:flex; margin-top:10px;}
     .navbar{
@@ -54,7 +79,7 @@
     .menu_tab li.active a:hover{text-decoration:none}
     #panels {margin:0px 20px 10px 0px;  line-height:1.5em; border-left: 1px solid #d3d5d8; border-bottom: 1px solid #d3d5d8;border-right: 1px solid #d3d5d8; overflow:scroll;width:100%;height:200px;}
     .menu_tab0{ padding: 10px; font-size:10pt;}
-    
+    .menu_tab1{ padding: 10px; font-size:10pt;}
     /* rightCont 친구신청 new 영역 */
     #newControl{position: absolute;} /*new 위치 컨트롤*/
     #newFriendNew{position:relative;top:-20;left:60px;z-index:999;font-size:9pt;background-color:#D84339;color:white;padding:1px 2px 1px 2px;}

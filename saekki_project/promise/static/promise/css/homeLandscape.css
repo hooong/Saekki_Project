@@ -70,7 +70,7 @@
     .menu_tabs li.actives a:hover{text-decoration:none}
     #panels {margin:0px 20px 10px 0px;  line-height:1.5em; border-left: 1px solid #d3d5d8; border-bottom: 1px solid #d3d5d8;border-right: 1px solid #d3d5d8; overflow:scroll;width:100%;max-height:200px;}
     .menu_tabs0{ padding: 10px; font-size:10pt;}
-
+    .menu_tabs1{ padding: 10px; font-size:10pt;}
     /* rightCont 친구신청 new 영역 */
     #newControls{position: absolute;} 
     /*new 위치 컨트롤*/
