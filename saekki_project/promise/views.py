@@ -71,6 +71,9 @@ def search(request):
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
+        noti_wait_re_friend = []
+        for wait in Notification_friend.objects.filter(receive_user=user):
+            noti_wait_re_friend.append(wait.send_user.uid)
 
         return render(request, 'search.html', {
             'user_list' : qs,
@@ -78,7 +81,7 @@ def search(request):
             'friends': friends,
             'noti_wait_friend': noti_wait_friend,
             'noti_add_friend':noti_add_friend,
-            'noti_promise':noti_promise,'all_noti_count':all_noti_count
+            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'noti_wait_re_friend':noti_wait_re_friend
         })
 
 

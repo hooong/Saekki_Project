@@ -6,8 +6,8 @@ from .models import *
 # 스케쥴러 생성
 def schedule():
     sched = BackgroundScheduler()
-    sched.add_job(com_time, 'interval', seconds=60)
-    sched.add_job(soon, 'interval', seconds=60)
+    sched.add_job(com_time, 'cron', minute='*' ,second=0)
+    sched.add_job(soon, 'cron', minute='*' ,second=2)
     sched.start()
 
 # 시간 비교 후 끝났는지 확인
