@@ -22,15 +22,14 @@
             <div class="profile-body">
                 <div class="profile-img">
                     <div class="imgbox">
-                       <img height="170px"src="{{user.thumbnail_image}}">
+                      <img height="170px" src="{{user.profile_image}}" alt="">
                     </div>
-                    <!-- TODO: 수정에는 이미지 업로드 폼! 그리고 카카오 로그인일때는 수정불가. -->
-                    <form action="#" style="padding-top:1rem;"><input type=submitP value="수정"></form>
+                   
                 </div>
                 <div class="profile-text">
                     <p><strong style="color:black;">{{user.name}}</strong></p>
                     <p style="margin-bottom : 0rem;">{{user.email}}</p>
-                    <p>넣고싶은 정보 뭐가있을지 모르겠다 ex)닉네임 ?</p>
+                    <p>내 상태메세지를 변경 해보세요잇~</p>
                     <form action="{% url 'mypage_mod_conf' %}" method='POST'>
                         {% csrf_token %}
                         <!-- TODO: 자바스크립트로 해야함. -->

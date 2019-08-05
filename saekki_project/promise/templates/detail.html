@@ -20,23 +20,47 @@
     {% csrf_token %}
     <input type="hidden" name='current_lat' value=''>
     <input type="hidden" name='current_lng' value=''>
-    <button type="submit">도착했어요!</button>
+    <button class="fbtn" type="submit">도착했어요!</button>
 </form>
-<br><br>
-{% endif %}
 
-제목 : {{promise.title}} <br>
-글쓴이 : {{promise.user.name}} <br>
-작성시간 : {{promise.created_at}} <br>
-내용 : {{promise.content}} <br>
-약속시간 : {{promise.setting_date_time}} <br>
-참가원 : 
-{% for party in parties %}
-    {% for u in party %}
-        {{u}}
-    {% endfor %}
-{% endfor %} <br>
-약속장소 : <div id="map" style="width:500px;height:400px;"></div>
+{% endif %}
+<style>
+.fbtn {
+      background: #cabcb0; /*fce7b4*/
+      color: #fff;
+      font-family: Sans-serif;
+      font-size: 14px;
+      height: 40px;
+      width: 100%;
+
+      text-align: center;
+      border: 0;
+      transition: all 0.3s ease 0s;
+  }
+  .formComment{
+      margin:10px !important;
+  }
+</style>
+
+    <div style="display:flex; flex-direction: column ; align-items: center;" >
+            <div> <h2>제목 : {{promise.title}}</h2></div>
+            <div><span style="padding-right:10px;">글쓴이 : {{promise.user.name}}</span><span>작성시간 : {{promise.created_at}}</span></div>
+            <div>약속시간 : {{promise.setting_date_time}}</div>
+            
+                    <!-- {% for party in parties %}
+                        {% for u in party %}
+                        {% if parties %}
+                            참가원 : 
+                            {{u}}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %} -->
+            
+            <div>내용 : {{promise.content}}</div>
+    </div>
+
+ <br>
+약속장소 : <div id="map" style="width:100%;height:400px;"></div>
 {% if cur_user == promise.user %}
 <a href="{% url 'pro_del' promise_id=promise.id %}">삭제</a><br>
 {% endif %}
@@ -54,10 +78,10 @@
 {% endfor %}
 
 <hr>
-<form method='POST', action="{% url 'new_comment' promise_id=promise.id %}">
+<form style="width:100%;" method='POST', action="{% url 'new_comment' promise_id=promise.id %}">
     {% csrf_token %}
-    {{commentform}}
-    <button type='submit'>댓글쓰기</button>
+    <div class="formComment">{{commentform}}</div>
+    <button class="fbtn" type='submit'>댓글쓰기</button>
 </form>
 
 

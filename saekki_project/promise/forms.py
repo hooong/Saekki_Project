@@ -20,7 +20,6 @@ class PromiseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PromiseForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs['class'] = 'form-control formInput'
-        
         self.fields['content'].widget.attrs['class'] = 'form-control formInput'
 
 class Promise_CommentForm(forms.ModelForm):
@@ -31,6 +30,10 @@ class Promise_CommentForm(forms.ModelForm):
         labels = {
             'content': '댓글내용'
         }
+    def __init__(self, *args, **kwargs):
+        super(Promise_CommentForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget.attrs['class'] = 'form-control'
+        self.fields['content'].widget.attrs['placeholder'] = '댓글을 남겨주세요!'
 
 class SearchForm(forms.Form): 
     word = forms.CharField(label='Search Word')
