@@ -53,22 +53,23 @@
                         <div class="menu_tabs">
                                 
                             <ul>
-                                    {% if noti_add_friend %}
-                                        <span id="newControls">
-                                        <span id="newFriendNews">new</span>
-                                        <span id="newFirendBts"></span>
-                                        </span>
-                                    {% endif %}
+
                                 <li class="actives"><a href="#"; onclick="tab_menus(0);">친구신청</a></li>
+                                {% if noti_add_friend %}
+                                <span id="newControls">
+                                <span id="newFriendNews">new</span>
+                                <span id="newFirendBts"></span>
+                                </span>
+                            {% endif %}
 
 
-                                {% if noti_promise %}
-                                    <span id="newControls">
-                                    <span id="newFriendNews">new</span>
-                                    <span id="newFirendBts"></span>
-                                    </span>
-                                {% endif %}
                                 <li><a href="#" onclick="tab_menus(1);">초대 및 댓글</a></li>
+                                {% if noti_promise %}
+                                <span id="newControls">
+                                <span id="newFriendNews">new</span>
+                                <span id="newFirendBts"></span>
+                                </span>
+                            {% endif %}
                             </ul>
                         </div>
                         <div class="menu_tabs0" id="panels" >
