@@ -34,4 +34,11 @@ urlpatterns = [
     path('logout/', accounts.views.kakao_logout, name='kakao_logout'),
     path('signout/', accounts.views.kakao_signout, name='kakao_signout'),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
+
+

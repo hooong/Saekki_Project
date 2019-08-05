@@ -28,7 +28,8 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 SECRET_KEY = config_secret_common['django']['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
 
 ALLOWED_HOSTS = [
     '*'
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'promise',
+	'storages',
     'accounts',
     'django_apscheduler',
 ]
@@ -131,19 +133,11 @@ TIME_ZONE = 'Asia/Seoul'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
 
-# STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'promise', 'static'),
-    os.path.join(BASE_DIR, 'saekki_pro', 'static'),
-]   
 
-STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
 
-MEDIA_URL = '/media/'   #URL설정
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   #medai폴더로 파일들을 모으겠다는 의미
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   #medai폴더로 파일들을 모으겠다는 의미
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = '/'
@@ -153,3 +147,37 @@ AUTH_USER_MODEL = 'accounts.User'
 APSCHEDULER_DATETIME_FORMAT =  "N j, Y, f:s a"
 
 AUTHENTICATION_BACKENDS = [ 'django.contrib.auth.backends.ModelBackend',]
+if not DEBUG:
+    
+	AWS_ACCESS_KEY_ID = config_secret_common['aws']['access_key_id']
+	AWS_SECRET_ACCESS_KEY = config_secret_common['aws']['secret_access_key']
+	AWS_STORAGE_BUCKET_NAME = config_secret_common['aws']['s3_name']
+	AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+	AWS_S3_OBJECT_PARAMETERS = {
+	  'CacheControl': 'max-age=86400',
+	}
+
+	AWS_STATIC_LOCATION = 'static'
+	STATICFILES_STORAGE = 'saekki_pro.storages.StaticStorage'
+	STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
+	
+	AWS_MEDIA_LOCATION = 'media'
+	DEFAULT_FILE_STORAGE = 'saekki_pro.storages.MediaStorage'
+
+else:
+	STATIC_URL = '/static/'
+	STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+	
+	MEDIA_URL = '/media/'
+	MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'promise', 'static'),
+    os.path.join(BASE_DIR, 'saekki_pro', 'static'),
+]  
+
+# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+ 
+

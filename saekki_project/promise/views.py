@@ -54,7 +54,7 @@ def search(request):
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=request.user):
             noti_wait_friend.append(wait.receive_user.uid)
-        qs = User.objects.all().exclude(uid=request.user.uid)#.exclude(uid='admin')
+        qs = User.objects.all().exclude(uid=request.user.uid).exclude(uid='admin')
 
         q = request.GET.get('q', '') # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
         if q: # q가 있으면
@@ -144,7 +144,7 @@ def new_comment(request, promise_id):
 
                 # 댓글 알림
                 user = request.user
-                parties = promise.party
+                parties = promise.pre_party
                 if promise.user.uid == user.uid:
                     for party in parties:
                         noti = Notification_promise()
@@ -377,4 +377,4 @@ def wanted(request):
     
     wanted = Fun_Image.objects.all()
 
-    return render(request, 'wanted.html', {'parties':parties,'wanted':wanted})
+    return render(request, 'wanted.html', {'wanted':wanted})
