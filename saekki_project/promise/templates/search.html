@@ -14,27 +14,35 @@
         
 </form>
 </div>
+<div style="display:flex;flex-wrap : wrap;">
 {% for user in user_list %}
-    <!-- 프사 띄워주는 곳 -->
-    {% if user.profile_image == '' %}
-        스태틱
-    {% else %}
-        <img src="{{user.profile_image}}" alt="">
-    {% endif %}
+    <div style="margin:20px; display:flex;height:110px;flex:1 1 280px;justify-content: center;">
+         <!-- 프사 띄워주는 곳 -->
+        {% if user.profile_image == '' %}
+        <img style="height:110px;" src="{% static 'promise/user.png' %}" />
+        {% else %}
+            <img style="height:110px;"src="{{user.profile_image}}" alt="">
+        {% endif %}
 
-    {{ user.name }}
-
+    <div style="margin-left:10px;">
+    <p>{{ user.name }}</p>
+    <p style="width:150px;overflow: hidden; text-overflow: ellipsis;white-space: nowrap">
+    {{user.state_msg}}
+    </p>
+    </span>
     {% if user not in friends %}
         {% if user.uid in noti_wait_friend %}
-        <button>요청중</button>
+        <button class="fbtn">요청중</button>
         {% else %}
-        
         <form action="{% url 'add_friend' pk=user.pk %}" method="get">
-                <input type="hidden" name='q_2' value="{{ q }}">
-                <button type="submit">친구신청</button>
+                <button class="fbtn" style="padding:0px;"type="submit">친구신청</button>
+                <input type="search" style="display:none;" name='q_2' value="{{ q }}">
+                
         </form>
         {% endif %}
     {% endif %}
+</div>
+    </div>
     <br>
     
 {% endfor %}
@@ -43,5 +51,6 @@
 
 
 
+</div>
 </div>
 {% endblock %}
