@@ -16,12 +16,12 @@
 </div>
 <div style="display:flex;flex-wrap : wrap;">
 {% for user in user_list %}
-    <div style="margin:20px; display:flex;height:110px;flex:1 1 280px;justify-content: center;">
+    <div style="margin:20px; display:flex;height:110px;flex:1 1 280px;justify-content: flex-start;">
          <!-- 프사 띄워주는 곳 -->
         {% if user.profile_image == '' %}
-        <img style="height:110px;" src="{% static 'promise/user.png' %}" />
+        <img style="height:110px;width:110px" src="{% static 'promise/user.png' %}" />
         {% else %}
-            <img style="height:110px;"src="{{user.profile_image}}" alt="">
+            <img style="height:110px;width:110px"src="{{user.profile_image}}" alt="">
         {% endif %}
 
     <div style="margin-left:10px;">
