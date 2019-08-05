@@ -28,7 +28,7 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 SECRET_KEY = config_secret_common['django']['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = [
@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'saekki_pro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'saekki_2',				
+        'NAME': config_secret_common['django']['db_name'],				
         'USER': config_secret_common['django']['db_user'],			
         'PASSWORD': config_secret_common['django']['db_pw'],		
         'HOST': config_secret_common['django']['db_host'],

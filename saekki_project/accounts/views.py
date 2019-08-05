@@ -113,7 +113,8 @@ def kakao(request, operation):
     login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
 
     client_id = config_secret_common['kakao']['client_id']
-    redirect_uri = 'http://127.0.0.1:8000/oauth'
+    host = config_secret_common['kakao']['host']
+    redirect_uri = host
     
     login_request_uri += 'client_id=' + str(client_id)
     login_request_uri += '&redirect_uri=' + str(redirect_uri)
