@@ -125,13 +125,25 @@
     <div class="menu_tab1" id="panels" style="display:none;">
         {% for noti in noti_promise %}
         {% if noti.com_or_pro == 'p' %}
-        
-            <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
-            <a href="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}"><button>수락</button></a>
-            <a href="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}"><button>거절</button></a>
+        <div class="notiPromise">
+            <div class="notiL">
+                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}" >{{noti.send_user.name}}님이 {{noti.promise.title}}에 초대했습니다.</a>
+            </div>   
+            <div class="notiR">
+              <a href="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}"><button class="nbtn">수락</button></a>
+              <a href="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}"><button class="nbtn">거절</button></a>
+            </div>
+        </div>
         {% elif noti.com_or_pro == 'c' %}
-            <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
-            <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
+        <div class="notiPromise">
+            <div class="notiL">
+                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a>
+            </div>   
+            <div class="notiR">
+                <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button class="nbtn" style="width: 84px;">지우기</button></a>
+            </div>
+        </div>
+  
         {% endif %}
        
     {% endfor %}
