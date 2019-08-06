@@ -107,6 +107,12 @@ def detail(request, pk):
                 acpt = '(거절)'
             parties.append([user.name,acpt])
 
+        # 약속수락 친구목록
+        noti_acpt_friend = [] 
+        for uid in promise.acpt_party:
+            user = get_object_or_404(User, uid=uid)
+            noti_acpt_friend.append(user.name)
+
         # 알림
         user = request.user
         # 약속 알림
@@ -129,7 +135,8 @@ def detail(request, pk):
 
         return render(request, 'detail.html', {'promise':promise, 'comments':comments, 'commentform':commentform, 'success': success, 'cur_user':cur_user, 'parties':parties
                                                 ,'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key })
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key,
+                                            'noti_acpt_friend':noti_acpt_friend })
 
 # 댓글작성
 def new_comment(request, promise_id):
@@ -192,15 +199,17 @@ def new(request):
         if request.method == "POST":
             form = PromiseForm(request.POST)
             if form.is_valid():
-                parties = request.POST.getlist('party_friend[]')
                 promise = form.save(commit=False)
                 promise.setting_date_time = request.POST['pic_date']
                 promise.user = request.user
-                promise.pre_party = parties
+                promise.pre_party = request.POST.getlist('party_friend[]')
+                promise.acpt_party = []
+                promise.acpt_party.append(str(request.user.uid))
                 promise.latitude = float(request.POST['addr_lat'])
                 promise.longitud = float(request.POST['addr_lng'])
                 promise.save()
 
+                parties = promise.pre_party
                 # 약속 알림 보내기
                 for party in parties:
                     noti = Notification_promise()
@@ -252,6 +261,7 @@ def acpt(request, operation, promise_id):
     p = Party_detail.objects.get(promise=promise, user=request.user)
     if operation == 'acpt':
         promise.acpt_party.append(user.uid)
+        promise.save()
         return redirect('/promise/fun_image/'+str(promise_id))
     elif operation == 'deny':
         noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
