@@ -18,6 +18,7 @@ class Promise(models.Model):
     what_betting = models.CharField(max_length=30, default='0', null=True, blank=True)
     # 벌금 기준
     per_min_money = models.CharField(max_length=255, default='100', null=True, blank=True)
+    min = models.CharField(max_length=50, default='1', null=True, blank=True)
 
     # 경도
     longitud = models.FloatField(null=True, blank=True, default=None)
