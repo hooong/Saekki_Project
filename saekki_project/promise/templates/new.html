@@ -110,9 +110,11 @@
         <script>
                 function new_tab_script(num){
                     var f = $('.new_tab').find('li');
-                    if(num==0){ $( '.new_order0' ).css( "color", "#D84339" );$( '.new_order1' ).css( "color", "gray" );$( '.new_order2').css( "color", "gray" );}
-                    if(num==1){ $( '.new_order0' ).css( "color", "gray" );$( '.new_order1' ).css( "color", "#D84339" );$( '.new_order2').css( "color", "gray" );}
-                    if(num==2){ $( '.new_order0' ).css( "color", "gray" );$( '.new_order1' ).css( "color", "gray" );$( '.new_order2').css( "color", "#D84339" );}
+                    if(num==0){ $( '.new_order0' ).css( "color", "#D84339" );$( '.new_order1' ).css( "color", "gray" );$( '.new_order2').css( "color", "gray" );$( '.new_order3').css( "color", "gray" );}
+                    if(num==1){ $( '.new_order0' ).css( "color", "gray" );$( '.new_order1' ).css( "color", "#D84339" );$( '.new_order2').css( "color", "gray" );$( '.new_order3').css( "color", "gray" );}
+                    if(num==2){ $( '.new_order0' ).css( "color", "gray" );$( '.new_order1' ).css( "color", "gray" );$( '.new_order2').css( "color", "#D84339" );$( '.new_order3').css( "color", "gray" );}
+                    if(num==3){ $( '.new_order0' ).css( "color", "gray" );$( '.new_order1' ).css( "color", "gray" );$( '.new_order2').css( "color", "gray" );$( '.new_order3').css( "color", "#D84339" );}
+
                     for(var i =0; i<f.length; i++){
                      
                         if(i==num){
@@ -144,7 +146,9 @@
             <ul>
                 <li class="chapter"><a href="#" onclick="new_tab_script(0)"><div class="new_order0" style="display: inline;">1. 글 작성</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li>
                 <li class="chapter"><a href="#" onclick="new_tab_script(1)"><div class="new_order1" style="display: inline;">2. 시간 선택</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li> 
-                <li class="chapter"><a href="#" onclick="new_tab_script(2)"><div class="new_order2" style="display: inline;">3. 장소 선택</div></a></li>
+                <li class="chapter"><a href="#" onclick="new_tab_script(2)"><div class="new_order2" style="display: inline;">3. 장소 선택</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li>
+                <li class="chapter"><a href="#" onclick="new_tab_script(3)"><div class="new_order3" style="display: inline;">4. 벌칙 선택</div> </a></li> 
+
             </ul>
         </div>
         </div>
@@ -229,6 +233,49 @@
                         <div class="new_tab">
                                         <span class="chapter" style="float:left"><a href="#" onclick="new_tab_script(1)">이전</a></span>
                                     
+                                        <span class="chapter" style="float:right"><a href="#" onclick="new_tab_script(3)">다음</a></span>
+
+                                
+                            </div>
+                        </div>
+       
+        
+        </div>
+        <div class="new_tab03" id="panel_new" style="display:none;">
+  
+
+                <h2 style="margin-left:10px;">4. 벌칙 선택</h2>
+         <style>
+         
+
+         </style>
+                 <!-- 지도 띄우기 -->
+                 <div class="divContainer">
+                        <div style="flex: 0 1 550px;">
+                                <form class="formtt">
+
+                                       
+                                        <div class="inputGroup">
+                                            <input id="radio1" name="radio" type="radio"/>
+                                            <label for="radio1">벌금</label>
+                                        </div>
+                                        <div class="inputGroup">
+                                            <input id="radio2" name="radio" type="radio"/>
+                                            <label for="radio2">엽사 공개</label>
+                                        </div>
+                                        <div class="inputGroup">
+                                                <input id="radio3" name="radio" type="radio"/>
+                                                <label for="radio3">벌칙 없음</label>
+                                              </div>
+                                      </form>
+                        </div>
+                        
+                    </div>
+                 <div class="divContainer">
+                        <div class="new_tab">
+                                        <span class="chapter" style="float:left"><a href="#" onclick="new_tab_script(2)">이전</a></span>
+                                    
+                                       
 
                                 
                             </div>
@@ -238,9 +285,7 @@
                  <!-- <button onclick="" type='button'>확인</button> -->
                  </div>
                  <!-- submit 전에 form 양식 맞췄는지?-->
-        
-        </div>
-
+                 </div>
 
         <script>
                 function checkform(){
