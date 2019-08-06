@@ -142,8 +142,8 @@
                 }
                 </script>
         <div class="divContainer">
-        <div class="new_tab" >
-            <ul>
+        <div class="new_tab" style="display:flex;">
+            <ul id="topul">
                 <li class="chapter"><a href="#" onclick="new_tab_script(0)"><div class="new_order0" style="display: inline;">1. 글 작성</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li>
                 <li class="chapter"><a href="#" onclick="new_tab_script(1)"><div class="new_order1" style="display: inline;">2. 시간 선택</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li> 
                 <li class="chapter"><a href="#" onclick="new_tab_script(2)"><div class="new_order2" style="display: inline;">3. 장소 선택</div> </a><img style="height:14px;padding-bottom: 5px;" src="{% static 'promise/next.png' %}"></li>
@@ -290,20 +290,24 @@
                                         </style>
 
                                         <div class="inputGroup">
-                                            <input onclick="dropdown(1)"id="radio1" name="radio" type="radio" value='1'/>
-                                            <label for="radio1">벌금</label>
+
+                                            <input class="checkinput" onclick="dropdown(1)"id="radio1" name="radio" type="radio"/>
+                                            <label class="checklabel" for="radio1">벌금</label>
                                             <div id="test1"> 벌금 내라 개세이야~ </div>
                                         </div>
                                         <div class="inputGroup">
-                                            <input onclick="dropdown(2)"id="radio2" name="radio" type="radio" value='2'/>
-                                            <label for="radio2">엽사 공개</label>
+                                            <input class="checkinput" onclick="dropdown(2)"id="radio2" name="radio" type="radio"/>
+                                            <label class="checklabel" for="radio2">엽사 공개</label>
                                             <div id="test2"> 
-                                                        {{ fun_form}}
+                                                
+                                                        <input type="file" name="profile">
+                                                        <input type="submit">
+                                                    
                                                 </div>
                                         </div>
                                         <div class="inputGroup">
-                                                <input onclick="dropdown(3)" id="radio3" name="radio" type="radio" value='3'/>
-                                                <label for="radio3">벌칙 없음</label>
+                                                <input class="checkinput"onclick="dropdown(3)" id="radio3" name="radio" type="radio"/>
+                                                <label class="checklabel" for="radio3">벌칙 없음</label>
                                               </div>
                                       </form>
                         </div>
