@@ -187,6 +187,7 @@ def new(request):
         return redirect('login')
     else: 
         if request.method == "POST":
+            funform = Fun_imageForm(request.POST, request.FILES)
             form = PromiseForm(request.POST)
             if form.is_valid():
                 parties = request.POST.getlist('party_friend[]')
@@ -221,12 +222,29 @@ def new(request):
                 p.save()
 
                 return redirect('/promise/fun_image/'+str(promise.id))
+                
+            if funform.is_valid():
+                user = get_object_or_404(User, uid=request.user)
+                promise = get_object_or_404(Promise, id=promise_id)
+                p = Party_detail.objects.get(promise=promise, user=request.user)
+                fun = funform.save(commit=False)
+                fun.user = p
+                fun.save()
+                
+                # 수락알림 삭제
+                noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
+                noti_promise.delete()
+
+                # 수락으로 상태변경
+                p.acpt = 1
+                p.save()
+                return redirect('/promise/detail/'+str(promise_id))
         else:
             form = PromiseForm()
             friend = Friend.objects.get(current_user=request.user)
             friends = friend.users.all()
             app_key = config_secret_common['kakao']['app_key']
-
+            funform = Fun_imageForm()
             # 알림
             user = request.user
             # 약속 알림
@@ -238,15 +256,15 @@ def new(request):
             noti_wait_friend = []
             for wait in Notification_friend.objects.filter(send_user=user):
                 noti_wait_friend.append(wait.receive_user.uid)
-
+    
             return render(request, 'new.html', {'form':form, 'friends':friends, 'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key})
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key,'funform':funform})
 
 # 약속 수락/거절 버튼
 def acpt(request, operation, promise_id):
     user = get_object_or_404(User, uid=request.user.uid)
     promise = get_object_or_404(Promise, id=promise_id)
-    p = Party_detail.objects.get(promise=promise, user=request.user)
+    p = Party_.objects.get(promise=promise, user=request.user)
     if operation == 'acpt':
         promise.acpt_party.append(user.uid)
         return redirect('/promise/fun_image/'+str(promise_id))
