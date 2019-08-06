@@ -243,7 +243,32 @@
         </div>
         <div class="new_tab03" id="panel_new" style="display:none;">
   
+<script>
+                function dropdown(num){
+                   var f = '#test';
+                   if(num==1){
+                       $(f+1).show();
+                       $(f+2).hide();
+                       $(f+1).css('height','200px')
+                       $(f+2).css('height','0px')
 
+                   } 
+                   if(num==2){
+                    $(f+2).show();
+                    $(f+1).hide();
+                    $(f+2).css('height','200px')
+                    $(f+1).css('height','0px')
+                   } 
+                   if(num==3){
+                    $(f+1).hide();
+                    $(f+2).hide();
+                       $(f+2).css('height','0px')
+                       $(f+1).css('height','0px')
+
+                   } 
+                }
+
+</script>
                 <h2 style="margin-left:10px;">4. 벌칙 선택</h2>
          <style>
          
@@ -254,17 +279,34 @@
                         <div style="flex: 0 1 550px;">
                                 <form class="formtt">
 
-                                       
+                                       <style>
+
+                                           #test1{
+                                            background-color:red;flex:0 1 550px; height:0px;transition:height 0.3s; display:none;
+                                           }
+                                           #test2{
+                                            flex:0 1 550px; height:0px;transition:height 0.3s;display:none;
+                                           }
+                                        </style>
+
                                         <div class="inputGroup">
-                                            <input id="radio1" name="radio" type="radio"/>
+                                            <input onclick="dropdown(1)"id="radio1" name="radio" type="radio"/>
                                             <label for="radio1">벌금</label>
+                                            <div id="test1"> 벌금 내라 개세이야~ </div>
                                         </div>
                                         <div class="inputGroup">
-                                            <input id="radio2" name="radio" type="radio"/>
+                                            <input onclick="dropdown(2)"id="radio2" name="radio" type="radio"/>
                                             <label for="radio2">엽사 공개</label>
+                                            <div id="test2"> 
+                                                    <form method='post' action='' enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        {{ funform.as_p }}
+                                                        <button type="submit">Upload</button>
+                                                    </form>
+                                                </div>
                                         </div>
                                         <div class="inputGroup">
-                                                <input id="radio3" name="radio" type="radio"/>
+                                                <input onclick="dropdown(3)" id="radio3" name="radio" type="radio"/>
                                                 <label for="radio3">벌칙 없음</label>
                                               </div>
                                       </form>
