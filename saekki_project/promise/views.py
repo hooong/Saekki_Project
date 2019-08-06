@@ -198,6 +198,8 @@ def new(request):
     else: 
         if request.method == "POST":
             form = PromiseForm(request.POST)
+            if request.POST['radio'] == '2':
+                fun_form = Fun_imageForm(request.POST, request.FILES)
             if form.is_valid():
                 promise = form.save(commit=False)
                 promise.setting_date_time = request.POST['pic_date']
@@ -208,6 +210,18 @@ def new(request):
                 promise.latitude = float(request.POST['addr_lat'])
                 promise.longitud = float(request.POST['addr_lng'])
                 promise.save()
+
+                if request.POST['radio'] == '2':
+                    p = Party_detail.objects.create(promise=promise, user=request.user)
+                    fun = fun_form.save(commit=False)
+                    fun.user = p
+                    fun.save()
+                else:
+                    p = Party_detail()
+                    p.promise = promise
+                    p.user = request.user
+                    p.acpt = 1
+                    p.save()
 
                 parties = promise.pre_party
                 # 약속 알림 보내기
@@ -226,15 +240,11 @@ def new(request):
                     p.user = User.objects.get(uid=party)
                     p.acpt = 0
                     p.save()
-                p = Party_detail()
-                p.promise = promise
-                p.user = request.user
-                p.acpt = 1
-                p.save()
 
-                return redirect('/promise/fun_image/'+str(promise.id))
+                return redirect('/promise/detail/'+str(promise.id))
         else:
             form = PromiseForm()
+            fun_form = Fun_imageForm()
             friend = Friend.objects.get(current_user=request.user)
             friends = friend.users.all()
             app_key = config_secret_common['kakao']['app_key']
@@ -252,7 +262,7 @@ def new(request):
                 noti_wait_friend.append(wait.receive_user.uid)
 
             return render(request, 'new.html', {'form':form, 'friends':friends, 'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key})
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key,'fun_form':fun_form})
 
 # 약속 수락/거절 버튼
 def acpt(request, operation, promise_id):
