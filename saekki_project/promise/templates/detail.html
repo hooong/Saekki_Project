@@ -4,27 +4,31 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{app_key}}&libraries=services"></script>
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+
 
 <!-- 도착이벤트 -->
 {% if success.success_or_fail == 1 %}
-<h2>도착을 하셨습니다!</h2>
+<h2 class="fbtn">도착을 하셨습니다!</h2>
 {% else %}
 <form method="POST" action="{% url 'arrived' promise.id %}" name='arrive_form'>
     {% csrf_token %}
     <input type="hidden" name='current_lat' value=''>
     <input type="hidden" name='current_lng' value=''>
     <button class="fbtn" type="submit">도착했어요!</button>
+
 </form>
+
+{% if messages %}
+<!-- <div style="position:absolute;top:10%;z-index:99999;background-color:white;left:50%;transform:translateX(-50%);width:50%;height:30%; "> -->
+    {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+<!-- </div> -->
+{% endif %}
 
 {% endif %}
 <style>
+
 .fbtn {
       background: #cabcb0; /*fce7b4*/
       color: #fff;
@@ -44,7 +48,7 @@
 
     <div style="display:flex; flex-direction: column ; align-items: center;" >
             <div> <h2>제목 : {{promise.title}}</h2></div>
-            <div><span style="padding-right:10px;">글쓴이 : {{promise.user.name}}</span><span>작성시간 : {{promise.created_at}}</span></div>
+            <div style="display:flex;flex-wrap: wrap"><span style="padding-right:10px;">글쓴이 : {{promise.user.name}}</span><span>작성시간 : {{promise.created_at}}</span></div>
             <div>약속시간 : {{promise.setting_date_time}}</div>
             초대 된 약지들 : 
                     {% for party in parties %}

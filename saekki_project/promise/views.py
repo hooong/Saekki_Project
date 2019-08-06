@@ -197,6 +197,7 @@ def new(request):
         return redirect('login')
     else: 
         if request.method == "POST":
+            funform = Fun_imageForm(request.POST, request.FILES)
             form = PromiseForm(request.POST)
             if request.POST['radio'] == '2':
                 fun_form = Fun_imageForm(request.POST, request.FILES)
@@ -242,13 +243,14 @@ def new(request):
                     p.save()
 
                 return redirect('/promise/detail/'+str(promise.id))
+
         else:
             form = PromiseForm()
             fun_form = Fun_imageForm()
             friend = Friend.objects.get(current_user=request.user)
             friends = friend.users.all()
             app_key = config_secret_common['kakao']['app_key']
-
+            funform = Fun_imageForm()
             # 알림
             user = request.user
             # 약속 알림
@@ -260,15 +262,17 @@ def new(request):
             noti_wait_friend = []
             for wait in Notification_friend.objects.filter(send_user=user):
                 noti_wait_friend.append(wait.receive_user.uid)
-
+    
             return render(request, 'new.html', {'form':form, 'friends':friends, 'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
+                                                
                                             'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key,'fun_form':fun_form})
+
 
 # 약속 수락/거절 버튼
 def acpt(request, operation, promise_id):
     user = get_object_or_404(User, uid=request.user.uid)
     promise = get_object_or_404(Promise, id=promise_id)
-    p = Party_detail.objects.get(promise=promise, user=request.user)
+    p = Party_.objects.get(promise=promise, user=request.user)
     if operation == 'acpt':
         promise.acpt_party.append(user.uid)
         promise.save()
