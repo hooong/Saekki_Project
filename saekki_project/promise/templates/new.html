@@ -153,7 +153,7 @@
         </div>
         </div>
 <!-- <div class="divContainer"><div id="logoDiv"><img src="{% static 'promise/logo.jpg' %}" id="logo"></div></div> -->
-<form method="POST" name='new_form' id="createForm">
+<form method="POST" name='new_form' id="createForm" enctype="multipart/form-data">
     <div class="divContainer" id="new_tabArea0">
             
         <div class="new_tab00" id="panel_new">
@@ -291,22 +291,22 @@
 
                                         <div class="inputGroup">
 
-                                            <input class="checkinput" onclick="dropdown(1)"id="radio1" name="radio" type="radio"/>
+                                            <input class="checkinput" onclick="dropdown(1)"id="radio1" name="radio" type="radio" value="1"/>
                                             <label class="checklabel" for="radio1">벌금</label>
                                             <div id="test1"> 벌금 내라 개세이야~ </div>
                                         </div>
                                         <div class="inputGroup">
-                                            <input class="checkinput" onclick="dropdown(2)"id="radio2" name="radio" type="radio"/>
+                                            <input class="checkinput" onclick="dropdown(2)"id="radio2" name="radio" type="radio" value="2"/>
                                             <label class="checklabel" for="radio2">엽사 공개</label>
                                             <div id="test2"> 
                                                 
-                                                        <input type="file" name="profile">
+                                                        <input type="file" name="fun">
                                                         <input type="submit">
                                                     
                                                 </div>
                                         </div>
                                         <div class="inputGroup">
-                                                <input class="checkinput"onclick="dropdown(3)" id="radio3" name="radio" type="radio"/>
+                                                <input class="checkinput"onclick="dropdown(3)" id="radio3" name="radio" type="radio" value="3"/>
                                                 <label class="checklabel" for="radio3">벌칙 없음</label>
                                               </div>
                                       </form>
