@@ -12,6 +12,13 @@ class Promise(models.Model):
     setting_date_time = models.CharField(max_length=200)
     pre_party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
     acpt_party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
+
+    # 벌칙 관련
+    # 벌칙 종류 (0:벌칙 없읍, 1: 벌금, 2: 엽사)
+    what_betting = models.CharField(max_length=30, default='0', null=True, blank=True)
+    # 벌금 기준
+    per_min_money = models.CharField(max_length=255, default='100', null=True, blank=True)
+
     # 경도
     longitud = models.FloatField(null=True, blank=True, default=None)
     # 위도
@@ -54,6 +61,9 @@ class Friend(models.Model):
 class Party_detail(models.Model):
     promise = models.ForeignKey(Promise, related_name='party_detail', null=True, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+
+    # 벌금
+    penalty = models.CharField(max_length=200, default='0', null=True, blank=True)
 
     # 수락여부
     acpt = models.PositiveSmallIntegerField(default=0)       # 1 : 수락 , 2 : 거절
