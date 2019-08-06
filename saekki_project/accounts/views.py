@@ -68,8 +68,9 @@ def kakao_signout(request):
 def oauth(request):
     code = request.GET['code']
 
-    client_id = request.session.get('client_id')
-    redirect_uri = request.session.get('redirect_uri')
+    client_id = config_secret_common['kakao']['client_id']
+    host = config_secret_common['kakao']['host']
+    redirect_uri = host
 
     access_token_request_uri = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&"
     access_token_request_uri += "client_id=" + str(client_id)
@@ -84,6 +85,7 @@ def oauth(request):
     user_profile_info_uri = "https://kapi.kakao.com/v2/user/me?access_token="
     user_profile_info_uri += str(access_token)
     print(user_profile_info_uri)
+    print("dd")
     
     user_profile_info_uri_data = requests.get(user_profile_info_uri)
     user_json_data = user_profile_info_uri_data.json()
@@ -113,7 +115,8 @@ def kakao(request, operation):
     login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
 
     client_id = config_secret_common['kakao']['client_id']
-    redirect_uri = 'http://127.0.0.1:8000/oauth'
+    host = config_secret_common['kakao']['host']
+    redirect_uri = host
     
     login_request_uri += 'client_id=' + str(client_id)
     login_request_uri += '&redirect_uri=' + str(redirect_uri)

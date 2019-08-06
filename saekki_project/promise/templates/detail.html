@@ -50,16 +50,18 @@
             <div> <h2>제목 : {{promise.title}}</h2></div>
             <div style="display:flex;flex-wrap: wrap"><span style="padding-right:10px;">글쓴이 : {{promise.user.name}}</span><span>작성시간 : {{promise.created_at}}</span></div>
             <div>약속시간 : {{promise.setting_date_time}}</div>
-            
-                    <!-- {% for party in parties %}
+            초대 된 약지들 : 
+                    {% for party in parties %}
                         {% for u in party %}
-                        {% if parties %}
-                            참가원 : 
-                            {{u}}
+                            {% if parties %}
+                                {{u}}
                             {% endif %}
                         {% endfor %}
-                    {% endfor %} -->
-            
+                    {% endfor %} <br>
+            참가하는 약지들 : 
+                    {% for party in noti_acpt_friend %}
+                        {{ party }}
+                    {% endfor %}
             <div>내용 : {{promise.content}}</div>
     </div>
 
