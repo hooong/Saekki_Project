@@ -84,7 +84,6 @@ def oauth(request):
     user_profile_info_uri = "https://kapi.kakao.com/v2/user/me?access_token="
     user_profile_info_uri += str(access_token)
     print(user_profile_info_uri)
-    print("dd")
     
     user_profile_info_uri_data = requests.get(user_profile_info_uri)
     user_json_data = user_profile_info_uri_data.json()
