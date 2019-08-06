@@ -68,8 +68,9 @@ def kakao_signout(request):
 def oauth(request):
     code = request.GET['code']
 
-    client_id = request.session.get('client_id')
-    redirect_uri = request.session.get('redirect_uri')
+    client_id = config_secret_common['kakao']['client_id']
+    host = config_secret_common['kakao']['host']
+    redirect_uri = host
 
     access_token_request_uri = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&"
     access_token_request_uri += "client_id=" + str(client_id)
