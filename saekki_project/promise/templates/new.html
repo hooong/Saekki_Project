@@ -331,34 +331,34 @@
                                             <input class="checkinput" onclick="dropdown(1)"id="radio1" name="radio" type="radio" value="1"/>
                                             <label class="checklabel" for="radio1">벌금</label>
                                             <div id="test1" style="display:flex;">
-                                                <div onclick="timeTab(1)" id="timeTabEl1" class="onmousediv" >시간당 과금</div>
-                                                <div onclick="timeTab(2)" id="timeTabEl2" class="onmousediv" >1회 과금</div>
+                                                <div onclick="timeTab(1)" id="timeTabEl1" class="onmousediv" name="per_time" value="1">시간당 과금</div>
+                                                <div onclick="timeTab(2)" id="timeTabEl2" class="onmousediv" name="per_time" value="2" >1회 과금</div>
                                                 <div id="test3" class="tabElements" style="display:none;">
                                                     <!-- <input type="text" data-dir="up" value="1"> -->
                                                     <!-- <span><button type="button" class="btn btn-default" data-dir="up" style="color:black">+</span></button></span> -->
-                                                    <select name="" id="">
-                                                        <option>1분</option>
-                                                        <option>5분</option>
-                                                        <option>10분</option>
-                                                        <option>30분</option>
-                                                        <option>1시간</option>
+                                                    <select name="setting_min" id="">
+                                                        <option value="1">1분</option>
+                                                        <option value="5">5분</option>
+                                                        <option value="10">10분</option>
+                                                        <option value="30">30분</option>
+                                                        <option value="60">1시간</option>
                                                     </select>
-                                                    <select name="" id="">
-                                                            <option>100원</option>
-                                                            <option>500원</option>
-                                                            <option>1000원</option>
-                                                            <option>5000원</option>
-                                                            <option>1만원</option>
+                                                    <select name="per_min_penalty" id="">
+                                                            <option value="100">100원</option>
+                                                            <option value="500">500원</option>
+                                                            <option value="1000">1000원</option>
+                                                            <option value="5000">5000원</option>
+                                                            <option value="10000">1만원</option>
                                                         </select>
                                                 <a onclick="timeTab(3)"> 돌아가기</a>
                                                 </div> 
                                                 <div id="test4" class="tabElements" style="display:none;">
-                                                    그냥 늦으면 <select name="" id="">
-                                                            <option>100원</option>
-                                                            <option>500원</option>
-                                                            <option>1000원</option>
-                                                            <option>5000원</option>
-                                                            <option>1만원</option>
+                                                    그냥 늦으면 <select name="panalty" id="">
+                                                            <option value="100">100원</option>
+                                                            <option value="500">500원</option>
+                                                            <option value="1000">1000원</option>
+                                                            <option value="5000">5000원</option>
+                                                            <option value="10000">1만원</option>
                                                             </select>
                                                 <a onclick="timeTab(3)"> 돌아가기</a>
                                                 </div> 

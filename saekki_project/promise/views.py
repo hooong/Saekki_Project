@@ -210,6 +210,7 @@ def new(request):
                 promise.save()
 
                 if request.POST['radio'] == '2':
+                    promise.what_betting = '2'
                     p = Party_detail.objects.create(promise=promise, user=request.user)
                     image = Fun_Image()
                     image.user = p
@@ -221,6 +222,13 @@ def new(request):
                     p.user = request.user
                     p.acpt = 1
                     p.save()
+                
+                if request.POST['radio'] == '1':
+                    promise.what_betting = '1'
+                    promise.setting_min = request.POST['setting_min']
+                    promise.per_min_money = request.POST['per_min_penalty']
+                    promise.onetime_panalty = request.POST['panalty']
+                    promise.save()
 
                 parties = promise.pre_party
                 # 약속 알림 보내기
