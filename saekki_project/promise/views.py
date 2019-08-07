@@ -225,10 +225,15 @@ def new(request):
                 
                 if request.POST['radio'] == '1':
                     promise.what_betting = '1'
-                    promise.setting_min = request.POST['setting_min']
-                    promise.per_min_money = request.POST['per_min_penalty']
-                    promise.onetime_panalty = request.POST['panalty']
-                    promise.save()
+                    if request.POST['per_time'] == '1':
+                        promise.per_or_one = '1'
+                        promise.setting_min = request.POST['setting_min']
+                        promise.per_min_money = request.POST['per_min_penalty']
+                        promise.save()
+                    if request.POST['per_time'] == '2':
+                        promise.per_or_one = '2'
+                        promise.onetime_panalty = request.POST['panalty']
+                        promise.save()
 
                 parties = promise.pre_party
                 # 약속 알림 보내기
