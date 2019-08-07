@@ -285,7 +285,7 @@
                                        <style>
 
                                            #test1{
-                                            background-color:white;flex:0 1 550px; height:0px;transition:height 0.3s; display:none;
+                                            background-color:rgba(244, 242, 240,0.5);flex:0 1 550px; height:0px;transition:height 0.3s; display:none;
                                            }
                                            #test2{
                                             flex:0 1 550px; height:0px;transition:height 0.3s;display:none;
@@ -311,6 +311,34 @@
 
                                                 }
                                             }
+                                        //     $('#timeselect').ready(function (){
+                                        //     // $('#timeTabEl1').on('click',function(){
+                                        //     var tests = $("#timeselect option:selected").text();
+                                        //     $('#rps').html("<p>" + tests + "</p>");
+                                        // });
+                                        // $(document).ready(function(){
+                                        // $('.tabElements>select').on('click', function () {  
+                                        //     // $('.tabElements').on('click','#timeselect', function (){
+                                        //     // $('#timeTabEl1').on('click',function(){
+                                        //     var tests = $("#timeselect option:selected").text();
+                                        //     $('#rps').html("<p>" + tests + "</p>");
+                                        // });
+                                        // });
+                                        $(document).ready(function(){
+                                            var timeselect = $("#timeselect option:selected").text();
+                                            var payselect = $("#payselect option:selected").text();
+                                            var once =$('#once option:selected').text();
+                                            $('#rps').html("<p>기본 설정 :" + timeselect + "당 "+payselect+"</p>");
+                                            $('#oncerps').html("<p>기본 설정 : 늦으면! " + once + "</p>");                                        $('.tabElements>select').on('change', function () {  
+                                            // $('.tabElements').on('click','#timeselect', function (){
+                                            // $('#timeTabEl1').on('click',function(){
+                                            var timeselect = $("#timeselect option:selected").text();
+                                            var payselect = $("#payselect option:selected").text();
+                                            var once =$('#once option:selected').text();
+                                            $('#rps').html("<p>기본 설정 :" + timeselect + "당 "+payselect+"</p>");
+                                            $('#oncerps').html("<p>늦으면! " + once + "</p>");
+                                        });
+                                        });
                                         </script>
                                         <style>
                                             
@@ -323,15 +351,15 @@
                                                 width:50%;height:100%;color:white;display:flex;justify-content: center;align-items:center;
                                             }
                                             .tabElements{
-                                                
+                                                padding:10px;
                                                 width:100%;height:100;color:black;
                                             }
                                             #timeTabEl1{
-                                                display:none;
+                                                
                                                 margin-right:2.5px;
                                             }
                                             #timeTabEl2{
-                                                display:none;
+                                                
                                                 margin-left:2.5px;
                                             }
                                         </style>
@@ -348,22 +376,25 @@
                                                 <div id="test3" class="tabElements" style="display:none;">
                                                     <!-- <input type="text" data-dir="up" value="1"> -->
                                                     <!-- <span><button type="button" class="btn btn-default" data-dir="up" style="color:black">+</span></button></span> -->
-                                                    <select name="setting_min" id="">
+
+                                                    <select name="setting_min" id="timeselect" class="custom-select custom-select-lg mb-3">
                                                         <option value="1">1분</option>
                                                         <option value="5">5분</option>
                                                         <option value="10">10분</option>
                                                         <option value="30">30분</option>
                                                         <option value="60">1시간</option>
                                                     </select>
-                                                    <select name="per_min_penalty" id="">
+                                                    <select name="per_min_penalty" id="payselect" class="custom-select custom-select-lg mb-3">
                                                             <option value="100">100원</option>
                                                             <option value="500">500원</option>
                                                             <option value="1000">1000원</option>
                                                             <option value="5000">5000원</option>
                                                             <option value="10000">1만원</option>
                                                         </select>
-                                                <a onclick="timeTab(3)"> 돌아가기</a>
+                                                        <div id="rps"></div>
+                                                <a onclick="timeTab(3)" style="color:rgb(216, 67, 57);float:right"> 돌아가기</a>
                                                 </div> 
+<<<<<<< HEAD
                                                 <div id="test4" class="tabElements" style="display:none;">
                                                     그냥 늦으면 <select name="panalty">
                                                             <option value="100">100원</option>
@@ -372,10 +403,11 @@
                                                             <option value="5000">5000원</option>
                                                             <option value="10000">1만원</option>
                                                             </select>
-                                                <a onclick="timeTab(3)"> 돌아가기</a>
-                                                </div> 
-<script>
-$(document).on('click', '.tabElements button',function (){
+                                                            <div id="oncerps"></div>
+                                                            <a onclick="timeTab(3)" style="color:rgb(216, 67, 57);float:right"> 돌아가기</a>
+                                                        </div> 
+<!-- <script>
+$(document).on('click', '.tabElements select',function (){
      var btn = $(this),
         oldValue = btn.closest('.tabElements').find('input').val().trim(),
         newVal = 0;
@@ -386,7 +418,7 @@ $(document).on('click', '.tabElements button',function (){
 
         }
         btn.closest('.tabElements').find('input').val(newVal);
-});
+}); -->
 </script>
 <!-- <script>
 $(document).on('click', '.number-spinner button', function () {    
