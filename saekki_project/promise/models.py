@@ -68,11 +68,6 @@ class Fun_Image(models.Model):
     # 엽사
     fun_image = models.ImageField(blank=True, null=True, upload_to="promise_fun_tmp")
 
-# 엽사(현상수배) 모델
-class Wanted(models.Model):
-    image = models.ImageField(blank=True, null=True, upload_to="wanted")
-    created_at = models.DateTimeField(auto_now_add=True)
-
 # 친구신청 알림 모델
 class Notification_friend(models.Model):
     send_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='firend_send_user', null=True, on_delete=models.CASCADE)
