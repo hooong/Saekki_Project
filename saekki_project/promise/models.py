@@ -93,3 +93,8 @@ class Notification_promise(models.Model):
     promise = models.ForeignKey(Promise, related_name='promise_noti', null=True, on_delete=models.CASCADE)
     com_or_pro = models.CharField(max_length=1, null=True)
 
+class Notification_penalty(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='penalty_user', null=True, on_delete=models.CASCADE)
+    promise = models.ForeignKey(Promise, related_name='penalty_promise', null=True, on_delete=models.CASCADE)
+    penalty = models.CharField(max_length=200, default='0')
+
