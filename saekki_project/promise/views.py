@@ -290,7 +290,10 @@ def acpt(request, operation, promise_id):
     if operation == 'acpt':
         promise.acpt_party.append(user.uid)
         promise.save()
-        return redirect('/promise/fun_image/'+str(promise_id))
+        if promise.what_betting == '엽사':
+            return redirect('/promise/fun_image/'+str(promise_id))
+        else:
+            return redirect('home')
     elif operation == 'deny':
         noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
         noti_promise.delete()
