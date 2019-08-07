@@ -248,6 +248,8 @@
                 function dropdown(num){
                    var f = '#test';
                    if(num==1){
+                       $('.onmousediv').show();
+                       $('.tabElements').hide();
                        $(f+1).show();
                        $(f+2).hide();
                        $(f+1).css('height','200px')
@@ -294,15 +296,22 @@
                                                 if(num==1){
                                                     $('#timeTabEl1').css('display','none');
                                                     $('#timeTabEl2').css('display','none');
+                                                    $('#once').attr('value','0');
                                                     $('#test3').show();
+                                                    
                                                 }else if(num==2){
                                                     $('#timeTabEl1').css('display','none');
                                                     $('#timeTabEl2').css('display','none');
+                                                    $('#once option:eq(1)').attr('value','100');
                                                     $('#test4').show();
+
                                                 }else{
                                                     $('#timeTabEl1').toggle();
                                                     $('#timeTabEl2').toggle();
                                                     $('.tabElements').hide();
+                                                    $('#once option:eq(1)').attr('value','0');
+                                                    // $('#seldefault').attr('value',0);
+
                                                 }
                                             }
                                         </script>
@@ -317,12 +326,15 @@
                                                 width:50%;height:100%;color:white;display:flex;justify-content: center;align-items:center;
                                             }
                                             .tabElements{
+                                                
                                                 width:100%;height:100;color:black;
                                             }
                                             #timeTabEl1{
+                                                display:none;
                                                 margin-right:2.5px;
                                             }
                                             #timeTabEl2{
+                                                display:none;
                                                 margin-left:2.5px;
                                             }
                                         </style>
@@ -331,8 +343,16 @@
                                             <input class="checkinput" onclick="dropdown(1)"id="radio1" name="radio" type="radio" value="1"/>
                                             <label class="checklabel" for="radio1">벌금</label>
                                             <div id="test1" style="display:flex;">
+<<<<<<< HEAD
+                                                <input type="button" onclick="timeTab(1)" id="timeTabEl1" class="onmousediv" value="시간당 과금">
+                                                <input type="button" onclick="timeTab(2)" id="timeTabEl2" class="onmousediv" value="1회 과금">
+
+                                                <!-- <div >시간당 과금</div> -->
+                                                <!-- <div onclick="timeTab(2)" id="timeTabEl2" class="onmousediv" >1회 과금</div> -->
+=======
                                                 <div onclick="timeTab(1)" id="timeTabEl1" class="onmousediv" name="per_time" value="1">시간당 과금</div>
                                                 <div onclick="timeTab(2)" id="timeTabEl2" class="onmousediv" name="per_time" value="2" >1회 과금</div>
+>>>>>>> ee00862495cabed6e4f0369becba7ead0fe96b2c
                                                 <div id="test3" class="tabElements" style="display:none;">
                                                     <!-- <input type="text" data-dir="up" value="1"> -->
                                                     <!-- <span><button type="button" class="btn btn-default" data-dir="up" style="color:black">+</span></button></span> -->
@@ -353,12 +373,21 @@
                                                 <a onclick="timeTab(3)"> 돌아가기</a>
                                                 </div> 
                                                 <div id="test4" class="tabElements" style="display:none;">
+<<<<<<< HEAD
+                                                    그냥 늦으면 <select name="" id="once">
+                                                            <option id="seldefault">100원</option>
+                                                            <option>500원</option>
+                                                            <option>1000원</option>
+                                                            <option>5000원</option>
+                                                            <option>1만원</option>
+=======
                                                     그냥 늦으면 <select name="panalty" id="">
                                                             <option value="100">100원</option>
                                                             <option value="500">500원</option>
                                                             <option value="1000">1000원</option>
                                                             <option value="5000">5000원</option>
                                                             <option value="10000">1만원</option>
+>>>>>>> ee00862495cabed6e4f0369becba7ead0fe96b2c
                                                             </select>
                                                 <a onclick="timeTab(3)"> 돌아가기</a>
                                                 </div> 
