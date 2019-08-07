@@ -12,7 +12,7 @@ class PromiseForm(forms.ModelForm):
         labels = {
             'title': '제목',
                 
-            'content': '약속내용',
+            'content': '글내용',
         }
 
         #form css class, id 입히기
