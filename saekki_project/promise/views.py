@@ -197,10 +197,7 @@ def new(request):
         return redirect('login')
     else: 
         if request.method == "POST":
-            funform = Fun_imageForm(request.POST, request.FILES)
             form = PromiseForm(request.POST)
-            if request.POST['radio'] == '2':
-                fun_form = Fun_imageForm(request.POST, request.FILES)
             if form.is_valid():
                 promise = form.save(commit=False)
                 promise.setting_date_time = request.POST['pic_date']
@@ -213,16 +210,25 @@ def new(request):
                 promise.save()
 
                 if request.POST['radio'] == '2':
+                    promise.what_betting = '2'
                     p = Party_detail.objects.create(promise=promise, user=request.user)
-                    fun = fun_form.save(commit=False)
-                    fun.user = p
-                    fun.save()
+                    image = Fun_Image()
+                    image.user = p
+                    image.fun_image = request.FILES['fun']
+                    image.save()
                 else:
                     p = Party_detail()
                     p.promise = promise
                     p.user = request.user
                     p.acpt = 1
                     p.save()
+                
+                if request.POST['radio'] == '1':
+                    promise.what_betting = '1'
+                    promise.setting_min = request.POST['setting_min']
+                    promise.per_min_money = request.POST['per_min_penalty']
+                    promise.onetime_panalty = request.POST['panalty']
+                    promise.save()
 
                 parties = promise.pre_party
                 # 약속 알림 보내기
@@ -246,7 +252,6 @@ def new(request):
 
         else:
             form = PromiseForm()
-            fun_form = Fun_imageForm()
             friend = Friend.objects.get(current_user=request.user)
             friends = friend.users.all()
             app_key = config_secret_common['kakao']['app_key']
@@ -265,7 +270,7 @@ def new(request):
     
             return render(request, 'new.html', {'form':form, 'friends':friends, 'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
                                                 
-                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key,'fun_form':fun_form})
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key})
 
 
 # 약속 수락/거절 버튼
