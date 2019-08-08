@@ -163,6 +163,7 @@
                     {{ form.as_table }}
                 </table>
                 <!-- 참여인원 input -->
+                <div onclick="friendDropdown(1)" id="fDr" class="fDrclass">참여인원 선택</div>
                 {% for friend in friends %}
                 <div class="friendsList">
                 <input type="checkbox" name="party_friend[]" value="{{friend.uid}}"> {{friend.name}}
@@ -245,6 +246,15 @@
         <div class="new_tab03" id="panel_new" style="display:none;">
   
 <script>
+                function friendDropdown(num){
+                    
+                   if(num==1){
+                    $('.fDrclass').hide();
+                    $('.friendsList').show();
+                       $('.friendsList').css('height','200px');
+
+                   }
+                }
                 function dropdown(num){
                    var f = '#test';
                    if(num==1){
@@ -394,9 +404,9 @@
                                                         <div id="rps"></div>
                                                 <a onclick="timeTab(3)" style="color:rgb(216, 67, 57);float:right"> 돌아가기</a>
                                                 </div> 
-                                                <div id="test4" class="tabElements" style="display:none;">
-                                                    그냥 늦으면 <select name="panalty">
-                                                            <option value="100">100원</option>
+                                                <div id="test4" class="tabElements" style="display:none;" >
+                                                    <select name="panalty" id="once" class="custom-select custom-select-lg mb-3">
+                                                            <option id="seldefault" value="100">100원</option>
                                                             <option value="500">500원</option>
                                                             <option value="1000">1000원</option>
                                                             <option value="5000">5000원</option>

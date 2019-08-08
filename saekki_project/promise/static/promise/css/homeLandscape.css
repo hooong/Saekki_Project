@@ -45,12 +45,20 @@
     svg {
     height:0
     }
-
-
- 
+.pcard{
+    flex:1 0 300px;
+    background-color:#3f3f3f;
+    text-align:center;
+    display:flex;
+    justify-content: center;
+     margin:10px;
+}
+.pcard a:hover{
+    text-decoration: none;
+}
 
     .promiseCard{
-        text-align:center;font-size:24pt;overflow:auto;color: white;  white-space:nowrap;text-overflow:ellipsis;
+        text-align:center;font-size:24pt;overflow:auto;color: white;  white-space:nowrap;text-overflow:ellipsis;width:300px;
     }
 
     
@@ -72,10 +80,21 @@
     .menu_tabs0{ padding: 10px; font-size:10pt;}
     .menu_tabs1{ padding: 10px; font-size:10pt;}
     /* rightCont 친구신청 new 영역 */
-    #newControls{position: absolute;} 
+    #newControls{position: absolute; width:25px;} 
     /*new 위치 컨트롤*/
     #newFriendNews{position:relative;top:-19px;right:30px;z-index:999;font-size:9pt;background-color:#D84339;color:white;padding:1px 2px 1px 2px;}
-    #newFirendBts{position: relative;top:-20px;right:22px; z-index:1000; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #D84339} 
-    /* new 하단 삼각형 */
+    #newFirendBts{
 
+        position: relative;
+        top:-19px;right:22px;
+         z-index:1000;
+          width: 0;
+           height: 0;
+            border-left: 5px solid transparent;
+             border-right: 5px solid transparent;
+              border-top: 5px solid #D84339} 
+    /* new 하단 삼각형 */
+   
 }
+ 
+
