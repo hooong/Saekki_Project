@@ -97,4 +97,5 @@ class Notification_penalty(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='penalty_user', null=True, on_delete=models.CASCADE)
     promise = models.ForeignKey(Promise, related_name='penalty_promise', null=True, on_delete=models.CASCADE)
     penalty = models.CharField(max_length=200, default='0')
+    final = models.CharField(max_length=5, default='0')
 

@@ -143,10 +143,36 @@
                 <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button class="nbtn" style="width: 84px;">지우기</button></a>
             </div>
         </div>
-  
         {% endif %}
-       
     {% endfor %}
+    {% for noti in noti_penalty %}
+      {% if noti.final == '0' %}
+        {% if noti.penalty == '-1' %}
+          <div class="notiPromise">
+            <div class="notiL">
+                <a href="{% url 'detail' pk=noti.promise.id %}">"{{noti.promise.title}}"의 엽사가 공개되고있어요!! 서둘러서 도착하세요!</a>
+            </div>   
+          </div>
+        {% else %}
+          <div class="notiPromise">
+            <div class="notiL">
+                <a href="{% url 'detail' pk=noti.promise.id %}">"{{noti.promise.title}}"의 벌금이 {{noti.penalty}}입니다. 서둘러서 도착하세요!</a>
+            </div>   
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="notiPromise">
+          <div class="notiL">
+              <a href="{% url 'detail' pk=noti.promise.id %}">"{{noti.promise.title}}"의 최종벌금은 {{noti.penalty}}입니다.</a>
+          </div>   
+          <div class="notiR">
+            <a href="{% url 'noti_promise_button' operation='delete_penalty' pk=noti.id %}"><button class="nbtn" style="width: 84px;">지우기</button></a>
+          </div>
+        </div>
+      {% endif %}
+  {% endfor %}
+
+      
     {% if not noti_promise %}
     <p style="margin:10px">알림이 없어요 ^^</p>
     {% endif %}
