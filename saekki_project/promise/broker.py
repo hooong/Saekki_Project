@@ -2,12 +2,17 @@ import time
 from django.utils import timezone
 from apscheduler.schedulers.background import BackgroundScheduler
 from .models import *
+from django.contrib.auth import get_user_model
+from datetime import datetime, timedelta
+
+User = get_user_model()
 
 # 스케쥴러 생성
 def schedule():
     sched = BackgroundScheduler()
-    sched.add_job(com_time, 'cron', minute='*' ,second=0)
-    sched.add_job(soon, 'cron', minute='*' ,second=2)
+    sched.add_job(com_time, 'cron', minute='*' ,second=1)
+    sched.add_job(soon, 'cron', minute='*' ,second=30)
+    sched.add_job(noti_count_penalty, 'cron', minute='*' ,second=55)
     sched.start()
 
 # 시간 비교 후 끝났는지 확인
@@ -21,12 +26,28 @@ def com_time():
             promise.end = 1
             promise.save()
 
-            # 도착한 사람들 엽사 삭제
+        # 도착한 사람들 엽사 삭제
+        if promise.what_betting == '엽사' and promise.end == 1:
             parties = Party_detail.objects.filter(promise=promise, success_or_fail=1)
             for party in parties:
                 fun = Fun_Image.objects.filter(user=party)
                 fun.delete()
+        
+        # 벌금 알림 생성
+        if promise.what_betting == '벌금' and promise.end == 1:
+            parties = Party_detail.objects.filter(promise=promise, success_or_fail=0, acpt=1)
+            for uid in parties:
+                user = User.objects.get(uid=uid.user.uid)
+                noti = Notification_penalty.objects.get_or_create(user=user, promise=promise)
+                if noti[1]:
+                    if promise.per_or_one == '시간':
+                        noti[0].penalty = promise.per_min_money
+                        noti[0].save()
+                    elif promise.per_or_one == '한번':
+                        noti[0].penalty = promise.onetime_panalty
+                        noti[0].save()
 
+# 마감 알려주기
 def soon():
     print("마감임박!")
     promises = Promise.objects.all().exclude(end=1)
@@ -56,6 +77,21 @@ def soon():
             promise.save()
         # TODO: 알림도 만들어주기.
 
+# 알림 벌금계산
+def noti_count_penalty():
+    print("벌금 최신화")
+    promises = Promise.objects.filter(end=1, what_betting='벌금', per_or_one='시간')
+    for promise in promises:
+        noties = Notification_penalty.objects.filter(promise=promise)
+        for noti in noties:
+            now = datetime.now()
+            s = promise.setting_date_time
+            set_time = datetime(int(s[:4]),int(s[5:7]),int(s[8:10]),int(s[11:13]),int(s[14:16]),int(s[17:]))
+            diff_time = ((now-set_time).seconds / 60)
+            diff_time = int(diff_time) // int(promise.setting_min)
+            noti.penalty = str(int(promise.per_min_money)*(1 + diff_time))
+            noti.save()
+
 # 시간 문자열 맞추기
 def time_to_str(t):
     t = t.replace('-','')
@@ -65,4 +101,6 @@ def time_to_str(t):
         t = t[:14]
 
     return t
+
+
 

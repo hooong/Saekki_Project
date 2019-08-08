@@ -32,6 +32,9 @@ def home(request):
         # 약속 알림
         noti_promise = Notification_promise.objects.filter(receive_user=user)
 
+        # 벌금 알림
+        noti_penalty = Notification_penalty.objects.filter(user=user)
+
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user)
         all_noti_count = noti_add_friend.count() + noti_promise.count()
@@ -42,7 +45,8 @@ def home(request):
         return render(request, 'home.html', {'friends':friends, 'users':users, 'promises':promises, 
                                             'user':user, 'arrives':arrives, 'no_arrives':no_arrives, 
                                             'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
-                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count,})
+                                            'noti_promise':noti_promise,'all_noti_count':all_noti_count,
+                                            'noti_penalty':noti_penalty})
 
 # 모든 유저 검색페이지
 def search(request):
@@ -210,7 +214,8 @@ def new(request):
                 promise.save()
 
                 if request.POST['radio'] == '2':
-                    promise.what_betting = '2'
+                    promise.what_betting = '엽사'
+                    promise.save()
                     p = Party_detail.objects.create(promise=promise, user=request.user)
                     image = Fun_Image()
                     image.user = p
@@ -224,14 +229,14 @@ def new(request):
                     p.save()
                 
                 if request.POST['radio'] == '1':
-                    promise.what_betting = '1'
+                    promise.what_betting = '벌금'
                     if request.POST['per_time'] == '1':
-                        promise.per_or_one = '1'
+                        promise.per_or_one = '시간'
                         promise.setting_min = request.POST['setting_min']
                         promise.per_min_money = request.POST['per_min_penalty']
                         promise.save()
                     if request.POST['per_time'] == '2':
-                        promise.per_or_one = '2'
+                        promise.per_or_one = '한번'
                         promise.onetime_panalty = request.POST['panalty']
                         promise.save()
 
@@ -282,11 +287,18 @@ def new(request):
 def acpt(request, operation, promise_id):
     user = get_object_or_404(User, uid=request.user.uid)
     promise = get_object_or_404(Promise, id=promise_id)
-    p = Party_.objects.get(promise=promise, user=request.user)
+    p = Party_detail.objects.get(promise=promise, user=request.user)
     if operation == 'acpt':
         promise.acpt_party.append(user.uid)
         promise.save()
-        return redirect('/promise/fun_image/'+str(promise_id))
+        if promise.what_betting == '엽사':
+            return redirect('/promise/fun_image/'+str(promise_id))
+        else:
+            noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
+            noti_promise.delete()
+            p.acpt = 1
+            p.save()
+            return redirect('home')
     elif operation == 'deny':
         noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
         noti_promise.delete()
@@ -384,6 +396,14 @@ def arrived(request, promise_id):
                 if arr == len(party_all):
                     promise.end = 1
                     promise.save()
+
+                # 시간이 끝나고 도착
+                if promise.end == 1:
+                    p = Party_detail.objects.get(promise=promise_id, user=request.user)
+                    p.success_or_fail = 1
+                    p.save()
+                    noti = Notification_penalty.objects.get(promise=promise_id, user=request.user)
+                    noti.delete()
 
                 return HttpResponseRedirect('/promise/detail/'+str(promise_id))
             else:
