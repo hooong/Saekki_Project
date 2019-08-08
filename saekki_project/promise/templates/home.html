@@ -244,7 +244,7 @@
     <div>
         <h2 >Promise(시간이 지난 약속)</h2>
         {% for promise in promises %}
-        {% if user.username == promise.user.username or user.username in promise.pre_party %}
+        {% if user.name == promise.user.name or user.name in promise.pre_party %}
         {% if promise.end == 1 %}
        
         
