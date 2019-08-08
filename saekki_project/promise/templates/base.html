@@ -53,7 +53,7 @@
               <strong style="color:#D84339">친구 신청 알림</strong>이 있습니다.
              
               {% else %}
-              뭐하세요 친구없는새기야 
+              요청된 친구목록이 없어요! 
               {% endif %}
               <div style="float:right;">
                   <span id="subMenuLink">
@@ -95,20 +95,22 @@
     <div class="menu_tab">
             
         <ul>
-                {% if noti_add_friend %}
+                
+            <li class="active"><a href="#"; onclick="tab_menu(0);">친구신청</a></li>
+            {% if noti_add_friend %}
                   <span id="newControl">
                   <span id="newFriendNew">new</span>
                   <span id="newFirendBt"></span>
                   </span>
                 {% endif %}
-            <li class="active"><a href="#"; onclick="tab_menu(0);">친구신청</a></li>
+            
+            <li><a href="#" onclick="tab_menu(1);">초대 및 댓글</a></li>
             {% if noti_promise %}
             <span id="newControl">
             <span id="newFriendNew">new</span>
             <span id="newFirendBt"></span>
             </span>
           {% endif %}
-            <li><a href="#" onclick="tab_menu(1);">초대 및 댓글</a></li>
         </ul>
     </div>
     <div class="menu_tab0" id="panels" >

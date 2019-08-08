@@ -14,12 +14,6 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
 
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <filter id="blur">
-        <feGaussianBlur stdDeviation="6" />
-    </filter>
-</svg>
-
 
 
 <body>
@@ -56,6 +50,7 @@
 
                                 <li class="actives"><a href="#"; onclick="tab_menus(0);">친구신청</a></li>
                                 {% if noti_add_friend %}
+                            
                                 <span id="newControls">
                                 <span id="newFriendNews">new</span>
                                 <span id="newFirendBts"></span>
@@ -132,156 +127,66 @@
 
         <a href="{% url 'search' %}"> 회원검색 </a>
 
-        <h2>약속 댓글 알림</h2>
-        {% for noti in noti_promise %}
-            {% if noti.com_or_pro == 'p' %}
-                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 초대했습니다.</a> <br>
-                <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
-            {% elif noti.com_or_pro == 'c' %}
-                <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}">{{noti.send_user.name}}님이 {{noti.promise.title}}에 댓글을 남겼습니다.</a> <br>
-                <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button>지우기</button></a>
-            {% endif %}
-        {% endfor %}
-        {% for noti in noti_penalty %}
-            <a href="{% url 'detail' pk=noti.promise.id %}">"{{noti.promise.title}}"의 벌금이 {{noti.penalty}}입니다. 서둘러서 도착하세요!</a> <br>
-        {% endfor %}
-            
-
-
-        <!-- 친구목록 -->
-        <h2>friends</h2>
-        {% for friend in friends %}
-            {% if not friend.socialaccount_set.all %}
-                {% if not friend.profile %}
-                    스태틱
-                {% elif friend.profile.image == '' %}
-                    스태틱
-                {% else %}
-                    <img width="50" height="50" src="{{ friend.profile.image.url }}" />
-                {% endif %}
-            {% else %}
-            <img width="50" height="50" src="{{ friend.socialaccount_set.all.0.get_avatar_url }}" />
-            {% endif %}
-
-        {{ friend.username }}
-        {% if friend.profile and friend.profile.state_msg != None %}
-            {{friend.profile.state_msg}}
-        {% endif %}
-        <a href="{% url 'change_friend' operation='remove' pk=friend.pk %}">
-            <button>친구해제</button>
-        </a>
-        <br>
-        {% endfor %}
         <!-- 약속게시물 -->
         <div>
         <h2 >Promise(진행중인 약속)</h2>
         <!-- 도착 -->
+        <div style="display: flex;flex-wrap: wrap;">
         {% for arrive in arrives %}
             {% if arrive.promise.end == 0 %}
+            <div class="pcard"></div>
                     <a href="{% url 'detail' pk=arrive.promise.id %}">
-                        <div>
-                            {{arrive.promise.title}} <br>
-                            {{arrive.promise.setting_date_time}} <br>
-                            (도착) <br>
-                        </div>      
+                        
+                        <div class="promiseCard">{{arrive.promise.title}}</div>
+                            <span>{{arrive.promise.setting_date_time}}(도착)</span>
+
                     </a>
             {% endif %}
         {% endfor %}
     </div>
+    </div>
         <hr> 
         <!-- 미도착 -->
+        <div style="display: flex;flex-wrap: wrap;">
         {% for no_arrive in no_arrives %}
             {% if no_arrive.promise.end == 0 %}
-                    
-                            <div id="{{no_arrive}}" class="prl bgBlur test">
+        
+            <div class="pcard">
                                 <a href="{% url 'detail' pk=no_arrive.promise.id %}">
                                     <div class="promiseCard">  {{no_arrive.promise.title}}</div>
                                         <span>{{no_arrive.promise.setting_date_time}}(미도착)</span>
                                         <!-- <a href="{% url 'detail' pk=no_arrive.promise.id %}"></a> -->
-                                        <script>
-                                                function handler(ev){
-                                                    var target= $(ev.target);
-                                                    var elId = target.attr('id');
-                                                    if(target.is(".prl *")){
-                                                        $(this).css("box-shadow", "15px 15px 15px rgb(138,148,145)");
-                                                        $(this).css("margin", "8px 12px 12px 8px ");
-                                                    }
-                                                }
-                                            $(".prl").mouseover(handler);
-                                            function hand(ev){
-                                                    var target= $(ev.target);
-                                                    var elId = target.attr('id');
-                                                    if(target.is(".prl *")){
-                                                    $(this).css("box-shadow", "10px 10px 10px rgb(138,148,145)");
-                                                    $(this).css("margin", "10px");
-                                                    }
-                                                }
-                                            $(".prl").mouseleave(hand);
-                                            </script>
-                                
+                                </a>
                                 </div>   
                            
-                    </a>
+           
             {% endif %}
         {% endfor %}      
-                
-
-
- <style type="text/css">
-            .prl{
-                margin:10px;
-                border-radius:3px;
-                box-shadow:10px 10px 10px rgb(138, 148, 145);
-                text-align: center;
-                padding:20px;
-            }
-            .prl a:hover{text-decoration:none;}
-
-
-</style>
+    </div>
 
 
     <div>
-        <h2 >Promise(시간이 지난 약속)</h2>
+        <h2 >(시간이 지난 약속)</h2>
+        <div style="display: flex;flex-wrap: wrap;">
         {% for promise in promises %}
         {% if user.username == promise.user.username or user.username in promise.pre_party %}
         {% if promise.end == 1 %}
        
         
-            
-            <div id="{{promise}}" class="prl bgBlur test" style="display:inline-block; margin:10px;">
+        
+            <div class="pcard">
                     <a href="{% url 'detail' pk=promise.id %}">
                 <div class="promiseCard">{{promise.title}}</div>
                 <span>{{promise.setting_date_time}}</span>
             </a>
             
             </div>   
-     
-                <script>
-                    function handler(ev){
-                        var target= $(ev.target);
-                        var elId = target.attr('id');
-                        if(target.is(".prl")){
-                            $(this).css("box-shadow", "15px 15px 15px rgb(138,148,145)");
-                            $(this).css("margin", "8px 12px 12px 8px ");
-                            
-                        }
-                    }
-                $(".prl").mouseover(handler);
-                function hand(ev){
-                        var target= $(ev.target);
-                        var elId = target.attr('id');
-                        if(target.is(".prl")){
-                        $(this).css("box-shadow", "10px 10px 10px rgb(138,148,145)");
-                        $(this).css("margin", "10px");
-                        }
-                    }
-                $(".prl").mouseleave(hand);
-                </script>
+        
    
                 {%endif%}
                 {% endif %}
     {% endfor %}
+</div>
 </div>
 
 
