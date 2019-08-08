@@ -215,6 +215,7 @@ def new(request):
 
                 if request.POST['radio'] == '2':
                     promise.what_betting = '엽사'
+                    promise.save()
                     p = Party_detail.objects.create(promise=promise, user=request.user)
                     image = Fun_Image()
                     image.user = p
@@ -293,6 +294,10 @@ def acpt(request, operation, promise_id):
         if promise.what_betting == '엽사':
             return redirect('/promise/fun_image/'+str(promise_id))
         else:
+            noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
+            noti_promise.delete()
+            p.acpt = 1
+            p.save()
             return redirect('home')
     elif operation == 'deny':
         noti_promise = Notification_promise.objects.filter(receive_user=user, promise=promise)
