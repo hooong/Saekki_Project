@@ -483,7 +483,7 @@ def aboutus(request):
 
 def wanted(request):
     # 랜덤으로 몇개
-    if len(wanted) > 6:
+    if len(Fun_Image.objects.all()) > 6:
         wanted = Fun_Image.objects.all().order_by('?')[:6]
     else:
         wanted = Fun_Image.objects.all()
