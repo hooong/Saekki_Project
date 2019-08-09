@@ -453,6 +453,8 @@ def arrived(request, promise_id):
                 # 도착시 엽사 삭제
                 elif promise.end == 1 and promise.what_betting == '엽사':
                     p = Party_detail.objects.get(promise=promise_id, user=request.user)
+                    noti = Notification_penalty.objects.get(user=request.user, promise=promise)
+                    noti.delete()
                     fun = Fun_Image.objects.filter(user=p)
                     fun.delete()
                     
