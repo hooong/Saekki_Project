@@ -146,6 +146,11 @@
         <div>
         <h2 >진행중인 약속</h2>
         <!-- 도착 -->
+
+        {% if not arrive and not no_arrive %}
+            아직 약속이 없어요
+            <a href="{% url 'new' %}"><button>약속만들러가기</button></a>
+        {% endif %}
         <div style="display: flex;flex-wrap: wrap;">
             
         {% for arrive in arrives %}
@@ -165,11 +170,7 @@
         <!-- 미도착 -->
         <div style="display: flex;flex-wrap: wrap;">
         {% for no_arrive in no_arrives %}
-
-            
-
             {% if no_arrive.promise.end == 0 and user.uid in no_arrive.promise.acpt_party%}
-
             <div class="pcard">
                     
                                 <a href="{% url 'detail' pk=no_arrive.promise.id %}">
@@ -180,12 +181,10 @@
                                 </a>
                                 
             </div>   <div class="box"><div class="ribbon2"><span style="font-size:12pt">미도착</span></div></div>
-                                
-        
-           
             {% endif %}
         {% endfor %}      
     </div>
+    
 
 
     <div>

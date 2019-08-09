@@ -38,7 +38,7 @@ def home(request):
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -76,7 +76,7 @@ def search(request):
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -134,7 +134,7 @@ def detail(request, pk):
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -287,7 +287,7 @@ def new(request):
 
             # 친구 알림
             noti_add_friend = Notification_friend.objects.filter(receive_user=user)
-            all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
+            all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
             noti_wait_friend = []
             for wait in Notification_friend.objects.filter(send_user=user):
                 noti_wait_friend.append(wait.receive_user.uid)
@@ -356,7 +356,7 @@ def fun_image(request, promise_id):
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -499,7 +499,7 @@ def wanted(request):
 
     # 친구 알림
     noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-    all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
+    all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
     noti_wait_friend = []
     for wait in Notification_friend.objects.filter(send_user=user):
         noti_wait_friend.append(wait.receive_user.uid)
