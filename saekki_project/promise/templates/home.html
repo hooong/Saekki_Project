@@ -165,8 +165,6 @@
         <!-- 미도착 -->
         <div style="display: flex;flex-wrap: wrap;">
         {% for no_arrive in no_arrives %}
-<<<<<<< HEAD
-            {% if no_arrive.promise.end == 0 %}
             <style>
 .box{
     
@@ -216,11 +214,7 @@
   border-top: 3px solid #79A70A;
 }
             </style>
-            
-=======
             {% if no_arrive.promise.end == 0 and user.uid in no_arrive.promise.acpt_party%}
-        
->>>>>>> 89dec289009d91292c137797d14d508a1921875c
             <div class="pcard">
                     
                                 <a href="{% url 'detail' pk=no_arrive.promise.id %}">
