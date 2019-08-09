@@ -83,10 +83,13 @@
         overflow: hidden;
     }
     .nameSpace{
-        color:#D84339;
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+        color:rgba(55,50,52, 1);
         display:block;margin-left:30px;margin-bottom:-1.4%;font-size:2vw;position: relative; z-index: 2;
     }
     .nameSpaceR{
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+        color:rgba(55,50,52, 1);
         text-align: right;
         display:block;margin-right: 30px;margin-bottom:-1.4%;font-size:2vw; position: relative; z-index: 2;
     }
@@ -139,7 +142,7 @@
         padding : 15px;
         /* color:white; */
         word-wrap: break-word;
-        background-color: rgba(55,50,52, 0.8);
+        background-color: rgba(55,50,52, 1);
         
     }
     .imgSpaceR{
@@ -190,10 +193,15 @@
         overflow: hidden;
     }
     .nameSpace{
-        color:#D84339;
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+        color:rgba(55,50,52, 1);
+        
+        
         display:block;margin-left:30px;margin-bottom:-1.4%;font-size:2vw;position: relative; z-index: 2;
     }
     .nameSpaceR{
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+        color:rgba(55,50,52, 1);
         text-align: right;
         display:block;margin-right: 30px;margin-bottom:-1.4%;font-size:2vw; position: relative; z-index: 2;
     }

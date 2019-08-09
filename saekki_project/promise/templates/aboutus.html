@@ -1,10 +1,40 @@
 
 {% load staticfiles %}
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/minty/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'saekki_pro/css/animate.css' %}">
 <script type="text/javascript" src="{% static 'saekki_pro/js/wow.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'promise/css/aboutusLandscape.css' %}">
 <body>
+        <link rel="stylesheet" href="{% static 'promise/css/base.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일화면적용 -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">약<span style="font-size:5px">속을</span>지<span style="font-size:5px">키지 않는 새끼</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="/">집 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'new' %}">약속잡기</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'search'%}" tabindex="-1">친구 검색</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'wanted' %}">수배자</a>
+                  </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'aboutus' %}">aboutus</a>
+                  </li>
+              </ul>
+            </div>
+          </nav>
 <div style="width:100%; height:40vh;">
         <div style="position:absolute;top:24vh;z-index:2;color:white;font-size:25px;left:50%;transform:translateX(-50%);border-bottom:3px solid">안녕하살법</div>
         <!-- left;50%; transform:translateX(-50%); 중앙정렬시키고 자신의 x축 50%만큼 뺌-->
@@ -34,10 +64,11 @@
         
         <div class="imgSpace">
             
-            <img class="profileImg" src="https://images.unsplash.com/photo-1504593811423-6dd665756598?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80">
+            <img class="profileImg" src="https://scontent-icn1-1.cdninstagram.com/vp/ea99b39cb4af971cd76d6050c42fe19b/5DE9FD2E/t51.2885-15/e35/57447341_901592016677643_4492920165317633737_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com">
             
             <div class="wordSpace">
-                    하고 싶은 일만 하고 먹고 싶은 것만 먹고 듣고 싶은 것만 듣고 보고 싶은 것 만 보고 싶다
+                    프론트엔드<br>
+                    css알레르기 걸림;;;;;
             </div>
         
         </div>
@@ -46,13 +77,13 @@
         </div>
         
     </div>
-    <span class="nameSpaceR">박지원</span>
+    <span class="nameSpaceR">홍석준</span>
     <div class="imgDiv wow bounceInUp">
             <div class="imgSpaceR2" style="margin-left:auto;"></div>
             <div class="imgSpaceR" >
                     <div class="wordSpace" style="margin-left:auto; text-align: right">
                             백엔드 개발자<br>
-                            대머리ㅉㄹㅈㄷㄹㄷㅈㄹㅈㄷㄹ
+                            애플에 잡스가 있다면 저는 그냥 대머리입니다.
                     </div>
                 <img class="profileImg" src="https://scontent-icn1-1.cdninstagram.com/vp/ce06acb056fc7976af91571575af195c/5DE6DD52/t51.2885-15/e35/18380725_1895129704075563_5003588319464914944_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com">
             
