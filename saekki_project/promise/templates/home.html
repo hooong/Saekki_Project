@@ -152,12 +152,12 @@
             {% if arrive.promise.end == 0 and user.uid in arrive.promise.acpt_party %}
             <div class="pcard">
                     <a href="{% url 'detail' pk=arrive.promise.id %}">
-                        
+                            <img style="height:100px"src="{% static 'promise/icon/prl.png' %}">
                         <div class="promiseCard" style="position: relative;">{{arrive.promise.title}}</div>
-                            <span>{{arrive.promise.setting_date_time}}(도착)</span>
+                            <span>{{arrive.promise.setting_date_time}}</span>
 
                     </a>
-                    </div>
+                    </div><div class="box"><div class="ribbon"><span style="font-size:12pt">도착</span></div></div>
             {% endif %}
         {% endfor %}
     </div>
@@ -165,66 +165,17 @@
         <!-- 미도착 -->
         <div style="display: flex;flex-wrap: wrap;">
         {% for no_arrive in no_arrives %}
-            <style>
-.box{
-    
-    position:relative;
-}
-.ribbon {
-  position: absolute;
-  right: 5px; top: 5px;
-  z-index: 1;
-  overflow: hidden;
-  width: 75px; height: 75px;
-  text-align: right;
-}
-.ribbon span {
-  font-size: 10px;
-  font-weight: bold;
-  color: #FFF;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 20px;
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  width: 100px;
-  display: block;
-  background: #79A70A;
-  background: linear-gradient(#9BC90D 0%, #79A70A 100%);
-  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 19px; right: -21px;
-}
-.ribbon span::before {
-  content: "";
-  position: absolute; left: 0px; top: 100%;
-  z-index: -1;
-  border-left: 3px solid #79A70A;
-  border-right: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #79A70A;
-}
-.ribbon span::after {
-  content: "";
-  position: absolute; right: 0px; top: 100%;
-  z-index: -1;
-  border-left: 3px solid transparent;
-  border-right: 3px solid #79A70A;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #79A70A;
-}
-            </style>
             {% if no_arrive.promise.end == 0 and user.uid in no_arrive.promise.acpt_party%}
             <div class="pcard">
                     
                                 <a href="{% url 'detail' pk=no_arrive.promise.id %}">
                                         <img style="height:100px"src="{% static 'promise/icon/prl.png' %}">
                                     <div class="promiseCard">  {{no_arrive.promise.title}}</div>
-                                        <span>{{no_arrive.promise.setting_date_time}}(미도착)</span>
+                                        <span>{{no_arrive.promise.setting_date_time}}</span>
                                         <!-- <a href="{% url 'detail' pk=no_arrive.promise.id %}"></a> -->
                                 </a>
                                 
-            </div>   <div class="box"><div class="ribbon"><span style="font-size:12pt">미도착</span></div></div>
+            </div>   <div class="box"><div class="ribbon2"><span style="font-size:12pt">미도착</span></div></div>
                                 
         
            
@@ -246,6 +197,7 @@
             <div class="pcard">
                 
                     <a href="{% url 'detail' pk=promise.id %}">
+                            <img style="height:100px"src="{% static 'promise/icon/prl.png' %}">
                 <div class="promiseCard">{{promise.title}}</div>
                 <span>{{promise.setting_date_time}}</span>
             </a>
