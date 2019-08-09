@@ -151,7 +151,7 @@ def detail(request, pk):
                                                 ,'noti_add_friend':noti_add_friend, 'noti_wait_friend':noti_wait_friend,
                                             'noti_promise':noti_promise,'all_noti_count':all_noti_count, 'app_key':app_key,
                                             'noti_acpt_friend':noti_acpt_friend, 'p_detail':p_detail, 'noti_penalty':noti_penalty })
-
+ 
 # 댓글작성
 def new_comment(request, promise_id):
     if not request.user.is_authenticated:
@@ -508,3 +508,9 @@ def wanted(request):
 
     return render(request, 'wanted.html', {'wanted':wanted,'noti_promise':noti_promise,'noti_penalty':noti_penalty, 'noti_add_friend':noti_add_friend,'all_noti_count':all_noti_count,
                                             'noti_wait_friend':noti_wait_friend})
+
+
+def howtouse(request):
+    # 사용방법 소개 페이지
+    
+    return render(request, 'howtouse.html')
