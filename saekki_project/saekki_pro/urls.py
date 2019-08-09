@@ -33,6 +33,9 @@ urlpatterns = [
     path('oauth/', accounts.views.oauth, name='oauth'),
     path('logout/', accounts.views.kakao_logout, name='kakao_logout'),
     path('signout/', accounts.views.kakao_signout, name='kakao_signout'),
+
+    # 테스트계정 로그인
+    path('test_login/', accounts.views.test_login, name='test_login'),
 ]
 
 if settings.DEBUG:

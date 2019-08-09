@@ -136,3 +136,11 @@ def kakao(request, operation):
     elif operation == 'signout':
         return redirect('kakao_signout')
         
+
+# 테스트 로그인
+def test_login(request):
+    User = get_user_model()
+    user = User.objects.get(uid='test')
+    login(request, user)
+
+    return redirect('home')
