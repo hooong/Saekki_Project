@@ -149,7 +149,7 @@
         <div style="display: flex;flex-wrap: wrap;">
             
         {% for arrive in arrives %}
-            {% if arrive.promise.end == 0 %}
+            {% if arrive.promise.end == 0 and user.uid in arrive.promise.acpt_party %}
             <div class="pcard">
                     <a href="{% url 'detail' pk=arrive.promise.id %}">
                         
@@ -165,7 +165,7 @@
         <!-- 미도착 -->
         <div style="display: flex;flex-wrap: wrap;">
         {% for no_arrive in no_arrives %}
-            {% if no_arrive.promise.end == 0 %}
+            {% if no_arrive.promise.end == 0 user.uid in no_arrive.promise.acpt_party%}
         
             <div class="pcard">
                                 <a href="{% url 'detail' pk=no_arrive.promise.id %}">
@@ -185,7 +185,7 @@
         <h2 >(시간이 지난 약속)</h2>
         <div style="display: flex;flex-wrap: wrap;">
         {% for promise in promises %}
-        {% if user.name == promise.user.name or user.name in promise.pre_party %}
+        {% if user.name == promise.user.name or user.uid in promise.acpt_party %}
         {% if promise.end == 1 %}
        
         
