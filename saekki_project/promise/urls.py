@@ -18,7 +18,7 @@ urlpatterns = [
     path('noti_promise/<str:operation>/<int:pk>', views.noti_promise_button, name='noti_promise_button'),
     path('search/', views.search, name='search'),
     path('aboutus/', views.aboutus, name='aboutus'),
-    path('promise_acpt/<str:operation>/<int:promise_id>',views.acpt, name='promise_acpt'),
+    path('promise_acpt/<str:operation>/<str:promise_id>',views.acpt, name='promise_acpt'),
     path('fun_image/<int:promise_id>',views.fun_image,name='fun_image'),
     path('wanted/',views.wanted, name='wanted')
 ]
