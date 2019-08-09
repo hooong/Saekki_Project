@@ -137,7 +137,6 @@
 
               <form name="acpt_time_form" action="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}" style="display:inline"><button class="nbtn" onclick="checkPenalty('acpt','{{noti.promise.what_betting}}','{{noti.promise.per_or_one}}','{{noti.promise.per_min_money}}','{{noti.promise.setting_min}}','{{noti.promise.onetime_panalty}}','{{noti.promise.id}}')">수락</button></form>
               <form name="acpt_one_form" action="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}" style="display:inline"><button class="nbtn" onclick="checkPenalty('deny','{{noti.promise.what_betting}}','{{noti.promise.per_or_one}}','{{noti.promise.per_min_money}}','{{noti.promise.setting_min}}','{{noti.promise.onetime_panalty}}','{{noti.promise.id}}')">거절</button></form>
-
             </div>
         </div>
         {% elif noti.com_or_pro == 'c' %}
@@ -225,6 +224,12 @@
           else{
             return false;
           }
+        }
+      }else{
+        if(confirm("정말로 거절해요? ^-^;") == true ){
+          document.acpt_deny_form.submit();
+        }else{
+          return false;
         }
       }
     }
