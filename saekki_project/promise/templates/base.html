@@ -134,8 +134,8 @@
                 <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}" >{{noti.send_user.name}}님이 {{noti.promise.title}}에 초대했습니다.</a>
             </div>   
             <div class="notiR">
-              <form name="acpt_time_form" action="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}"></form><button class="nbtn" onclick="checkPenalty('acpt','{{noti.promise.what_betting}}','{{noti.promise.per_or_one}}','{{noti.promise.per_min_money}}','{{noti.promise.setting_min}}','{{noti.promise.onetime_panalty}}','{{noti.promise.id}}')">수락</button></form>
-              <form name="acpt_one_form" action="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}"></form><button class="nbtn" onclick="checkPenalty('deny','{{noti.promise.what_betting}}','{{noti.promise.per_or_one}}','{{noti.promise.per_min_money}}','{{noti.promise.setting_min}}','{{noti.promise.onetime_panalty}}','{{noti.promise.id}}')">거절</button></form>
+              <form name="acpt_time_form" action="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}"><button class="nbtn" onclick="checkPenalty('acpt','{{noti.promise.what_betting}}','{{noti.promise.per_or_one}}','{{noti.promise.per_min_money}}','{{noti.promise.setting_min}}','{{noti.promise.onetime_panalty}}','{{noti.promise.id}}')">수락</button></form>
+              <form action="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}"><button class="nbtn" >거절</button></form>
             </div>
         </div>
         {% elif noti.com_or_pro == 'c' %}
@@ -209,7 +209,7 @@
           }
           else{
             if(confirm("이 약속은 늦으면 벌금"+one_penal+"원이다!!") == true ){
-              document.acpt_one_form.submit();
+              document.acpt_time_form.submit();
             }
             else{
               return false;

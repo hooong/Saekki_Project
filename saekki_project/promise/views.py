@@ -126,6 +126,8 @@ def detail(request, pk):
         user = request.user
         # 약속 알림
         noti_promise = Notification_promise.objects.filter(receive_user=user).order_by('-id')
+        # 벌금 알림
+        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
@@ -134,8 +136,6 @@ def detail(request, pk):
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
 
-        # 벌금 알림
-        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
 
         # 댓글
         comments = promise.comments.all()
