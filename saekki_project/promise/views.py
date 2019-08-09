@@ -33,11 +33,12 @@ def home(request):
         noti_promise = Notification_promise.objects.filter(receive_user=user).order_by('-id')
 
         # 벌금 알림
-        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
+        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
+        noti_penalty_count = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -70,11 +71,12 @@ def search(request):
         noti_promise = Notification_promise.objects.filter(receive_user=user).order_by('-id')
 
         # 벌금 알림
-        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
+        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
+        noti_penalty_count = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -127,11 +129,12 @@ def detail(request, pk):
         # 약속 알림
         noti_promise = Notification_promise.objects.filter(receive_user=user).order_by('-id')
         # 벌금 알림
-        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
+        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
+        noti_penalty_count = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -279,11 +282,12 @@ def new(request):
             noti_promise = Notification_promise.objects.filter(receive_user=user)
 
             # 벌금 알림
-            noti_penalty = Notification_penalty.objects.filter(user=request.user).exclude(penalty='-1')
+            noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
+            noti_penalty_count = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
 
             # 친구 알림
             noti_add_friend = Notification_friend.objects.filter(receive_user=user)
-            all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
+            all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
             noti_wait_friend = []
             for wait in Notification_friend.objects.filter(send_user=user):
                 noti_wait_friend.append(wait.receive_user.uid)
@@ -347,11 +351,12 @@ def fun_image(request, promise_id):
         noti_promise = Notification_promise.objects.filter(receive_user=user).order_by('-id')
 
         # 벌금 알림
-        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
+        noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
+        noti_penalty_count = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
 
         # 친구 알림
         noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
+        all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
         noti_wait_friend = []
         for wait in Notification_friend.objects.filter(send_user=user):
             noti_wait_friend.append(wait.receive_user.uid)
@@ -489,11 +494,12 @@ def wanted(request):
     noti_promise = Notification_promise.objects.filter(receive_user=user).order_by('-id')
 
     # 벌금 알림
-    noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
+    noti_penalty = Notification_penalty.objects.filter(user=request.user).order_by('-id')
+    noti_penalty_count = Notification_penalty.objects.filter(user=request.user).order_by('-id').exclude(penalty='-1')
 
     # 친구 알림
     noti_add_friend = Notification_friend.objects.filter(receive_user=user).order_by('-id')
-    all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty.count()
+    all_noti_count = noti_add_friend.count() + noti_promise.count() + noti_penalty_count.count()
     noti_wait_friend = []
     for wait in Notification_friend.objects.filter(send_user=user):
         noti_wait_friend.append(wait.receive_user.uid)
