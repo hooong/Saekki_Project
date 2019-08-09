@@ -1,3 +1,10 @@
+@font-face { font-family: 'BBTreeGR'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGR.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'TmonMonsori'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'S-CoreDream-3Light'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'Handon3gyeopsal600g'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/Handon3gyeopsal600g.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'HangeulNuri-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+
 @media (min-width:500px) and (orientation:landscape){
     #homeRightCon{
         display:none;
@@ -96,5 +103,17 @@
     /* new 하단 삼각형 */
    
 }
- 
 
+
+/* 글꼴 */
+#ment {
+    font-family: 'TmonMonsori';
+}
+
+#myProfiles, #myProfileName, .menu_tab, .menu_tab0, .menu_tab1, .sub_menu{
+    font-family: 'BBTreeGR';
+}
+
+.pcard{
+    font-family: 'HangeulNuri-Bold';
+}

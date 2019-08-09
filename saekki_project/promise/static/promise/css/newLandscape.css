@@ -1,3 +1,5 @@
+@font-face { font-family: 'S-CoreDream-3Light'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff'); font-weight: normal; font-style: normal; }
+
 /* 아 웹표준 너무 어렵다.. */
 .inputform{
     width:100%;
@@ -242,4 +244,15 @@ form{
 }
 #datetimeDemo{
     height: 30px;
+}
+
+
+/* 폰트 */
+
+h2{
+    font-family: 'S-CoreDream-3Light';
+}
+
+.divContainer, #topul, .inputform{
+    font-family: 'S-CoreDream-3Light';
 }

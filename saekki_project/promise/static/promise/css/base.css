@@ -1,3 +1,5 @@
+@font-face { font-family: 'BBTreeGR'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGR.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'S-CoreDream-3Light'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff'); font-weight: normal; font-style: normal; }
 .navbar{
     box-shadow: 0 0 7px;
     padding-left:80px;
@@ -37,9 +39,11 @@
     }
     #rightCon{
         display:none;
+        
     }
     #rightCon *{
         display:none;
+        
     }
     #leftCon{
         flex:1 1 95%;
@@ -121,3 +125,16 @@ body{
     text-align:center;font-size:24pt;overflow:auto;color: white;  white-space:nowrap;text-overflow:ellipsis;
 }
 
+
+/* 폰트 */
+.navbar {
+    font-family:'S-CoreDream-3Light';
+}
+
+#sub_menu{
+    font-family:'BBTreeGR';
+}
+
+#myProfiles, #myProfileName, .menu_tab, .menu_tab0, .menu_tab1, .sub_menu{
+    font-family: 'BBTreeGR';
+}
