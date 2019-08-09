@@ -32,6 +32,15 @@ def com_time():
             for party in parties:
                 fun = Fun_Image.objects.filter(user=party)
                 fun.delete()
+            
+            # 엽사 공개 알림
+            parties = Party_detail.objects.filter(promise=promise, success_or_fail=0, acpt=1)
+            for uid in parties:
+                user = User.objects.get(uid=uid.user.uid)
+                noti = Notification_penalty.objects.get_or_create(user=user, promise=promise)
+                if noti[1]:
+                    noti[0].penalty = '-1'
+                    noti[0].save()
         
         # 벌금 알림 생성
         if promise.what_betting == '벌금' and promise.end == 1:
@@ -41,9 +50,13 @@ def com_time():
                 noti = Notification_penalty.objects.get_or_create(user=user, promise=promise)
                 if noti[1]:
                     if promise.per_or_one == '시간':
+                        uid.penalty = promise.per_min_money
+                        uid.save()
                         noti[0].penalty = promise.per_min_money
                         noti[0].save()
                     elif promise.per_or_one == '한번':
+                        uid.penalty = promise.onetime_panalty
+                        uid.save()
                         noti[0].penalty = promise.onetime_panalty
                         noti[0].save()
 
@@ -82,14 +95,18 @@ def noti_count_penalty():
     print("벌금 최신화")
     promises = Promise.objects.filter(end=1, what_betting='벌금', per_or_one='시간')
     for promise in promises:
-        noties = Notification_penalty.objects.filter(promise=promise)
+        noties = Notification_penalty.objects.filter(promise=promise, final='0')
         for noti in noties:
             now = datetime.now()
             s = promise.setting_date_time
             set_time = datetime(int(s[:4]),int(s[5:7]),int(s[8:10]),int(s[11:13]),int(s[14:16]),int(s[17:]))
             diff_time = ((now-set_time).seconds / 60)
             diff_time = int(diff_time) // int(promise.setting_min)
-            noti.penalty = str(int(promise.per_min_money)*(1 + diff_time))
+            penalty = str(int(promise.per_min_money)*(1 + diff_time))
+            p = Party_detail.objects.get(user=noti.user, promise=promise)
+            p.penalty = penalty
+            p.save()
+            noti.penalty = penalty
             noti.save()
 
 # 시간 문자열 맞추기

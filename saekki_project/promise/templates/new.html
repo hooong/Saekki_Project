@@ -163,6 +163,7 @@
                     {{ form.as_table }}
                 </table>
                 <!-- 참여인원 input -->
+                <div onclick="friendDropdown(1)" id="fDr" class="fDrclass">참여인원 선택</div>
                 {% for friend in friends %}
                 <div class="friendsList">
                 <input type="checkbox" name="party_friend[]" value="{{friend.uid}}"> {{friend.name}}
@@ -180,21 +181,25 @@
         </div>
         <div class="new_tab01" id="panel_new" style="display:none;">
                  <!-- 날짜시간선택__ -->
-            <div class="css-script-clear">
-                    <div class="col-lg-6">
-                        <h2>2. 날짜 및 시간 선택</h2>
-                        <div id="pickerDiv">
-                            <div id="pickerInput">
-                                <input  value="날짜 및 시간을 선택해주세요" style="border-radius:0px;"type="text" id="datetimeDemo" name="pic_date" class="datetime form-control" readonly/>
-                            </div>
-                            <div id="pickerspace"></div>
-                        </div>
-                        <div class="new_tab">
-                                    <span class="chapter" style="float:left"><a href="#" onclick="new_tab_script(0)">이전</a></span>
-                                    <span class="chapter"><a href="#" onclick="new_tab_script(2)">다음</a></span>
-                        </div>
+        <div class="css-script-clear">
+                <div class="col-lg-6">
+                <h2>2. 날짜 및 시간 선택</h2>
+                <div id="pickerDiv">
+                    <div id="pickerInput">
+                        <input style="height:40px" value="날짜 및 시간을 선택해주세요" style="border-radius:0px;" type="text" id="datetimeDemo" name="pic_date" class=" form-control" readonly/>
                     </div>
+                    <div id="pickerspace" style="height:381px;"></div>
+                </div>
+                <div class="new_tab">
+                        
+                                <span class="chapter" style="float:left"><a href="#" onclick="new_tab_script(0)">이전</a></span>
+                            <span class="chapter"><a href="#" onclick="new_tab_script(2)">다음</a></span>
+    
+                        
+                    </div>
+                </div>
             </div>
+      
             <script>
                 tail.DateTime("#datetimeDemo", {
                     static: "#datetime-demo-holder",   /* Used for demonstration */
@@ -232,10 +237,21 @@
                                 
                             </div>
                         </div>
+       
+        
         </div>
         <div class="new_tab03" id="panel_new" style="display:none;">
   
 <script>
+                function friendDropdown(num){
+                    
+                   if(num==1){
+                    $('.fDrclass').hide();
+                    $('.friendsList').show();
+                       $('.friendsList').css('height','200px');
+
+                   }
+                }
                 function dropdown(num){
                    var f = '#test';
                    if(num==1){
@@ -250,7 +266,7 @@
                    if(num==2){
                     $(f+2).show();
                     $(f+1).hide();
-                    $(f+2).css('height','200px')
+                    $(f+2).css('height','100px')
                     $(f+1).css('height','0px')
                    } 
                    if(num==3){
@@ -276,10 +292,10 @@
                                        <style>
 
                                            #test1{
-                                            background-color:rgba(244, 242, 240,0.5);flex:0 1 550px; height:0px;transition:height 0.3s; display:none;
+                                            background-color:rgba(244, 242, 240,0.5);flex:0 1 550px; height:0px;transition:all 0.3s; display:none;
                                            }
                                            #test2{
-                                            flex:0 1 550px; height:0px;transition:height 0.3s;display:none;
+                                            flex:0 1 550px; height:0px;transition:all 0.3s;display:none;
                                            }
                                         </style>
                                         <script>
@@ -315,7 +331,7 @@
                                         //     $('#rps').html("<p>" + tests + "</p>");
                                         // });
                                         // });
-                                        $('.tabElements').ready(function(){
+                                        $(document).ready(function(){
                                             var timeselect = $("#timeselect option:selected").text();
                                             var payselect = $("#payselect option:selected").text();
                                             var once =$('#once option:selected').text();
@@ -385,9 +401,9 @@
                                                         <div id="rps"></div>
                                                 <a onclick="timeTab(3)" style="color:rgb(216, 67, 57);float:right"> 돌아가기</a>
                                                 </div> 
-                                                <div id="test4" class="tabElements" style="display:none;">
-                                                    그냥 늦으면 <select name="panalty">
-                                                            <option value="100">100원</option>
+                                                <div id="test4" class="tabElements" style="display:none;" >
+                                                    <select name="panalty" id="once" class="custom-select custom-select-lg mb-3">
+                                                            <option id="seldefault" value="100">100원</option>
                                                             <option value="500">500원</option>
                                                             <option value="1000">1000원</option>
                                                             <option value="5000">5000원</option>
@@ -474,8 +490,8 @@ $(document).on('click', '.number-spinner2 button', function () {
                                             <label class="checklabel" for="radio2">엽사 공개</label>
                                             <div id="test2"> 
                                                 
-                                                        <input type="file" name="fun">
-                                                        <input type="submit">
+                                                        <input style="max-width:560px;height:100px;" type="file" name="fun">
+                                                    
                                                     
                                                 </div>
                                         </div>
@@ -522,11 +538,9 @@ $(document).on('click', '.number-spinner2 button', function () {
                     set_time = set_time.replace(":","");
         
                     if(cur_time < set_time){
-                        i
                         if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
                             document.new_form.submit();
                         }else{
-                            
                             return false;
                         }
                     } else{

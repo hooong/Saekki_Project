@@ -25,7 +25,7 @@
     #pickerDiv{
         display:flex;
         flex-direction: column-reverse;
-        
+        max-height:436px;
     }
     #map{
         border-radius:20px;
@@ -67,7 +67,7 @@ body{
 .col-lg-6{
     max-width:100%;
     flex: 1 1 100%;
-    
+    max-height: 520px;
     padding:10px;
 }
 
@@ -75,6 +75,7 @@ div{
     flex:1 1 100%
 }
 #pickerInput{
+    height:40px;
     padding-right : 20px;
     padding-left:20px;
     margin-top:15px;
@@ -213,3 +214,32 @@ form{
     line-height: 36px;
   }
   
+  
+
+.friendsList{
+    margin-top:20px;
+    display:none;
+    height:0px;
+    transition: all 0.3s ease;
+    border:1px solid;
+    border-radius: 10px;
+    padding : 10px;
+}
+.fDrclass{
+    margin-top:20px;
+    border-radius: 10px;
+    border:1px solid;
+    text-align: center;
+
+}
+.fDrclass:hover{
+    background-color:#D84339;
+    color:white;
+}
+.fDrclass:active{
+    background-color:#D84339;
+    color:white;
+}
+#datetimeDemo{
+    height: 30px;
+}

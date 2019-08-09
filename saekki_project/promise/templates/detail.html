@@ -63,6 +63,9 @@
                         {{ party }}
                     {% endfor %}
             <div>내용 : {{promise.content}}</div>
+            {% if promise.what_betting == "벌금" %}
+                <div>당신의 벌금 : {{ p_detail.penalty }}</div>
+            {% endif %}
     </div>
 
  <br>
@@ -94,7 +97,23 @@
 <script> 
 
     function init(){
-        window.navigator.geolocation.getCurrentPosition(current_position);
+        // window.navigator.geolocation.getCurrentPosition(current_position);
+        var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+        };
+
+        function success(position) {
+        document.arrive_form.current_lat.value = position.coords.latitude  // 위도
+        document.arrive_form.current_lng.value = position.coords.longitude // 경도
+        };
+
+        function error(err) {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+        };
+
+        window.navigator.geolocation.getCurrentPosition(success, error, options);
     }
     function current_position(position){
         document.arrive_form.current_lat.value = position.coords.latitude  // 위도

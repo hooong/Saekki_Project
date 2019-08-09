@@ -47,13 +47,12 @@
       <div id="sub_menu">
             {{user.name}}님, 
               {% if user.profile and user.profile.state_msg != None %}
-                  <!-- {{user.profile.state_msg}} -->
               {% endif %}
               {% if noti_add_friend %}
               <strong style="color:#D84339">친구 신청 알림</strong>이 있습니다.
              
               {% else %}
-              뭐하세요 친구없는새기야 
+              요청된 친구신청이 없어요! 
               {% endif %}
               <div style="float:right;">
                   <span id="subMenuLink">
@@ -81,7 +80,7 @@
         {% if user.profile_image == '' %}
         <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
         {% else %}
-        <img style="border-radius:50%"width="60" height="60" src="{{user.thumbnail_image}}" />
+        <img style="border-radius:50%" width="60" height="60" src="{{ user.thumbnail_image }}" />
         {% endif %}
 
     </div>
@@ -95,20 +94,22 @@
     <div class="menu_tab">
             
         <ul>
-                {% if noti_add_friend %}
+                
+            <li class="active"><a href="#"; onclick="tab_menu(0);">친구신청</a></li>
+            {% if noti_add_friend %}
                   <span id="newControl">
                   <span id="newFriendNew">new</span>
                   <span id="newFirendBt"></span>
                   </span>
                 {% endif %}
-            <li class="active"><a href="#"; onclick="tab_menu(0);">친구신청</a></li>
+            
+            <li><a href="#" onclick="tab_menu(1);">초대 및 댓글</a></li>
             {% if noti_promise %}
             <span id="newControl">
             <span id="newFriendNew">new</span>
             <span id="newFirendBt"></span>
             </span>
           {% endif %}
-            <li><a href="#" onclick="tab_menu(1);">초대 및 댓글</a></li>
         </ul>
     </div>
     <div class="menu_tab0" id="panels" >
@@ -130,8 +131,8 @@
                 <a href="{% url 'noti_promise_button' operation='click' pk=noti.id %}" >{{noti.send_user.name}}님이 {{noti.promise.title}}에 초대했습니다.</a>
             </div>   
             <div class="notiR">
-              <a href="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}"><button class="nbtn">수락</button></a>
-              <a href="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}"><button class="nbtn">거절</button></a>
+              <form name="acpt_time_form" action="{% url 'promise_acpt' operation='acpt' promise_id=noti.promise.id %}"></form><button class="nbtn" onclick="checkPenalty('acpt','{{noti.promise.what_betting}}','{{noti.promise.per_or_one}}','{{noti.promise.per_min_money}}','{{noti.promise.setting_min}}','{{noti.promise.onetime_panalty}}','{{noti.promise.id}}')">수락</button></form>
+              <form name="acpt_one_form" action="{% url 'promise_acpt' operation='deny' promise_id=noti.promise.id %}"></form><button class="nbtn" onclick="checkPenalty('deny','{{noti.promise.what_betting}}','{{noti.promise.per_or_one}}','{{noti.promise.per_min_money}}','{{noti.promise.setting_min}}','{{noti.promise.onetime_panalty}}','{{noti.promise.id}}')">거절</button></form>
             </div>
         </div>
         {% elif noti.com_or_pro == 'c' %}
@@ -143,10 +144,36 @@
                 <a href="{% url 'noti_promise_button' operation='delete' pk=noti.id %}"><button class="nbtn" style="width: 84px;">지우기</button></a>
             </div>
         </div>
-  
         {% endif %}
-       
     {% endfor %}
+    {% for noti in noti_penalty %}
+      {% if noti.final == '0' %}
+        {% if noti.penalty == '-1' %}
+          <div class="notiPromise">
+            <div class="notiL">
+                <a href="{% url 'detail' pk=noti.promise.id %}">"{{noti.promise.title}}"의 엽사가 공개되고있어요!! 서둘러서 도착하세요!</a>
+            </div>   
+          </div>
+        {% else %}
+          <div class="notiPromise">
+            <div class="notiL">
+                <a href="{% url 'detail' pk=noti.promise.id %}">"{{noti.promise.title}}"의 벌금이 {{noti.penalty}}입니다. 서둘러서 도착하세요!</a>
+            </div>   
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="notiPromise">
+          <div class="notiL">
+              <a href="{% url 'detail' pk=noti.promise.id %}">"{{noti.promise.title}}"의 최종벌금은 {{noti.penalty}}입니다.</a>
+          </div>   
+          <div class="notiR">
+            <a href="{% url 'noti_promise_button' operation='delete_penalty' pk=noti.id %}"><button class="nbtn" style="width: 84px;">지우기</button></a>
+          </div>
+        </div>
+      {% endif %}
+  {% endfor %}
+
+      
     {% if not noti_promise %}
     <p style="margin:10px">알림이 없어요 ^^</p>
     {% endif %}
@@ -164,6 +191,37 @@
                 $('.menu_tab' + i).hide();
             }
         }
+    }
+    
+    function checkPenalty(opt, what_bet, what_per, per_min, set_min, one_penal, promise_id){
+      if(opt == 'acpt'){
+        if(what_bet == '벌금'){
+          if(what_per == '시간'){
+            if(confirm("이 약속은 늦으면 "+set_min+'분당 '+per_min+"원이다!!") == true ){
+              document.acpt_time_form.submit();
+            }
+            else{
+              return false;
+            }
+          }
+          else{
+            if(confirm("이 약속은 늦으면 벌금"+one_penal+"원이다!!") == true ){
+              document.acpt_one_form.submit();
+            }
+            else{
+              return false;
+            }
+          }
+        }
+        else if(what_bet == '엽사'){
+          if(confirm("엽사를 등록합시다~") == true ){
+              document.acpt_time_form.submit();
+          }
+          else{
+            return false;
+          }
+        }
+      }
     }
     </script>
 

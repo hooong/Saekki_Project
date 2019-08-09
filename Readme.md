@@ -21,6 +21,8 @@
 - psycopg2
 - django-apscheduler 
 - pillow
+- django-storages
+- django-tempus-dominus
 - 일단 생각나는거 여기까지 만약에 뭔가가 no module뜨면 찾아보고 채워넣기
 - DB는 PostgresQL 사용!!
 </pre>
