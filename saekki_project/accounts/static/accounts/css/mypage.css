@@ -1,3 +1,7 @@
+@font-face { font-family: 'S-CoreDream-3Light'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BBTreeGR'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGR.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'S-CoreDream-8Heavy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff') format('woff'); font-weight: normal; font-style: normal; }
+@import url('https://fonts.googleapis.com/css?family=Amaranth|Bree+Serif|Open+Sans&display=swap');
 /* 프로필 부분 */
 
 @media all and (orientation:landscape){
@@ -69,4 +73,14 @@
 }
 textarea[readonly]{
     color:gray;
+}
+
+
+/* 폰트 */
+
+#myProfileName, .menu_tab, .menu_tab0, .menu_tab1, .myProfileIn, .profile{
+    font-family: 'S-CoreDream-3Light';
+}
+.zemok {
+    font-family: 'Amaranth', sans-serif;
 }
