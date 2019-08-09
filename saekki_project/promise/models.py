@@ -14,9 +14,9 @@ class Promise(models.Model):
     acpt_party = ArrayField(models.CharField(max_length=15),  default=list, null=True, blank=True)
 
     # 벌칙 관련
-    # 벌칙 종류 (0:벌칙 없읍, 1: 벌금, 2: 엽사)
+    # 벌칙 종류 (0:벌칙 없읍, '벌금': 벌금, '엽사': 엽사)
     what_betting = models.CharField(max_length=30, default='0', null=True, blank=True)
-    # 벌금 기준 (0:기본, 1: 시간당, 2: 1회)
+    # 벌금 기준 (0:기본, '시간': 시간당, '한번': 1회)
     per_or_one = models.CharField(max_length=30, default='0', null=True, blank=True)
     per_min_money = models.CharField(max_length=255, default='100', null=True, blank=True)
     setting_min = models.CharField(max_length=50, default='1', null=True, blank=True)

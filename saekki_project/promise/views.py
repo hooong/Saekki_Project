@@ -296,6 +296,7 @@ def new(request):
 # 약속 수락/거절 버튼
 def acpt(request, operation, promise_id):
     user = get_object_or_404(User, uid=request.user.uid)
+    promise_id = int(promise_id)
     promise = get_object_or_404(Promise, id=promise_id)
     p = Party_detail.objects.get(promise=promise, user=request.user)
     if operation == 'acpt':

@@ -538,11 +538,9 @@ $(document).on('click', '.number-spinner2 button', function () {
                     set_time = set_time.replace(":","");
         
                     if(cur_time < set_time){
-                        i
                         if(confirm(timeTmp + "\n" + where + "이 확실해요?") == true){
                             document.new_form.submit();
                         }else{
-                            
                             return false;
                         }
                     } else{
