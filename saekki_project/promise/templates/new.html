@@ -163,12 +163,16 @@
                     {{ form.as_table }}
                 </table>
                 <!-- 참여인원 input -->
+                {% if not friends %}
+                    아직 친구가 없군요?!
+                {% else %}
                 <div onclick="friendDropdown(1)" id="fDr" class="fDrclass">참여인원 선택</div>
                 {% for friend in friends %}
                 <div class="friendsList">
                 <input type="checkbox" name="party_friend[]" value="{{friend.uid}}"> {{friend.name}}
                 </div>
                 {% endfor %}
+                {% endif %}
                 <div class="new_tab">
                        
                            
