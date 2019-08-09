@@ -147,7 +147,7 @@
         <h2 >진행중인 약속</h2>
         <!-- 도착 -->
 
-        {% if not arrive and not no_arrive %}
+        {% if not arrives and not no_arrives %}
             아직 약속이 없어요
             <a href="{% url 'new' %}"><button>약속만들러가기</button></a>
         {% endif %}
