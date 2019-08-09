@@ -3,7 +3,7 @@
 
 {%block contents %}
 <div style="width:100%;background-color:red;text-align: center;vertical-align: middle"><h1 style="color:yellow;">상습 약속 파괴범</h1></div>
-<div style="display:flex;justify-content: center;">
+
 {% for image in wanted %}
     {% if image.user.promise.end == 1 %}
     <div style="display:inline-block;max-width: 300px; margin-left:10px;margin-right:10px;">
@@ -21,5 +21,5 @@
     {% endif %}
 {% endfor %}
 </div>
-</div>
+
 {% endblock%}
