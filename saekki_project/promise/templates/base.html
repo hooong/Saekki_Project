@@ -47,7 +47,6 @@
       <div id="sub_menu">
             {{user.name}}님, 
               {% if user.profile and user.profile.state_msg != None %}
-                  <!-- {{user.profile.state_msg}} -->
               {% endif %}
               {% if noti_add_friend %}
               <strong style="color:#D84339">친구 신청 알림</strong>이 있습니다.
@@ -81,7 +80,7 @@
         {% if user.profile_image == '' %}
         <img style="border-radius:50%" width="60" height="60" src="{% static 'promise/user.png' %}" />
         {% else %}
-        <img style="border-radius:50%"width="60" height="60" src="{{user.thumbnail_image}}" />
+        <img style="border-radius:50%" width="60" height="60" src="{{ user.thumbnail_image }}" />
         {% endif %}
 
     </div>
