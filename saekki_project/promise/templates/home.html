@@ -34,13 +34,13 @@
     </div>
     <div id="myProfileNames">
     {{user.name}}
-    <div style="float:right;"><a  href="{% url 'kakao' operation='logout'%}">로그아웃</a></div></span>
+    <div style="float:right;"><a href="{% url 'mypage' %}">마이페이지</a> </div></span>
     <div id="myProfileIns">{{ user.state_msg  }}</div>
                         
                         </div>
                         </div>
-                        <div style="background-color:#F4F2F0;padding-left: 10px;display:flex;"><span style="display: inline;"><a href="{% url 'mypage' %}">마이페이지</a> <img style="height:15px" src="{% static 'promise/notice.png' %}"></span>
-                            <div style="flex:1 1 50%;"><marquee direction="right">test</marquee></div>
+                        <div style="background-color:#F4F2F0;padding-left: 10px;display:flex;"><span style="display: flex;align-items:center;"><img style="height:15px;" src="{% static 'promise/notice.png' %}"></span>
+                            <div style="flex:1 1 50%;"><marquee direction="right">멋사 해커톤 화이팅~! 에러나도 너그러이 이해해주세요</marquee></div>
                             
                              </div>
                     
@@ -147,15 +147,17 @@
         <h2 >(진행중인 약속)</h2>
         <!-- 도착 -->
         <div style="display: flex;flex-wrap: wrap;">
+            
         {% for arrive in arrives %}
             {% if arrive.promise.end == 0 %}
-            <div class="pcard"></div>
+            <div class="pcard">
                     <a href="{% url 'detail' pk=arrive.promise.id %}">
                         
                         <div class="promiseCard">{{arrive.promise.title}}</div>
                             <span>{{arrive.promise.setting_date_time}}(도착)</span>
 
                     </a>
+                    </div>
             {% endif %}
         {% endfor %}
     </div>

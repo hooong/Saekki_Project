@@ -1,5 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{%block contents %}
+<div style="width:100%;background-color:red;text-align: center;vertical-align: middle"><h1 style="color:yellow;">상습 약속 파괴범</h1></div>
+
 {% for image in wanted %}
     {% if image.user.promise.end == 1 %}
-    <img src="{{image.fun_image.url}}" alt="">
+    <div style="display:inline-block;max-width: 300px; margin-left:10px;margin-right:10px;">
+        <div style="display:flex;flex:0 1 300px;flex-direction:column;">
+            <div style="border:1px solid;margin-bottom: 10px;height:300px;overflow: hidden;">
+                <img width="300px" height="300px" style="overflow:hidden" src="{{image.fun_image.url}}" alt="">
+            </div>
+            <span style="border:1px solid;background-color:#4c5af5;color:white;font-weight: bold;text-align: center;width:80px;">  사건 개요  </span>
+            <div style="border:1px solid;display:inline-block;background-color:#fffdac;color:#4c5af5;padding:5px;">
+                용의자 {{image.user.user.name}}은 '{{image.user.promise.setting_date_time}}'경
+                {{image.user.promise.title}} 약속을 지키지않고 도주 중임.
+            </div>
+        </div>
+    </div>
     {% endif %}
 {% endfor %}
+</div>
+
+{% endblock%}
