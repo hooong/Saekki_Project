@@ -479,5 +479,5 @@ def wanted(request):
     for wait in Notification_friend.objects.filter(send_user=user):
         noti_wait_friend.append(wait.receive_user.uid)
 
-    return render(request, 'wanted.html', {'wanted':wanted,'noti_promise':noti_promise,'noti_penalty':noti_penalty, 'noti_add_friend':noti_add_friend,'all_noti_count':all_noti_count
+    return render(request, 'wanted.html', {'wanted':wanted,'noti_promise':noti_promise,'noti_penalty':noti_penalty, 'noti_add_friend':noti_add_friend,'all_noti_count':all_noti_count,
                                             'noti_wait_friend':noti_wait_friend})
