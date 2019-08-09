@@ -266,7 +266,7 @@
                    if(num==2){
                     $(f+2).show();
                     $(f+1).hide();
-                    $(f+2).css('height','200px')
+                    $(f+2).css('height','100px')
                     $(f+1).css('height','0px')
                    } 
                    if(num==3){
@@ -292,10 +292,10 @@
                                        <style>
 
                                            #test1{
-                                            background-color:rgba(244, 242, 240,0.5);flex:0 1 550px; height:0px;transition:height 0.3s; display:none;
+                                            background-color:rgba(244, 242, 240,0.5);flex:0 1 550px; height:0px;transition:all 0.3s; display:none;
                                            }
                                            #test2{
-                                            flex:0 1 550px; height:0px;transition:height 0.3s;display:none;
+                                            flex:0 1 550px; height:0px;transition:all 0.3s;display:none;
                                            }
                                         </style>
                                         <script>
@@ -490,8 +490,8 @@ $(document).on('click', '.number-spinner2 button', function () {
                                             <label class="checklabel" for="radio2">엽사 공개</label>
                                             <div id="test2"> 
                                                 
-                                                        <input type="file" name="fun">
-                                                        <input type="submit">
+                                                        <input style="max-width:560px;height:100px;" type="file" name="fun">
+                                                    
                                                     
                                                 </div>
                                         </div>
