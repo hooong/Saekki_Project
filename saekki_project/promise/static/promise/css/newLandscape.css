@@ -25,7 +25,7 @@
     #pickerDiv{
         display:flex;
         flex-direction: column-reverse;
-        
+        max-height:436px;
     }
     #map{
         border-radius:20px;
@@ -75,6 +75,7 @@ div{
     flex:1 1 100%
 }
 #pickerInput{
+    height:40px;
     padding-right : 20px;
     padding-left:20px;
     margin-top:15px;
@@ -238,4 +239,7 @@ form{
 .fDrclass:active{
     background-color:#D84339;
     color:white;
+}
+#datetimeDemo{
+    height: 30px;
 }
