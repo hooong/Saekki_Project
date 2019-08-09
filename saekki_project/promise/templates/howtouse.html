@@ -1,0 +1,68 @@
+
+{% load staticfiles %}
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="{% static 'promise/css/howtouse.css' %}" />
+<link href="https://fonts.googleapis.com/css?family=Hi+Melody|Jua|Song+Myung&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'saekki_pro/css/animate.css' %}">
+<script type="text/javascript" src="{% static 'saekki_pro/js/wow.min.js' %}"></script>
+<script>
+    new WOW().init();
+</script>
+
+	<head>
+		<title>약지 :: 사용법</title>
+		<meta charset="utf-8" />
+    </head>
+
+	<body>
+        
+	<section id="header">
+        <div class="title">
+            <div class="title_gray">
+                <br>
+                <div class="wow flipinX">
+                    <p class="text_white" style="font-family: 'Jua', sans-serif; font-size: 50px; "> 
+                            <img src="{% static 'promise/howto/color_painting.png' %}" height="100px;"><br>약 지</p>
+                </div>
+                <p class="text_white">/</p>
+                <div class="wow flipinX">
+                    <p class="text_white">약속을 지키지 않는 사람들을 위한,</p>
+                    <h4 class="text_white">약 속 지 킴 이<br>서 비 스</h4>
+                </div>
+                <br>
+            </div>
+        </div>
+    </section>
+
+    <section id="informed">
+        <div class="tutorial">
+            <div class="title">
+                <p class="wow fadeInUp" style="font-size: 30px; font-family: 'Song Myung', serif;">설명서</p>
+            </div>
+            
+            <div class="wow fadeInRightBig">
+                <div class="text_inform">
+                    <ol style="font-family: 'Hi Melody', cursive;"> <b>
+                        <li>친구를 검색해서 친구를 신청한다.</li>
+                        <li>친구가 수락을 하면 친구가 생성된다.</li>
+                        <li>친구 사이에 약속을 생성할 수 있다.</li>
+                        <li>약속에 늦을 시 벌금을 생성할 수 있다.
+                            <ul>
+                                <li>시간당(ex: 1분에 500원)</li>
+                                <li>1회벌금</li>
+                            </ul>
+                        </li>
+                        <li>자신의 엽사를 걸고 약속에 늦으면 수배자 페이지에 전체 공개된다. <br>(도착한 순간부터 공개되지 않는다.)</li>
+                    </b> </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kakao_login">
+        <button class="kakao_box">카카오 로그인</button>
+    </section>
+
+    <br><br>
+    
+    </body>
