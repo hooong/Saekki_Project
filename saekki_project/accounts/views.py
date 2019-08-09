@@ -89,9 +89,14 @@ def oauth(request):
     user_profile_info_uri_data = requests.get(user_profile_info_uri)
     user_json_data = user_profile_info_uri_data.json()
     user_id = user_json_data['id']
+    properties = user_json_data['properties']
     nickname = user_json_data['properties']['nickname']
-    profile_image = user_json_data['properties']['profile_image']
-    thumbnail_image = user_json_data['properties']['thumbnail_image']
+    if not len(properties) == 1:
+        profile_image = user_json_data['properties']['profile_image']
+        thumbnail_image = user_json_data['properties']['thumbnail_image']
+    else:
+        profile_image = ''
+        thumbnail_image = ''
 
     # 카카오 회원가입
     if not User.objects.filter(uid=user_id):
