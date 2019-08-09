@@ -8,13 +8,13 @@
 
 <!-- 도착이벤트 -->
 {% if success.success_or_fail == 1 %}
-<h2 class="fbtn">도착을 하셨습니다!</h2>
+<h2 class="fbtn" >도착을 하셨습니다!</h2>
 {% else %}
 <form method="POST" action="{% url 'arrived' promise.id %}" name='arrive_form'>
     {% csrf_token %}
     <input type="hidden" name='current_lat' value=''>
     <input type="hidden" name='current_lng' value=''>
-    <button class="fbtn" type="submit">도착했어요!</button>
+    <button class="fbtn" type="submit" >도착하셨으면 여기를 눌러주세요!</button>
 
 </form>
 
@@ -48,8 +48,7 @@
 </style>
 
     <div style="display:flex; flex-direction: column ; align-items: center;" >
-            <div> <h2>제목 : {{promise.title}}</h2></div>
-            <div style="display:flex;flex-wrap: wrap"><div style="padding-right:10px;">글쓴이 : {{promise.user.name}}</div><span>작성시간 : {{promise.created_at}}</span></div>
+            <div> <h2>{{promise.title}}</h2></div>
             <div>약속시간 : {{promise.setting_date_time}}</div>
             초대 된 약지들 : 
                     {% for party in parties %}
@@ -63,19 +62,26 @@
                     {% for party in noti_acpt_friend %}
                         {{ party }}
                     {% endfor %}
-            <div>내용 : {{promise.content}}</div>
+           
             {% if promise.what_betting == "벌금" %}
                 <div>당신의 벌금 : {{ p_detail.penalty }}</div>
             {% endif %}
     </div>
 
  <br>
+ <div style="display:flex; flex-direction: column ; align-items: center;" >
 약속장소 : <div id="map" style="width:100%;height:400px;"></div>
-{% if cur_user == promise.user %}
-<a href="{% url 'pro_del' promise_id=promise.id %}">삭제</a><br>
-{% endif %}
-
+<div>내용 : {{promise.content}}</div>
+ 
+ </div>
+ <div style="display:flex;text-align: right;flex-direction:column;margin-right:20px;">
+        <div style="flex:1 1 100%">글쓴이 : {{promise.user.name}}</div>
+        <div style="flex:1 1 100%">작성시간 : {{promise.created_at}}</div>
+    </div>
 <br><br>
+{% if cur_user == promise.user %}
+<a href="{% url 'pro_del' promise_id=promise.id %}"><div class="fbtn">삭제</div></a><br>
+{% endif %}
 <hr>
 <h2>댓글</h2>
 {% for comment in comments %}

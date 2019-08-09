@@ -166,7 +166,11 @@
                 <div onclick="friendDropdown(1)" id="fDr" class="fDrclass">참여인원 선택</div>
                 {% for friend in friends %}
                 <div class="friendsList">
+                    {% if not friend.name %}
+                    친구가없는걸요?
+                    {% else %}
                 <input type="checkbox" name="party_friend[]" value="{{friend.uid}}"> {{friend.name}}
+                {% endif%}
                 </div>
                 {% endfor %}
                 <div class="new_tab">
@@ -248,7 +252,8 @@
                    if(num==1){
                     $('.fDrclass').hide();
                     $('.friendsList').show();
-                       $('.friendsList').css('height','20px');
+                    
+                       
 
                    }
                 }
