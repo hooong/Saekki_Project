@@ -1,38 +1,9 @@
 # 약속 늦지 않는 새끼
 
-> 음음...
-
-
-
-### TODO
-<pre>
-- 프론트 전반적으로!!^^
-- 회원 정보 구체화 ~> 마이페이지(프론트)
-- 엽사를 올릴만한 구조 만들기
-- 박지원 머리털 뽑기
-- FBV --> CBV!!
-- +++++이 이상 더 생각나는대로!!
-</pre>
-
-
-### installed app (pip)
-<pre>
-- django
-- psycopg2
-- django-apscheduler 
-- pillow
-- django-storages
-- django-tempus-dominus
-- 일단 생각나는거 여기까지 만약에 뭔가가 no module뜨면 찾아보고 채워넣기
-- DB는 PostgresQL 사용!!
-</pre>
-
-
 ### accounts app
 <pre>
 - 사용자 계정 관리 app
 </pre>
-
 
 ### promise app
 
