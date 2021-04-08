@@ -2,7 +2,7 @@ APScheduler==3.6.0
 certifi==2019.6.16
 chardet==3.0.4
 defusedxml==0.6.0
-Django==2.2.2
+Django==2.2.20
 django-apscheduler==0.3.0
 django-oauth-toolkit==1.2.0
 django-tempus-dominus==5.1.2.5
